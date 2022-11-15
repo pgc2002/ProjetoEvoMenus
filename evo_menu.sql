@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 15-Nov-2022 às 10:42
+-- Tempo de geração: 15-Nov-2022 às 11:58
 -- Versão do servidor: 5.7.36
 -- versão do PHP: 8.1.0
 
@@ -169,7 +169,8 @@ CREATE TABLE `mesa` (
   `id` int(11) NOT NULL,
   `numero` int(11) NOT NULL,
   `capacidade` int(11) NOT NULL,
-  `estado` varchar(20) NOT NULL
+  `estado` varchar(20) NOT NULL,
+  `idRestaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -220,7 +221,8 @@ CREATE TABLE `pagamento` (
 CREATE TABLE `pedido` (
   `id` int(11) NOT NULL,
   `valorTotal` double NOT NULL,
-  `idEstado` int(11) NOT NULL
+  `idEstado` int(11) NOT NULL,
+  `idCliente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -253,7 +255,8 @@ CREATE TABLE `pessoa` (
   `nome` varchar(100) NOT NULL,
   `telemovel` varchar(13) NOT NULL,
   `nif` int(9) NOT NULL,
-  `tipo` varchar(20) NOT NULL
+  `tipo` varchar(20) NOT NULL,
+  `idMorada` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -301,8 +304,8 @@ ALTER TABLE `categoria`
 -- Índices para tabela `cliente`
 --
 ALTER TABLE `cliente`
-  ADD KEY `idPessoa` (`idPessoa`),
-  ADD KEY `idMesa` (`idMesa`);
+  ADD KEY `idMesa` (`idMesa`),
+  ADD KEY `idPessoa` (`idPessoa`);
 
 --
 -- Índices para tabela `ementa`
@@ -368,7 +371,8 @@ ALTER TABLE `menus_pedido`
 -- Índices para tabela `mesa`
 --
 ALTER TABLE `mesa`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idRestaurante` (`idRestaurante`);
 
 --
 -- Índices para tabela `metodos_pagamento`
@@ -395,7 +399,8 @@ ALTER TABLE `pagamento`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idEstado` (`idEstado`);
+  ADD KEY `idEstado` (`idEstado`),
+  ADD KEY `idCliente` (`idCliente`);
 
 --
 -- Índices para tabela `pedido_inscricao`
@@ -407,16 +412,17 @@ ALTER TABLE `pedido_inscricao`
 -- Índices para tabela `pessoa`
 --
 ALTER TABLE `pessoa`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idMorada` (`idMorada`);
 
 --
 -- Índices para tabela `restaurante`
 --
 ALTER TABLE `restaurante`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idMorada` (`idMorada`),
   ADD KEY `idEmenta` (`idEmenta`),
-  ADD KEY `idHorario` (`idHorario`);
+  ADD KEY `idHorario` (`idHorario`),
+  ADD KEY `idMorada` (`idMorada`);
 
 --
 -- Índices para tabela `trabalhador`
@@ -512,10 +518,17 @@ ALTER TABLE `restaurante`
 --
 
 --
+-- Limitadores para a tabela `categoria`
+--
+ALTER TABLE `categoria`
+  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`idEmenta`) REFERENCES `ementa` (`id`);
+
+--
 -- Limitadores para a tabela `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idMesa`) REFERENCES `mesa` (`id`);
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idMesa`) REFERENCES `mesa` (`id`),
+  ADD CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`idPessoa`) REFERENCES `pessoa` (`id`);
 
 --
 -- Limitadores para a tabela `gestor`
@@ -538,6 +551,13 @@ ALTER TABLE `items_menu`
   ADD CONSTRAINT `items_menu_ibfk_2` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`);
 
 --
+-- Limitadores para a tabela `items_pedido`
+--
+ALTER TABLE `items_pedido`
+  ADD CONSTRAINT `items_pedido_ibfk_1` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`),
+  ADD CONSTRAINT `items_pedido_ibfk_2` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`id`);
+
+--
 -- Limitadores para a tabela `menu`
 --
 ALTER TABLE `menu`
@@ -551,6 +571,12 @@ ALTER TABLE `menus_pedido`
   ADD CONSTRAINT `menus_pedido_ibfk_2` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`id`);
 
 --
+-- Limitadores para a tabela `mesa`
+--
+ALTER TABLE `mesa`
+  ADD CONSTRAINT `mesa_ibfk_1` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`id`);
+
+--
 -- Limitadores para a tabela `pagamento`
 --
 ALTER TABLE `pagamento`
@@ -561,14 +587,22 @@ ALTER TABLE `pagamento`
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`id`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idPessoa`);
+
+--
+-- Limitadores para a tabela `pessoa`
+--
+ALTER TABLE `pessoa`
+  ADD CONSTRAINT `pessoa_ibfk_1` FOREIGN KEY (`idMorada`) REFERENCES `morada` (`id`);
 
 --
 -- Limitadores para a tabela `restaurante`
 --
 ALTER TABLE `restaurante`
   ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`idEmenta`) REFERENCES `ementa` (`id`),
-  ADD CONSTRAINT `restaurante_ibfk_2` FOREIGN KEY (`idHorario`) REFERENCES `horario_funcionamento` (`id`);
+  ADD CONSTRAINT `restaurante_ibfk_2` FOREIGN KEY (`idHorario`) REFERENCES `horario_funcionamento` (`id`),
+  ADD CONSTRAINT `restaurante_ibfk_3` FOREIGN KEY (`idMorada`) REFERENCES `morada` (`id`);
 
 --
 -- Limitadores para a tabela `trabalhador`
