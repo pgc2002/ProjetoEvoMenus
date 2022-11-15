@@ -1,2 +1,2 @@
 # ProjetoEvoMenus
-Repositório do projeto de sistemas de informação do grupo dos alunos André Afoito, Joel Mateus e Pedro Cavalheiro
+Repositório do projeto Evo Menus do grupo de alunos André Afoito, Joel Mateus e Pedro Cavalheiro
