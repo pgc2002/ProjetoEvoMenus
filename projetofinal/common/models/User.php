@@ -22,9 +22,24 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string|null $telemovel
+ * @property string|null $nif
+ * @property string|null $tipo
+ * @property string|null $nome
+ * @property int|null $idRestaurante
+ * @property int|null $idMorada
+ * @property int|null $idMesa
+ *
+ * @property Mesa $idMesa0
+ * @property Morada $idMorada0
+ * @property Restaurante $idRestaurante0
+ * @property Pedido[] $pedidos
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+
+    public $passwprd;
+
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
@@ -56,7 +71,83 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['status', 'created_at', 'updated_at', 'idRestaurante', 'idMesa'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['telemovel'], 'string', 'max' => 13],
+            [['nif'], 'string', 'max' => 9],
+            [['tipo'], 'string', 'max' => 20],
+            [['nome'], 'string', 'max' => 100],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+            [['idMesa'], 'exist', 'skipOnError' => true, 'targetClass' => Mesa::class, 'targetAttribute' => ['idMesa' => 'id']],
+            [['idRestaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['idRestaurante' => 'id']],
+            [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'email' => 'Email',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
+            'telemovel' => 'Telemovel',
+            'nif' => 'Nif',
+            'tipo' => 'Tipo',
+            'nome' => 'Nome',
+            'idRestaurante' => 'Id Restaurante',
+            'idMorada' => 'Id Morada',
+            'idMesa' => 'Id Mesa',
+        ];
+    }
+
+    /**
+     * Gets query for [[IdMesa0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdMesa0()
+    {
+        return $this->hasOne(Mesa::class, ['id' => 'idMesa']);
+    }
+
+    /**
+     * Gets query for [[IdMorada0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdMorada0()
+    {
+        return $this->hasOne(Morada::class, ['id' => 'idMorada']);
+    }
+
+    /**
+     * Gets query for [[IdRestaurante0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdRestaurante0()
+    {
+        return $this->hasOne(Restaurante::class, ['id' => 'idRestaurante']);
+    }
+
+    /**
+     * Gets query for [[Pedidos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPedidos()
+    {
+        return $this->hasMany(Pedido::class, ['idCliente' => 'id']);
     }
 
     /**
@@ -211,3 +302,5 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 }
+
+

@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Restaurante;
+use app\models\Pedidoinscricao;
 
 /**
- * RestauranteSearch represents the model behind the search form of `app\models\Restaurante`.
+ * PedidoinscricaoSearch represents the model behind the search form of `frontend\models\PedidoInscricao`.
  */
-class RestauranteSearch extends Restaurante
+class PedidoinscricaoSearch extends Pedidoinscricao
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class RestauranteSearch extends Restaurante
     public function rules()
     {
         return [
-            [['id', 'lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
-            [['nome', 'email', 'telemovel'], 'safe'],
+            [['id', 'nome', 'email'], 'integer'],
+            [['telemovel', 'morada'], 'safe'],
         ];
     }
 
@@ -40,14 +40,13 @@ class RestauranteSearch extends Restaurante
      */
     public function search($params)
     {
-        $query = Restaurante::find();
+        $query = Pedidoinscricao::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
 
         $this->load($params);
 
@@ -60,15 +59,12 @@ class RestauranteSearch extends Restaurante
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'lotacaoMaxima' => $this->lotacaoMaxima,
-            'idMorada' => $this->idMorada,
-            'idEmenta' => $this->idEmenta,
-            'idHorario' => $this->idHorario,
+            'nome' => $this->nome,
+            'email' => $this->email,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'telemovel', $this->telemovel]);
+        $query->andFilterWhere(['like', 'telemovel', $this->telemovel])
+            ->andFilterWhere(['like', 'morada', $this->morada]);
 
         return $dataProvider;
     }

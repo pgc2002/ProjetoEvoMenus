@@ -1,18 +1,22 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
-use common\models\Restaurante;
-use app\models\RestauranteSearch;
+use common\models\User;
+use common\models\Morada;
+use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\Model;
 
 /**
- * RestauranteController implements the CRUD actions for Restaurante model.
+ * UserController implements the CRUD actions for User model.
  */
-class RestauranteController extends Controller
+class UserController extends Controller
 {
+    public $password;
+
     /**
      * @inheritDoc
      */
@@ -32,13 +36,13 @@ class RestauranteController extends Controller
     }
 
     /**
-     * Lists all Restaurante models.
+     * Lists all User models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new RestauranteSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +52,7 @@ class RestauranteController extends Controller
     }
 
     /**
-     * Displays a single Restaurante model.
+     * Displays a single User model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,29 +65,40 @@ class RestauranteController extends Controller
     }
 
     /**
-     * Creates a new Restaurante model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Restaurante();
+        $user = new User();
+        $morada = new Morada();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($user->load($this->request->post()) && $morada->load($this->request->post()) ) {
+
+                $morada->save(false);
+                $user->idMorada = $morada->id;
+                $user->setPassword($this->password);
+                $user->generateAuthKey();
+                $user->save();
+
+                return $this->redirect(['view', 'id' => $user->id]);
+            }else if(!Model::validateMultiple([$user, $morada])){
+                echo '<script>alert("Erro!")</script>';
             }
         } else {
-            $model->loadDefaultValues();
+            $user->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'user' => $user,
+            'morada' => $morada,
         ]);
     }
 
     /**
-     * Updates an existing Restaurante model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +118,7 @@ class RestauranteController extends Controller
     }
 
     /**
-     * Deletes an existing Restaurante model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +132,15 @@ class RestauranteController extends Controller
     }
 
     /**
-     * Finds the Restaurante model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Restaurante the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Restaurante::findOne(['id' => $id])) !== null) {
+        if (($model = User::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
