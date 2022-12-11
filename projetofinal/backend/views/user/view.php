@@ -2,9 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Morada;
 
 /** @var yii\web\View $this */
 /** @var common\models\User $model */
+
+/*$morada = Morada::find()
+    ->where(['id' == $model->idMorada])
+    ->all();*/
+
+$morada = Morada::findOne([
+    'id' => $model->idMorada,
+]);
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
@@ -29,24 +38,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'username',
+            'nome',
             'auth_key',
             'password_hash',
-            'password_reset_token',
+            //'password_reset_token',
             'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
+            //'status',
+            [
+                'attribute' => 'created_at',
+                'label' => 'Criádo em',
+                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d-m-Y H:i:s'),
+            ],
+            //'updated_at',
+            //'verification_token',
             'telemovel',
             'nif',
             'tipo',
-            'nome',
-            'idRestaurante',
-            'idMorada',
-            'idMesa',
+            [
+                'label' => 'Morada',
+                'value' => $morada->pais.', '. $morada->cidade .', '. $morada->rua. ' '.$morada->codpost,
+            ],
+            //'idRestaurante',
+            //'idMorada',
+            //'idMesa',
         ],
     ]) ?>
-
 </div>

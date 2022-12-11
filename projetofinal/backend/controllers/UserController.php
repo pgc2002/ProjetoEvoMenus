@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use yii;
 use common\models\User;
 use common\models\Morada;
 use app\models\UserSearch;
@@ -77,6 +78,7 @@ class UserController extends Controller
         if ($this->request->isPost) {
             if ($user->load($this->request->post()) && $morada->load($this->request->post()) ) {
 
+                $this->password = Yii::$app->request->post('password');
                 $morada->save(false);
                 $user->idMorada = $morada->id;
                 $user->setPassword($this->password);
@@ -84,7 +86,16 @@ class UserController extends Controller
                 $user->save();
 
                 return $this->redirect(['view', 'id' => $user->id]);
-            }else if(!Model::validateMultiple([$user, $morada])){
+            }else if($user->load($this->request->post())){
+
+                $this->password = Yii::$app->request->post('password');
+                $user->setPassword($this->password);
+                $user->generateAuthKey();
+                $user->save();
+
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
+            else if(!Model::validateMultiple([$user, $morada])){
                 echo '<script>alert("Erro!")</script>';
             }
         } else {

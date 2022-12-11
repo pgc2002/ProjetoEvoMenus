@@ -22,17 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
 
 </div>
-
-    <?php
-        if(isset($_POST["tipo"]))
-        {
-            $_SESSION["tipoUser"] = $_POST["tipo"];
-
-            /*header('Location: http://localhost:8080/ProjetoEvoMenus/projetofinal/backend/web/user/create');
-            Yii::$app->runAction('UserController/actionCreate');*/
-        }
-    ?>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -42,18 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            [
+                'attribute' => 'nome',
+                'label' => 'Nome Completo',
+            ],
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
             //'email:email',
             //'status',
             //'created_at',
             //'updated_at',
             //'verification_token',
-            //'telemovel',
+            [
+                'attribute' => 'telemovel',
+                'label' => 'Telemóvel',
+            ],
             //'nif',
-            //'tipo',
-            //'nome',
+            'tipo',
             //'idRestaurante',
             //'idMorada',
             //'idMesa',
