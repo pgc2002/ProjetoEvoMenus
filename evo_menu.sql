@@ -367,7 +367,8 @@ ALTER TABLE `morada`
 -- Índices para tabela `pagamento`
 --
 ALTER TABLE `pagamento`
-  ADD KEY `pagamento_ibfk_2` (`idPedido`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pagamento_ibfk_1` (`idPedido`);
 
 --
 -- Índices para tabela `pedido`
@@ -407,12 +408,6 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
-
---
--- AUTO_INCREMENT de tabela `morada`
---
-ALTER TABLE `morada`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de tabela `categoria`
 --
@@ -459,13 +454,31 @@ ALTER TABLE `pedidoinscricao`
 -- AUTO_INCREMENT de tabela `restaurante`
 --
 ALTER TABLE `restaurante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `morada`
+--
+ALTER TABLE `morada`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `pagamento`
+--
+ALTER TABLE `pagamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `horario_funcionamento`
+--
+ALTER TABLE `horario_funcionamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para despejos de tabelas
@@ -520,13 +533,13 @@ ALTER TABLE `mesa`
 -- Limitadores para a tabela `pagamento`
 --
 ALTER TABLE `pagamento`
-  ADD CONSTRAINT `pagamento_ibfk_2` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`id`);
+  ADD CONSTRAINT `pagamento_ibfk_1` FOREIGN KEY (`idPedido`) REFERENCES `pedido` (`id`);
 
 --
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`);
 
 --
 -- Limitadores para a tabela `restaurante`
