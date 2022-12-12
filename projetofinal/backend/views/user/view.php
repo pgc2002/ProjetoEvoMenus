@@ -56,10 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'telemovel',
             'nif',
             'tipo',
-            [
-                'label' => 'Morada',
-                'value' => $morada->pais.', '. $morada->cidade .', '. $morada->rua. ' '.$morada->codpost,
-            ],
+            'moradaFormatada',
             //'idRestaurante',
             //'idMorada',
             //'idMesa',

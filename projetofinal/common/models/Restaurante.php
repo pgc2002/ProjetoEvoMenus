@@ -21,7 +21,7 @@ use Yii;
  * @property HorarioFuncionamento $horario
  * @property Morada $morada
  * @property Mesa[] $mesas
- * @property Trabalhador[] $trabalhadors
+ * @property Trabalhador[] $trabalhadores
  */
 class Restaurante extends \yii\db\ActiveRecord
 {
@@ -128,6 +128,6 @@ class Restaurante extends \yii\db\ActiveRecord
     }
 
     public function getMoradaFormatada(){
-        return $this->morada ? $this->morada->cidade . ", " . $this->morada->rua : 'Sem morada';
+        return $this->morada ? $this->morada->pais.', '. $this->morada->cidade .', '. $this->morada->rua. ' '.$this->morada->codpost : 'Sem morada';
     }
 }

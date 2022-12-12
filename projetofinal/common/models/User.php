@@ -100,13 +100,14 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
-            'telemovel' => 'Telemovel',
+            'telemovel' => 'Telemóvel',
             'nif' => 'Nif',
             'tipo' => 'Tipo',
-            'nome' => 'Nome',
+            'nome' => 'Nome Completo',
             'idRestaurante' => 'Id Restaurante',
             'idMorada' => 'Id Morada',
             'idMesa' => 'Id Mesa',
+            'moradaFormatada' => 'Morada',
         ];
     }
 
@@ -115,7 +116,12 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdMesa0()
+
+    public function getMoradaFormatada(){
+        return $this->morada ? $this->morada->pais.', '. $this->morada->cidade .', '. $this->morada->rua. ' '.$this->morada->codpost : 'Sem morada';
+    }
+
+    public function getMesa()
     {
         return $this->hasOne(Mesa::class, ['id' => 'idMesa']);
     }
@@ -125,7 +131,7 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdMorada0()
+    public function getMorada()
     {
         return $this->hasOne(Morada::class, ['id' => 'idMorada']);
     }
@@ -135,7 +141,7 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdRestaurante0()
+    public function getRestaurante()
     {
         return $this->hasOne(Restaurante::class, ['id' => 'idRestaurante']);
     }
