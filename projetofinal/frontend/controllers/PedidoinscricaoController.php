@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Pedidoinscricao;
 use app\models\PedidoinscricaoSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,35 +33,6 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Lists all PedidoInscricao models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new PedidoinscricaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single PedidoInscricao model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new PedidoInscricao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
@@ -70,8 +42,20 @@ class PedidoinscricaoController extends Controller
         $model = new Pedidoinscricao();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) ) {
+                $pais = mb_convert_case(Yii::$app->request->post('pais'), MB_CASE_TITLE, "UTF-8");
+                $cidade = Yii::$app->request->post('cidade');
+                $codpost = Yii::$app->request->post('codpost');
+                $rua = Yii::$app->request->post('rua');
+                $morada = $pais.', '.$cidade.', '.$rua.' '.$codpost;
+                $model->morada = $morada;
+
+                if($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Inscreveu-se com sucesso.');
+                    return $this->goHome();
+                }else{
+                    Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -80,40 +64,6 @@ class PedidoinscricaoController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Updates an existing PedidoInscricao model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing PedidoInscricao model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

@@ -8,13 +8,14 @@ use Yii;
  * This is the model class for table "pedidoinscricao".
  *
  * @property int $id
- * @property int $nome
- * @property int $email
+ * @property string $nome
+ * @property string $email
  * @property string $telemovel
  * @property string|null $morada
  */
 class Pedidoinscricao extends \yii\db\ActiveRecord
 {
+    public $pais;
     /**
      * {@inheritdoc}
      */
@@ -30,7 +31,7 @@ class Pedidoinscricao extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'email', 'telemovel'], 'required'],
-            [['nome', 'email'], 'integer'],
+            [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['morada'], 'string', 'max' => 200],
         ];

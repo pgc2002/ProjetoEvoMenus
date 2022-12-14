@@ -221,8 +221,8 @@ CREATE TABLE `pedido` (
 DROP TABLE IF EXISTS `pedidoinscricao`;
 CREATE TABLE `pedidoinscricao` (
   `id` int(11) NOT NULL,
-  `nome` int(100) NOT NULL,
-  `email` int(100) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `telemovel` varchar(13) NOT NULL,
   `morada` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -5,9 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var frontend\models\PedidoInscricao $model */
 
-$this->title = 'Create Pedido Inscricao';
-$this->params['breadcrumbs'][] = ['label' => 'Pedido Inscricaos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Criar Pedido de Inscricao';
 ?>
 <div class="pedido-inscricao-create">
 
