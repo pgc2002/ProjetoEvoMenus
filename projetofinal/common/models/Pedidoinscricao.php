@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -30,7 +30,7 @@ class Pedidoinscricao extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'email', 'telemovel'], 'required'],
-            [['nome', 'email'], 'integer'],
+            [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['morada'], 'string', 'max' => 200],
         ];
@@ -45,8 +45,14 @@ class Pedidoinscricao extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'email' => 'Email',
-            'telemovel' => 'Telemovel',
+            'telemovel' => 'Telemóvel',
             'morada' => 'Morada',
+            'moradaFormatada' => 'Morada',
         ];
+    }
+
+    public function getMoradaFormatada(){
+        $arrayMorada= explode("!%$#%&()", $this->morada );
+        return $arrayMorada[0].', '.$arrayMorada[1].', '.$arrayMorada[2].', '.$arrayMorada[3];
     }
 }

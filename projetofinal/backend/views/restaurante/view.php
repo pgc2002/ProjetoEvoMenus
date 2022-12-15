@@ -4,7 +4,9 @@ use common\models\HorarioFuncionamento;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
+use yii\grid\ActionColumn;
 use common\models\Morada;
 
 /** @var yii\web\View $this */
@@ -32,11 +34,9 @@ $this->title = $model->nome;
         $dataProvider = new \yii\data\SqlDataProvider([
             'sql' => 'SELECT segunda, terca, quarta, quinta, sexta, sabado, domingo FROM horario_funcionamento WHERE id=:id',
             'params' => [':id' => $model->idHorario],
-            'pagination' => false,
         ]);
 
         echo '<h3>Horário de funcionamento</h3>';
-
         echo GridView::widget([
             'dataProvider' => $dataProvider,
             'layout' => '{items}{pager}',
@@ -50,6 +50,16 @@ $this->title = $model->nome;
                 'domingo',
             ],
         ]);
+
+        echo Html::a(
+            '<i class="fa fa-times" aria-hidden="true"></i>',
+            Url::to(['..\horariofuncionamento\update', 'id' => $model->idHorario]),
+            [
+                'id'=>'grid-custom-button',
+                'data-pjax'=>true,
+                'class'=>'button btn btn-danger',
+            ]
+        );
     ?>
 
 </div>

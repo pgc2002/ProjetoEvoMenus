@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var frontend\models\PedidoInscricao $model */
+/** @var common\models\HorarioFuncionamento $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Pedido Inscricaos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Horario Funcionamentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="pedido-inscricao-view">
+<div class="horario-funcionamento-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'nome',
-            'email:email',
-            'telemovel',
-            'morada',
+            'segunda',
+            'terca',
+            'quarta',
+            'quinta',
+            'sexta',
+            'sabado',
+            'domingo',
         ],
     ]) ?>
 

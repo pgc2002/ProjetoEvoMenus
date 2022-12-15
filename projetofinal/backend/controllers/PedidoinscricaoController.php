@@ -1,13 +1,11 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
-use common\models\Pedidoinscricao;
+use common\models\PedidoInscricao;
+use backend\models\PedidoInscricaoSearch;
+use common\models\Morada;
 use common\models\Restaurante;
-use app\models\PedidoinscricaoSearch;
-use common\widgets\Alert;
-use Yii;
-use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -42,13 +40,46 @@ class PedidoinscricaoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PedidoinscricaoSearch();
+        $searchModel = new PedidoInscricaoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
+    }
+
+    public function actionAceitar($id)
+    {
+        $pedidoInscricao = $this->findModel($id);
+        $restaurante = new Restaurante();
+        $morada = new Morada();
+
+        $restaurante->nome = $pedidoInscricao->nome;
+        $restaurante->email = $pedidoInscricao->email;
+        $restaurante->telemovel = $pedidoInscricao->telemovel;
+
+        $arrayMorada= explode("!%$#%&()", $pedidoInscricao->morada );
+        $morada->pais = $arrayMorada[0];
+        $morada->cidade = $arrayMorada[1];
+        $morada->rua = $arrayMorada[2];
+        $morada->codpost = $arrayMorada[3];
+        $morada->save(false);
+
+        $restaurante->idMorada = $morada->id;
+        $restaurante->save(false);
+
+        $pedidoInscricao->delete();
+        return $this->redirect('index');
+    }
+
+    public function actionRecusar($id)
+    {
+        $pedidoInscricao = $this->findModel($id);
+        $pedidoInscricao->delete();
+
+        return $this->redirect('index');
     }
 
     /**
@@ -71,43 +102,19 @@ class PedidoinscricaoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Pedidoinscricao();
+        $model = new PedidoInscricao();
 
-        try {
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    if(Restaurante::find()->where(['nome' => $model->nome])->one()){
-                        Yii::$app->session->setFlash('error', 'Já existe um restaurante com este nome!!');
-                        return $this->refresh();
-                    }
-
-                    $pais = mb_convert_case(Yii::$app->request->post('pais'), MB_CASE_TITLE, "UTF-8");
-                    $cidade = Yii::$app->request->post('cidade');
-                    $codpost = Yii::$app->request->post('codpost');
-                    $rua = Yii::$app->request->post('rua');
-                    $morada = $pais . '!%$#%&()' . $cidade . '!%$#%&()' . $rua . '!%$#%&()' . $codpost;
-                    $model->morada = $morada;
-
-                    if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'Inscreveu-se com sucesso.');
-                        return $this->goHome();
-                    } else {
-                        Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
-                    }
-                }
-            } else {
-                $model->loadDefaultValues();
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }catch (\yii\db\Exception $e){
-            Yii::$app->session->setFlash('error', 'Já existe um restaurante com este nome!!');
-            return $this->refresh();
+        } else {
+            $model->loadDefaultValues();
         }
 
-
-
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -148,12 +155,12 @@ class PedidoinscricaoController extends Controller
      * Finds the PedidoInscricao model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Pedidoinscricao the loaded model
+     * @return PedidoInscricao the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Pedidoinscricao::findOne(['id' => $id])) !== null) {
+        if (($model = PedidoInscricao::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

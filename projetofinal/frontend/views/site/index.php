@@ -58,7 +58,7 @@ $this->title = 'Evo Menus';
                         <h2>Queres inscrever o teu restaurante na nossa app??</h2>
 
 
-                        <p><a class="btn btn-outline-secondary" href="pedidoinscricao/index">Inscreve-te aqui!!</a></p>
+                        <p><a class="btn btn-outline-secondary" href="pedidoinscricao/create">Inscreve-te aqui!!</a></p>
                     </div>
             </div>
         </div>

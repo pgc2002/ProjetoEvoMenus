@@ -1,21 +1,17 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
-use common\models\Pedidoinscricao;
 use common\models\Restaurante;
-use app\models\PedidoinscricaoSearch;
-use common\widgets\Alert;
-use Yii;
-use yii\helpers\Html;
+use app\models\RestauranteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PedidoinscricaoController implements the CRUD actions for PedidoInscricao model.
+ * RestauranteController implements the CRUD actions for Restaurante model.
  */
-class PedidoinscricaoController extends Controller
+class RestauranteController extends Controller
 {
     /**
      * @inheritDoc
@@ -36,13 +32,13 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Lists all PedidoInscricao models.
+     * Lists all Restaurante models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new PedidoinscricaoSearch();
+        $searchModel = new RestauranteSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -52,7 +48,7 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Displays a single PedidoInscricao model.
+     * Displays a single Restaurante model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -65,53 +61,29 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Creates a new PedidoInscricao model.
+     * Creates a new Restaurante model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Pedidoinscricao();
+        $model = new Restaurante();
 
-        try {
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    if(Restaurante::find()->where(['nome' => $model->nome])->one()){
-                        Yii::$app->session->setFlash('error', 'Já existe um restaurante com este nome!!');
-                        return $this->refresh();
-                    }
-
-                    $pais = mb_convert_case(Yii::$app->request->post('pais'), MB_CASE_TITLE, "UTF-8");
-                    $cidade = Yii::$app->request->post('cidade');
-                    $codpost = Yii::$app->request->post('codpost');
-                    $rua = Yii::$app->request->post('rua');
-                    $morada = $pais . '!%$#%&()' . $cidade . '!%$#%&()' . $rua . '!%$#%&()' . $codpost;
-                    $model->morada = $morada;
-
-                    if ($model->save()) {
-                        Yii::$app->session->setFlash('success', 'Inscreveu-se com sucesso.');
-                        return $this->goHome();
-                    } else {
-                        Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
-                    }
-                }
-            } else {
-                $model->loadDefaultValues();
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }catch (\yii\db\Exception $e){
-            Yii::$app->session->setFlash('error', 'Já existe um restaurante com este nome!!');
-            return $this->refresh();
+        } else {
+            $model->loadDefaultValues();
         }
 
-
-
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing PedidoInscricao model.
+     * Updates an existing Restaurante model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -131,7 +103,7 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Deletes an existing PedidoInscricao model.
+     * Deletes an existing Restaurante model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -145,15 +117,15 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Finds the PedidoInscricao model based on its primary key value.
+     * Finds the Restaurante model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Pedidoinscricao the loaded model
+     * @return Restaurante the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Pedidoinscricao::findOne(['id' => $id])) !== null) {
+        if (($model = Restaurante::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

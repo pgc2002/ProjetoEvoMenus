@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Pedidoinscricao;
+use common\models\PedidoInscricao;
 
 /**
- * PedidoinscricaoSearch represents the model behind the search form of `frontend\models\PedidoInscricao`.
+ * PedidoInscricaoSearch represents the model behind the search form of `app\models\PedidoInscricao`.
  */
-class PedidoinscricaoSearch extends Pedidoinscricao
+class PedidoInscricaoSearch extends PedidoInscricao
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class PedidoinscricaoSearch extends Pedidoinscricao
      */
     public function search($params)
     {
-        $query = Pedidoinscricao::find();
+        $query = PedidoInscricao::find();
 
         // add conditions that should always apply here
 

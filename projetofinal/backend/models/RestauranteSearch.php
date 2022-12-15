@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Pedidoinscricao;
+use common\models\Restaurante;
 
 /**
- * PedidoinscricaoSearch represents the model behind the search form of `frontend\models\PedidoInscricao`.
+ * RestauranteSearch represents the model behind the search form of `app\models\Restaurante`.
  */
-class PedidoinscricaoSearch extends Pedidoinscricao
+class RestauranteSearch extends Restaurante
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class PedidoinscricaoSearch extends Pedidoinscricao
     public function rules()
     {
         return [
-            [['id', 'nome', 'email'], 'integer'],
-            [['telemovel', 'morada'], 'safe'],
+            [['id', 'lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
+            [['nome', 'email', 'telemovel'], 'safe'],
         ];
     }
 
@@ -40,13 +40,14 @@ class PedidoinscricaoSearch extends Pedidoinscricao
      */
     public function search($params)
     {
-        $query = Pedidoinscricao::find();
+        $query = Restaurante::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
 
         $this->load($params);
 
@@ -59,12 +60,15 @@ class PedidoinscricaoSearch extends Pedidoinscricao
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'nome' => $this->nome,
-            'email' => $this->email,
+            'lotacaoMaxima' => $this->lotacaoMaxima,
+            'idMorada' => $this->idMorada,
+            'idEmenta' => $this->idEmenta,
+            'idHorario' => $this->idHorario,
         ]);
 
-        $query->andFilterWhere(['like', 'telemovel', $this->telemovel])
-            ->andFilterWhere(['like', 'morada', $this->morada]);
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'telemovel', $this->telemovel]);
 
         return $dataProvider;
     }
