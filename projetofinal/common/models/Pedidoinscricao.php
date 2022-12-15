@@ -8,13 +8,14 @@ use Yii;
  * This is the model class for table "pedidoinscricao".
  *
  * @property int $id
- * @property int $nome
- * @property int $email
+ * @property string $nome
+ * @property string $email
  * @property string $telemovel
  * @property string|null $morada
  */
 class Pedidoinscricao extends \yii\db\ActiveRecord
 {
+    public $pais;
     /**
      * {@inheritdoc}
      */

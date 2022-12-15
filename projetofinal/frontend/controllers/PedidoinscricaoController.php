@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Pedidoinscricao;
 use common\models\Restaurante;
 use app\models\PedidoinscricaoSearch;
+
 use common\widgets\Alert;
 use Yii;
 use yii\helpers\Html;
@@ -36,35 +37,6 @@ class PedidoinscricaoController extends Controller
     }
 
     /**
-     * Lists all PedidoInscricao models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $searchModel = new PedidoinscricaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single PedidoInscricao model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new PedidoInscricao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
@@ -72,6 +44,7 @@ class PedidoinscricaoController extends Controller
     public function actionCreate()
     {
         $model = new Pedidoinscricao();
+
 
         try {
             if ($this->request->isPost) {
@@ -93,11 +66,14 @@ class PedidoinscricaoController extends Controller
                         return $this->goHome();
                     } else {
                         Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
+                        return $this->refresh();
                     }
+                }else {
+                    Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
+                    return $this->refresh();
                 }
-            } else {
-                $model->loadDefaultValues();
             }
+
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -105,43 +81,6 @@ class PedidoinscricaoController extends Controller
             Yii::$app->session->setFlash('error', 'Já existe um restaurante com este nome!!');
             return $this->refresh();
         }
-
-
-
-    }
-
-    /**
-     * Updates an existing PedidoInscricao model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing PedidoInscricao model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
