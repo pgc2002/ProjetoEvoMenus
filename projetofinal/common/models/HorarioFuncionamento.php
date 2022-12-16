@@ -65,4 +65,9 @@ class HorarioFuncionamento extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Restaurante::class, ['idHorario' => 'id']);
     }
+
+    public function getHorario(){
+        $dias = array($this->segunda, $this->terca, $this->quarta, $this->quinta, $this->sexta, $this->sabado, $this->domingo);
+        
+    }
 }

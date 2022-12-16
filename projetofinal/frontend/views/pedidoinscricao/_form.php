@@ -53,7 +53,7 @@ use common\models\Pais;
 
     <?= Html::label('Morada', 'rua', ['class' => 'control-label'])?>
     <?= Html::input('text', 'rua', null, ['class' => 'form-control', 'required' => 'true', 'id' =>'rua'])  ?>
-    
+
     <br>
 
     <div class="form-group">

@@ -52,12 +52,12 @@ $this->title = $model->nome;
         ]);
 
         echo Html::a(
-            '<i class="fa fa-times" aria-hidden="true"></i>',
+            'Editar horário',
             Url::to(['..\horariofuncionamento\update', 'id' => $model->idHorario]),
             [
                 'id'=>'grid-custom-button',
                 'data-pjax'=>true,
-                'class'=>'button btn btn-danger',
+                'class'=>'button btn btn-info',
             ]
         );
     ?>
