@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Evo_Menu</string>
+    <string name="UsernameLogin">Username</string>
+    <string name="PasswordLogin">Password</string>
+    <string name="btLogin">Login</string>
+    <string name="btRegistar">Registar</string>
+    <string name="nopen">open</string>
+    <string name="nclose">close</string>
+    <string name="textErrorMail">Username errado</string>
+    <string name="textErrorPass">Password errada</string>
+    <string name="btCancelarRegisto">Cancelar Registo</string>
+    <string name="etRegistarNif">NIF</string>
+    <string name="etRegistarTelemovel">Telemovel</string>
+    <string name="etRegistarEmail">Email</string>
+    <string name="etRegistarPass">Password</string>
+    <string name="etRegistarUsername">Username</string>
+    <string name="btEditarPerfil">Concluir edição</string>
+    <string name="Nif">NIF</string>
+    <string name="Telemovel">Telemovel</string>
+    <string name="remover" />
+</resources>

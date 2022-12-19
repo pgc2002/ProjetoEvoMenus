@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="btCancelarRegisto" type="id"></item>
+    <item name="btRegistarNovo" type="id"></item>
+    <item name="etRegistarNif" type="id"></item>
+    <item name="etRegistarTelemovel" type="id"></item>
+    <item name="etRegistarEmail" type="id"></item>
+    <item name="etRegistarPassword" type="id" />
+    <item name="etRegistarUsername" type="id" />
+    <item name="imageView" type="id" />
+    <item name="btEditarPerfil" type="id" />
+    <item name="tvNif" type="id" />
+    <item name="textView" type="id" />
+    <item name="tvTelemovel" type="id" />
+    <item name="item_remover_favoritos" type="id" />
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navEditarPerfil"
+            android:title="Editar Perfil">
+
+        </item>
+        <item
+            android:id="@+id/navFavoritos"
+            android:title="Favoritos">
+
+
+        </item>
+        <item
+            android:id="@+id/navRestaurantes"
+            android:title="Restaurantes">
+
+        </item>
+
+    </group>
+
+
+
+</menu>
