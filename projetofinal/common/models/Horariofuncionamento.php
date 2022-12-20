@@ -18,7 +18,7 @@ use Yii;
  *
  * @property Restaurante[] $restaurantes
  */
-class HorarioFuncionamento extends \yii\db\ActiveRecord
+class Horariofuncionamento extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

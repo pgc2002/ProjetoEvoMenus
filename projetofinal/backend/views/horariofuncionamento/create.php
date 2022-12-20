@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\HorarioFuncionamento $model */
+/** @var common\models\Horariofuncionamento $model */
 
 $this->title = 'Create Horario Funcionamento';
 $this->params['breadcrumbs'][] = ['label' => 'Horario Funcionamentos', 'url' => ['index']];

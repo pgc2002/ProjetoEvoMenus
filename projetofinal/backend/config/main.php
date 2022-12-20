@@ -11,10 +11,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => ['api' => ['class' => 'backend\modules\api\ModuleAPI',],],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => ['application/json' => 'yii\web\JsonParser',],
+
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -42,9 +44,33 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/user',
+                    'extraPatterns' => [
+                        'GET username' => 'username',
+                        'GET password' => 'password',
+                        'GET email' => 'email',
+                        'GET creationDate' => 'creationdate',
+                        'GET telemovel' => 'telemovel',
+                        'GET nif' => 'nif', ],],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/categoria'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/ementa'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/item'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/itemspedido'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/menu'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/menuspedido'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/mesa'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/morada'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/pagamento'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/pais'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/pedidoinscricao'],
+                ['class' => 'yii\rest\UrlRule','controller' => 'api/restaurante'],
             ],
         ],
-        
-    ],
+
+
+],
     'params' => $params,
 ];

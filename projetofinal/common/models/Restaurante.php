@@ -18,7 +18,7 @@ use Yii;
  *
  * @property Gestor[] $gestor
  * @property Ementa $ementa
- * @property HorarioFuncionamento $horario
+ * @property Horariofuncionamento $horario
  * @property Morada $morada
  * @property Mesa[] $mesas
  * @property Trabalhador[] $trabalhadores
@@ -44,7 +44,7 @@ class Restaurante extends \yii\db\ActiveRecord
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
-            [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
+            [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => Horariofuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
             [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
     }
@@ -95,7 +95,7 @@ class Restaurante extends \yii\db\ActiveRecord
      */
     public function getHorario()
     {
-        return $this->hasOne(HorarioFuncionamento::class, ['id' => 'idHorario']);
+        return $this->hasOne(Horariofuncionamento::class, ['id' => 'idHorario']);
     }
 
     /**

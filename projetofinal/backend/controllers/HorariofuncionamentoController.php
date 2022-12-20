@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use yii;
-use common\models\HorarioFuncionamento;
+use common\models\Horariofuncionamento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -41,7 +41,7 @@ class HorariofuncionamentoController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => HorarioFuncionamento::find(),
+            'query' => Horariofuncionamento::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -79,7 +79,7 @@ class HorariofuncionamentoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new HorarioFuncionamento();
+        $model = new Horariofuncionamento();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -177,12 +177,12 @@ class HorariofuncionamentoController extends Controller
      * Finds the HorarioFuncionamento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return HorarioFuncionamento the loaded model
+     * @return Horariofuncionamento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HorarioFuncionamento::findOne(['id' => $id])) !== null) {
+        if (($model = Horariofuncionamento::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\HorarioFuncionamento;
+use common\models\Horariofuncionamento;
 use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
