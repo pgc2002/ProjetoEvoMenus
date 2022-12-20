@@ -25,15 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'segunda',
             'terca',
             'quarta',
             'quinta',
-            //'sexta',
-            //'sabado',
-            //'domingo',
+            'sexta',
+            'sabado',
+            'domingo',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, HorarioFuncionamento $model, $key, $index, $column) {

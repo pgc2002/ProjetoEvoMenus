@@ -64,7 +64,6 @@ class Restaurante extends \yii\db\ActiveRecord
             'idEmenta' => 'Id Ementa',
             'idHorario' => 'Id Horario',
             'moradaFormatada' => 'Morada',
-            'diasSemana' => 'Horário de funcionamento'
         ];
     }
 
@@ -130,10 +129,5 @@ class Restaurante extends \yii\db\ActiveRecord
 
     public function getMoradaFormatada(){
         return $this->morada ? $this->morada->pais.', '. $this->morada->cidade .', '. $this->morada->rua. ', '.$this->morada->codpost : 'Sem morada';
-    }
-
-    public function getDiasSemana(){
-        //$horario= HorarioFuncionamento::findOne($this->idHorario);
-        return ("Segunda a Domingo");
     }
 }
