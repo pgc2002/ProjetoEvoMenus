@@ -49,8 +49,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        carregarLivrosFicheiro();
-
         carregarCabecalho();
 
         carregarFragmentoInicial();
@@ -59,7 +57,8 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     private void carregarFragmentoInicial()
     {
-
+        Fragment fragment = new PaginaInicialFragment();
+        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     private void carregarCabecalho()
@@ -83,10 +82,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         TextView tvMail = headerView.findViewById(R.id.tvHeaderMail);
         tvMail.setText(email);
     }
-
-    private void carregarLivrosFicheiro() {
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)

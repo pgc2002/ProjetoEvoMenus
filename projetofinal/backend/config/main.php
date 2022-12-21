@@ -46,6 +46,7 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/user',
                     'extraPatterns' => [
+                        'GET count' => 'count',
                         'GET username' => 'username',
                         'GET password' => 'password',
                         'GET email' => 'email',

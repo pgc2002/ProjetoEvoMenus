@@ -2,8 +2,10 @@
 
 namespace backend\modules\api\controllers;
 
+use yii\filters\ContentNegotiator;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use common\models\User;
 
 /**
  * Default controller for the `api` module
@@ -12,10 +14,14 @@ class UserController extends ActiveController
 {
     public $modelClass = 'common\models\User';
 
+    public function actionCount(){
+        $recs = User::find()->all();
+        return count($recs);
+    }
+
     public function actionUsername()
     {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['username'])->all();
+        $recs = User::find()->select(['username'])->all();
         return $recs;
     }
     public function actionPassword()
@@ -24,14 +30,14 @@ class UserController extends ActiveController
         $recs = $Usermodel::find()->select(['password'])->all();
         return $recs;
     }
-    public function actionemail()
+    public function actionEmail()
     {
         $Usermodel = new $this->modelClass;
         $recs = $Usermodel::find()->select(['email'])->all();
         return $recs;
     }
 
-    public function actioncreationdate()
+    public function actionCreationdate()
     {
         $Usermodel = new $this->modelClass;
         $recs = $Usermodel::find()->select(['creationdate'])->all();
@@ -45,27 +51,23 @@ class UserController extends ActiveController
         return $recs;
     }
 
-    public function actionnif()
+    public function actionNif()
     {
         $Usermodel = new $this->modelClass;
         $recs = $Usermodel::find()->select(['nif'])->all();
         return $recs;
     }
 
-
-
-
-
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
-                'class' => \yii\ filters\ ContentNegotiator::className(),
+                'class' => ContentNegotiator::className(),
                 'only' => ['index', 'view'],
                 'formats' => [
-                    'application/json' => \yii\ web\ Response::FORMAT_JSON,
+                    'application/json' => Response::FORMAT_JSON,
                 ],
             ],
         ];
-    }
+    }*/
 
 }

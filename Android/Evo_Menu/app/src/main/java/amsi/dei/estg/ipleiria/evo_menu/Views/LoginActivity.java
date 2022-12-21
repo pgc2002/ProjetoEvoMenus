@@ -73,8 +73,6 @@ public class LoginActivity extends AppCompatActivity
         if(pass == null)
             return false;
         return pass.length() >=4;
-
-
     }
 
     private boolean isMailValido(String mail) {
