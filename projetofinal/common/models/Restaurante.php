@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\Mesa;
+
 
 /**
  * This is the model class for table "restaurante".
@@ -64,6 +66,7 @@ class Restaurante extends \yii\db\ActiveRecord
             'idEmenta' => 'Id Ementa',
             'idHorario' => 'Id Horario',
             'moradaFormatada' => 'Morada',
+            'NumeroMesas' => 'Número de mesas',
         ];
     }
 
@@ -112,9 +115,16 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMesas()
+    /*public function getMesas()
     {
-        return $this->hasMany(Mesa::class, ['idRestaurante' => 'id']);
+        return $this->hasMany(Mesa::class, ['id' => 'idMesa']);
+    }*/
+
+    public function getNumeroMesas()
+    {
+        $mesas = Mesa::findAll(['idRestaurante' => $this->id]);
+        return count($mesas);
+
     }
 
     /**

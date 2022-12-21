@@ -72,4 +72,10 @@ class Mesa extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::class, ['idMesa' => 'id']);
     }
+    public function getMesas()
+    {
+        return $this->hasMany(Mesa::class, ['id' => 'idMesa']);
+    }
+
+
 }

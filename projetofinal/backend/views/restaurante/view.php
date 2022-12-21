@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Horariofuncionamento;
+use common\models\Mesa;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
@@ -28,8 +29,23 @@ $this->title = $model->nome;
                 'email',
                 'telemovel',
                 'moradaFormatada',
+                'NumeroMesas',
             ],
         ]);
+        echo Html::a(
+            'Editar Mesas',
+            Url::to(['..\mesa\index', 'idRestaurante' => $model->id]),
+            [
+                'id'=>'grid-custom-button',
+                'data-pjax'=>true,
+                'class'=>'button btn btn-info',
+            ]
+        );
+
+
+
+
+
 
         $horario = HorarioFuncionamento::findOne($model->idHorario);
         $horario = $horario->getHorario();
