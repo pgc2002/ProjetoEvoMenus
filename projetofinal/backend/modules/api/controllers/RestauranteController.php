@@ -13,7 +13,7 @@ class RestauranteController extends ActiveController
 {
     public $modelClass = 'common\models\Restaurante';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class RestauranteController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

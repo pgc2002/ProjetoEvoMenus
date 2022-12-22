@@ -13,7 +13,7 @@ class PaisController extends ActiveController
 {
     public $modelClass = 'common\models\Pais';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class PaisController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

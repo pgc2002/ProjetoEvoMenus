@@ -13,7 +13,7 @@ class CategoriaController extends ActiveController
 {
     public $modelClass = 'common\models\Categoria';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class CategoriaController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

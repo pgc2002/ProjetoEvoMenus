@@ -13,7 +13,7 @@ class HorariofuncionamentoController extends ActiveController
 {
     public $modelClass = 'common\models\Horariofuncionamento';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class HorariofuncionamentoController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

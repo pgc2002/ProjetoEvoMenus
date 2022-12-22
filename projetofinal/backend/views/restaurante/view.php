@@ -42,11 +42,6 @@ $this->title = $model->nome;
             ]
         );
 
-
-
-
-
-
         $horario = HorarioFuncionamento::findOne($model->idHorario);
         $horario = $horario->getHorario();
 

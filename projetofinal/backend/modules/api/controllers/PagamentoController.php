@@ -13,7 +13,7 @@ class PagamentoController extends ActiveController
 {
     public $modelClass = 'common\models\Pagamento';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class PagamentoController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

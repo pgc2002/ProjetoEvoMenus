@@ -13,7 +13,7 @@ class ItemController extends ActiveController
 {
     public $modelClass = 'common\models\Item';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class ItemController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

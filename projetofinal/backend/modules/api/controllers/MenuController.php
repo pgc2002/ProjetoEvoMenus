@@ -13,7 +13,7 @@ class MenuController extends ActiveController
 {
     public $modelClass = 'common\models\Menu';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class MenuController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

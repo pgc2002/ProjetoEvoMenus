@@ -13,7 +13,7 @@ class PedidoinscricaoController extends ActiveController
 {
     public $modelClass = 'common\models\Pedidoinscricao';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class PedidoinscricaoController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

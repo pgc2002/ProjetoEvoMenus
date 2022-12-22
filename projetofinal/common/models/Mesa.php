@@ -50,6 +50,7 @@ class Mesa extends \yii\db\ActiveRecord
             'capacidade' => 'Capacidade',
             'estado' => 'Estado',
             'idRestaurante' => 'Id Restaurante',
+            'nomeRestaurante' => 'Restaurante',
         ];
     }
 
@@ -77,5 +78,8 @@ class Mesa extends \yii\db\ActiveRecord
         return $this->hasMany(Mesa::class, ['id' => 'idMesa']);
     }
 
-
+    public function getNomeRestaurante(){
+        $restaurante = Restaurante::findOne($this->idRestaurante);
+        return $restaurante->nome;
+    }
 }

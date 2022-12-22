@@ -12,8 +12,11 @@ use yii\grid\GridView;
 /** @var backend\models\MesaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+if(isset($_GET['idRestaurante'])){
+    $this->title = Restaurante::findOne($_GET['idRestaurante'])->nome.' - Mesas';
+}
+else
 $this->title = 'Mesas';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mesa-index">
 
@@ -21,48 +24,67 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php
-        /*if(isset $_GET['idRestaurante'])*/
-
-        Html::a('Create Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']) ?>
+        if(isset($_GET['idRestaurante'])){
+            echo Html::a(
+            'Voltar para restaurante',
+            Url::to(['..\restaurante\view', 'id' => $_GET['idRestaurante']]),
+            [
+                'class'=>'btn btn-secondary',
+            ]);
+            echo Html::a('Create Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']);
+        }
+        else
+            echo Html::a('Create Mesa', ['create'], ['class' => 'btn btn-success']);
+        ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php
-
     if(isset( $_GET['idRestaurante']))
     {
     $mesas = Mesa::findAll(["idRestaurante" => $_GET['idRestaurante']]);
 
     $dataProvider = new ArrayDataProvider([
         'allModels' => $mesas,]);
-    }
 
-    ?>
-
-
-    <?= GridView::widget([
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'numero',
             'capacidade',
             'estado',
-
             [
                 'class' => ActionColumn::className(),
-
                 'urlCreator' => function ($action, Mesa $mesas, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $mesas->id, 'idRestaurante' => $mesas->idRestaurante]);
-                 }
-
+                    //if ($action == "delete")
+                        return Url::toRoute([$action, 'id' => $mesas->id, 'idRestaurante' => $mesas->idRestaurante]);
+                    //else
+                    //    return Url::toRoute([$action, 'id' => $mesas->id]);
+                }
             ],
         ],
-    ]); ?>
-
-
-
-
+    ]);
+    }else{
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'nomeRestaurante',
+                'numero',
+                'capacidade',
+                'estado',
+                [
+                    'class' => ActionColumn::className(),
+                    'urlCreator' => function ($action, Mesa $mesas, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $mesas->id]);
+                    }
+                ],
+            ],
+        ]);
+    }
+    ?>
 </div>

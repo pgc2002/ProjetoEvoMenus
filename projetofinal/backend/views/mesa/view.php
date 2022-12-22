@@ -6,9 +6,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Mesa $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Mesas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = $model->getNomeRestaurante().' - Mesa '.$model->numero;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="mesa-view">
@@ -16,6 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?php
+            if(isset($_GET['idRestaurante']))
+                echo Html::a('Voltar para mesas', ['index', 'idRestaurante' => $model->idRestaurante], ['class' => 'btn btn-secondary']);
+            else
+                echo Html::a('Voltar para mesas', ['index'], ['class' => 'btn btn-secondary']);
+        ?>
         <?= Html::a('Update', ['update', 'id' => $model->id, 'idRestaurante' => $model->idRestaurante], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id, 'idRestaurante' => $model->idRestaurante], [
             'class' => 'btn btn-danger',
@@ -29,11 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'numero',
             'capacidade',
             'estado',
-            'idRestaurante',
         ],
     ]) ?>
 

@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Restaurante;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,21 +15,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'numero')->textInput() ?>
+    <?php
+        if(isset($_GET['idRestaurante'])) {
+            echo Html::a('Voltar para mesas', ['index', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-secondary']);
+            echo $form->field($model, 'idRestaurante')->hiddenInput(['value' => $_GET['idRestaurante']])->label(false);
+        }
+        else{
+            echo Html::a('Voltar para mesas', ['index'], ['class' => 'btn btn-secondary']);
+            $items = ArrayHelper::map(Restaurante::find()->all(), 'id', 'nome');
+            echo $form->field($model, 'idRestaurante')->dropDownList($items)->label("Restaurante");
+        }
+    ?>
 
     <?= $form->field($model, 'capacidade')->textInput() ?>
 
     <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
-
-    <?php if(isset($_GET['idRestaurante'])) {
-
-        $form->field($model, 'idRestaurante')->hiddenInput(['value' => $_GET['idRestaurante']])->label(false);
-    }
-    else{
-        $form->field($model, 'idRestaurante')->textInput();
-    }?>
-
-
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

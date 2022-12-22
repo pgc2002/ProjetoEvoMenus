@@ -13,7 +13,7 @@ class MesaController extends ActiveController
 {
     public $modelClass = 'common\models\Mesa';
 
-    public function behaviors() {
+    /*public function behaviors() {
         return [
             [
                 'class' => ContentNegotiator::className(),
@@ -23,5 +23,5 @@ class MesaController extends ActiveController
                 ],
             ],
         ];
-    }
+    }*/
 }

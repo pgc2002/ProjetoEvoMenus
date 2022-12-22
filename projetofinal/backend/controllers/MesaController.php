@@ -70,7 +70,9 @@ class MesaController extends Controller
         $model = new Mesa();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->numero = \common\models\Restaurante::findOne($model->idRestaurante)->getNumeroMesas() + 1;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,7 +96,7 @@ class MesaController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'idRestaurante' => $_GET['idRestaurante']]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -111,10 +113,14 @@ class MesaController extends Controller
      */
     public function actionDelete($id)
     {
-
+        $idRestaurante = $this->findModel($id)->idRestaurante;
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index?idRestaurante='.$_GET['idRestaurante']]);
+        if(isset($_GET['idRestaurante'])) {
+            return $this->redirect(['index', 'idRestaurante' => $idRestaurante]);
+        }else{
+            return $this->redirect(['index']);
+        }
     }
 
     /**

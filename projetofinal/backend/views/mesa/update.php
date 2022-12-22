@@ -5,10 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Mesa $model */
 
-$this->title = 'Update Mesa: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Mesas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Alterar Mesa ' . $model->numero . ' de ' . \common\models\Restaurante::findOne($model->idRestaurante)->nome;
 ?>
 <div class="mesa-update">
 
