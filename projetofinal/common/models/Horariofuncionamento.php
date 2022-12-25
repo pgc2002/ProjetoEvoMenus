@@ -57,13 +57,13 @@ class Horariofuncionamento extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Restaurantes]].
+     * Gets query for [[RestauranteId]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
-    public function getRestaurantes()
+    public function getRestauranteId()
     {
-        return $this->hasMany(Restaurante::class, ['idHorario' => 'id']);
+        return Restaurante::findOne(["idHorario" => $this->id])->id;
     }
 
     public function getHorario(){

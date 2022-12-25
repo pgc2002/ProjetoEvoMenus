@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\PedidoInscricaoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Pedidos Inscrição';
+$this->title = 'Pedido Inscrição';
 ?>
 <div class="pedido-inscricao-index">
 

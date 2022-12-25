@@ -14,10 +14,12 @@ use common\models\Morada;
 /** @var yii\web\View $this */
 /** @var common\models\Restaurante $model */
 
-$this->title = $model->nome;
+$this->title = $model->nome." - Detalhes";
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="restaurante-view">
+
+    <h1>Detalhes</h1>
 
     <?php
 
@@ -86,7 +88,7 @@ $this->title = $model->nome;
             'sql' => 'SELECT segunda, terca, quarta, quinta, sexta, sabado, domingo FROM horario_funcionamento WHERE id=:id',
             'params' => [':id' => $model->idHorario],
         ]);*/
-
+        echo "<br><br>";
         echo '<h3>Horário de funcionamento</h3>';
         echo GridView::widget([
             'dataProvider' => $dataProvider,

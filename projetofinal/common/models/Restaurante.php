@@ -124,7 +124,6 @@ class Restaurante extends \yii\db\ActiveRecord
     {
         $mesas = Mesa::findAll(['idRestaurante' => $this->id]);
         return count($mesas);
-
     }
 
     /**

@@ -11,22 +11,18 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Users';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
-
-    <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
-
-</div>
+    <p><?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?></p>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'layout' => '{items}{pager}',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',

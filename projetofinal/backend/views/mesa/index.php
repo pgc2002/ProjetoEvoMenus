@@ -31,7 +31,7 @@ $this->title = 'Mesas';
             [
                 'class'=>'btn btn-secondary',
             ]);
-            echo Html::a('Create Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']);
+            echo " ".Html::a('Create Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']);
         }
         else
             echo Html::a('Create Mesa', ['create'], ['class' => 'btn btn-success']);
@@ -51,6 +51,7 @@ $this->title = 'Mesas';
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'layout' => '{items}{pager}',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'numero',
@@ -71,6 +72,7 @@ $this->title = 'Mesas';
         echo GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'layout' => '{items}{pager}',
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'nomeRestaurante',

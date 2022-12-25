@@ -1,7 +1,7 @@
 <?php
 
 namespace common\models;
-
+use common\models\User;
 use Yii;
 
 /**
@@ -51,6 +51,7 @@ class Pedido extends \yii\db\ActiveRecord
             'valorTotal' => 'Valor Total',
             'estado' => 'Estado',
             'idCliente' => 'Id Cliente',
+            'nomeCliente' => 'Cliente',
         ];
     }
 
@@ -92,5 +93,10 @@ class Pedido extends \yii\db\ActiveRecord
     public function getPagamentos()
     {
         return $this->hasMany(Pagamento::class, ['idPedido' => 'id']);
+    }
+
+    public function getNomeCliente()
+    {
+        return User::findOne($this->idCliente)->nome;
     }
 }

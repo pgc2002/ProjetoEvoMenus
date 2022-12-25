@@ -2,6 +2,7 @@
 
 use kartik\time\TimePicker;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -100,6 +101,12 @@ use yii\widgets\ActiveForm;
         }
     ?>
     <h4>Segunda-feira</h4>
+    <?= Html::a(
+    'Voltar para restaurante',
+    Url::to(['..\restaurante\view', 'id' => $model->getRestauranteId()]),
+    [
+    'class'=>'btn btn-secondary',
+    ]); ?>
     <div class="row" id="segunda">
         <div class="column">
             <?= Html::label('Início Almoço', 'segunda_almoco_inicio')?>
