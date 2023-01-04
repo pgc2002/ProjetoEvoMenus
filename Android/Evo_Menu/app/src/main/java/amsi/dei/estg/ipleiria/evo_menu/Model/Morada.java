@@ -6,7 +6,6 @@ public class Morada implements Serializable {
     private int id;
     private String pais, cidade, rua, codpost;
 
-
     public Morada(int id, String pais, String cidade, String rua, String codpost) {
         this.id = id;
         this.pais = pais;

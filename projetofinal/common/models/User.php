@@ -33,7 +33,7 @@ use yii\web\IdentityInterface;
  * @property Mesa $idMesa0
  * @property Morada $idMorada0
  * @property Restaurante $idRestaurante0
- * @property Pedido[] $pedidos
+ * @property Pedido[] $pedido
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -147,7 +147,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Gets query for [[Pedidos]].
+     * Gets query for [[Pedido]].
      *
      * @return \yii\db\ActiveQuery
      */

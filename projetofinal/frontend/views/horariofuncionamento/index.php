@@ -1,6 +1,6 @@
 <?php
 
-use common\models\HorarioFuncionamento;
+use common\models\Horariofuncionamento;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'domingo',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, HorarioFuncionamento $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Horariofuncionamento $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

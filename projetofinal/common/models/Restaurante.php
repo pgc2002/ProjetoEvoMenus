@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\Mesa;
+
 
 /**
  * This is the model class for table "restaurante".
@@ -18,6 +20,7 @@ use Yii;
  *
  * @property Gestor[] $gestor
  * @property HorarioFuncionamento $horario
+ * @property Ementa $ementa
  * @property Morada $morada
  * @property Mesa[] $mesas
  * @property Trabalhador[] $trabalhadores
@@ -43,6 +46,7 @@ class Restaurante extends \yii\db\ActiveRecord
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
+            [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
             [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
     }
@@ -61,7 +65,7 @@ class Restaurante extends \yii\db\ActiveRecord
             'idMorada' => 'Id Morada',
             'idHorario' => 'Id Horario',
             'moradaFormatada' => 'Morada',
-            'diasSemana' => 'Horário de funcionamento'
+            'NumeroMesas' => 'Número de mesas',
         ];
     }
 
@@ -82,7 +86,7 @@ class Restaurante extends \yii\db\ActiveRecord
      */
     public function getHorario()
     {
-        return $this->hasOne(HorarioFuncionamento::class, ['id' => 'idHorario']);
+        return $this->hasOne(Horariofuncionamento::class, ['id' => 'idHorario']);
     }
 
     /**
@@ -100,9 +104,15 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMesas()
+    /*public function getMesas()
     {
-        return $this->hasMany(Mesa::class, ['idRestaurante' => 'id']);
+        return $this->hasMany(Mesa::class, ['id' => 'idMesa']);
+    }*/
+
+    public function getNumeroMesas()
+    {
+        $mesas = Mesa::findAll(['idRestaurante' => $this->id]);
+        return count($mesas);
     }
 
     /**
@@ -117,10 +127,5 @@ class Restaurante extends \yii\db\ActiveRecord
 
     public function getMoradaFormatada(){
         return $this->morada ? $this->morada->pais.', '. $this->morada->cidade .', '. $this->morada->rua. ', '.$this->morada->codpost : 'Sem morada';
-    }
-
-    public function getDiasSemana(){
-        //$horario= HorarioFuncionamento::findOne($this->idHorario);
-        return ("Segunda a Domingo");
     }
 }

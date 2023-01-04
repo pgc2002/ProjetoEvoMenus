@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -51,6 +52,7 @@ class Pedido extends \yii\db\ActiveRecord
             'valorTotal' => 'Valor Total',
             'estado' => 'Estado',
             'idCliente' => 'Id Cliente',
+            'nomeCliente' => 'Cliente',
         ];
     }
 
@@ -73,6 +75,10 @@ class Pedido extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Item::class, ['id' => 'idItem'])->viaTable('items_pedido', ['idPedido' => 'id']);
     }
+    public function getItemsPedidos()
+    {
+        return $this->hasMany(ItemsPedido::class, ['idPedido' => 'id']);
+    }
 
     /**
      * Gets query for [[MenusPedidos]].
@@ -84,6 +90,11 @@ class Pedido extends \yii\db\ActiveRecord
         return $this->hasMany(Menu::class, ['id' => 'idMenu'])->viaTable('menus_pedido', ['idPedido' => 'id']);
     }
 
+    public function getMenusPedidos()
+    {
+        return $this->hasMany(MenusPedido::class, ['idPedido' => 'id']);
+    }
+
     /**
      * Gets query for [[Pagamentos]].
      *
@@ -92,5 +103,10 @@ class Pedido extends \yii\db\ActiveRecord
     public function getPagamentos()
     {
         return $this->hasMany(Pagamento::class, ['idPedido' => 'id']);
+    }
+
+    public function getNomeCliente()
+    {
+        return User::findOne($this->idCliente)->nome;
     }
 }

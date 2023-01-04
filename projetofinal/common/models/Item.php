@@ -62,7 +62,6 @@ class Item extends \yii\db\ActiveRecord
         return $this->preco . ' €';
     }
 
-
     /**
      * Gets query for [[IdCategoria0]].
      *
@@ -77,6 +76,7 @@ class Item extends \yii\db\ActiveRecord
      * Gets query for [[ItemsMenus]].
      *
      * @return \yii\db\ActiveQuery
+<<<<<<< HEAD
      * 
      * public function getItemsMenus()
      * {
@@ -89,6 +89,10 @@ class Item extends \yii\db\ActiveRecord
     public function getMenus()
     {
         return $this->hasMany(Menu::class, ['id' => 'idMenu'])->viaTable('items_menu', ['idItem' => 'id']);
+    }
+    public function getItemsMenus()
+    {
+        return $this->hasMany(ItemsMenu::class, ['idItem' => 'id']);
     }
 
     /**
@@ -107,4 +111,8 @@ class Item extends \yii\db\ActiveRecord
         return $this->hasMany(Pedido::class, ['id' => 'idPedido'])->viaTable('items_pedido', ['idItem' => 'id']);
     }
 
+    public function getItemsPedidos()
+    {
+        return $this->hasMany(ItemsPedido::class, ['idItem' => 'id']);
+    }
 }

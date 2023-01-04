@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use yii;
-use common\models\HorarioFuncionamento;
+use common\models\Horariofuncionamento;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -41,7 +41,7 @@ class HorariofuncionamentoController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => HorarioFuncionamento::find(),
+            'query' => Horariofuncionamento::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -79,7 +79,7 @@ class HorariofuncionamentoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new HorarioFuncionamento();
+        $model = new Horariofuncionamento();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -109,43 +109,43 @@ class HorariofuncionamentoController extends Controller
 
             if (!Yii::$app->request->post('segunda_folga'))
                 $model->segunda = Yii::$app->request->post('segunda_almoco_inicio'). '-' .Yii::$app->request->post('segunda_almoco_fim').
-                ' | ' .Yii::$app->request->post('segunda_jantar_inicio'). '-' .Yii::$app->request->post('segunda_jantar_fim');
+                '-' .Yii::$app->request->post('segunda_jantar_inicio'). '-' .Yii::$app->request->post('segunda_jantar_fim');
             else
                 $model->segunda = 'Folga';
 
             if (!Yii::$app->request->post('terca_folga'))
             $model->terca = Yii::$app->request->post('terca_almoco_inicio'). '-' .Yii::$app->request->post('terca_almoco_fim').
-                ' | ' .Yii::$app->request->post('terca_jantar_inicio'). '-' .Yii::$app->request->post('terca_jantar_fim');
+                '-' .Yii::$app->request->post('terca_jantar_inicio'). '-' .Yii::$app->request->post('terca_jantar_fim');
             else
                 $model->terca = 'Folga';
 
             if (!Yii::$app->request->post('quarta_folga'))
             $model->quarta = Yii::$app->request->post('quarta_almoco_inicio'). '-' .Yii::$app->request->post('quarta_almoco_fim').
-                ' | ' .Yii::$app->request->post('quarta_jantar_inicio'). '-' .Yii::$app->request->post('quarta_jantar_fim');
+                '-' .Yii::$app->request->post('quarta_jantar_inicio'). '-' .Yii::$app->request->post('quarta_jantar_fim');
             else
                 $model->quarta = 'Folga';
 
             if (!Yii::$app->request->post('quinta_folga'))
             $model->quinta = Yii::$app->request->post('quinta_almoco_inicio'). '-' .Yii::$app->request->post('quinta_almoco_fim').
-                ' | ' .Yii::$app->request->post('quinta_jantar_inicio'). '-' .Yii::$app->request->post('quinta_jantar_fim');
+                '-' .Yii::$app->request->post('quinta_jantar_inicio'). '-' .Yii::$app->request->post('quinta_jantar_fim');
             else
                 $model->quinta = 'Folga';
 
             if (!Yii::$app->request->post('sexta_folga'))
             $model->sexta = Yii::$app->request->post('sexta_almoco_inicio'). '-' .Yii::$app->request->post('sexta_almoco_fim').
-                ' | ' .Yii::$app->request->post('sexta_jantar_inicio'). '-' .Yii::$app->request->post('sexta_jantar_fim');
+                '-' .Yii::$app->request->post('sexta_jantar_inicio'). '-' .Yii::$app->request->post('sexta_jantar_fim');
             else
                 $model->sexta = 'Folga';
 
             if (!Yii::$app->request->post('sabado_folga'))
             $model->sabado = Yii::$app->request->post('sabado_almoco_inicio'). '-' .Yii::$app->request->post('sabado_almoco_fim').
-                ' | ' .Yii::$app->request->post('sabado_jantar_inicio'). '-' .Yii::$app->request->post('sabado_jantar_fim');
+                '-' .Yii::$app->request->post('sabado_jantar_inicio'). '-' .Yii::$app->request->post('sabado_jantar_fim');
             else
                 $model->sabado = 'Folga';
 
             if (!Yii::$app->request->post('domingo_folga'))
             $model->domingo = Yii::$app->request->post('domingo_almoco_inicio'). '-' .Yii::$app->request->post('domingo_almoco_fim').
-                ' | ' .Yii::$app->request->post('domingo_jantar_inicio'). '-' .Yii::$app->request->post('domingo_jantar_fim');
+                '-' .Yii::$app->request->post('domingo_jantar_inicio'). '-' .Yii::$app->request->post('domingo_jantar_fim');
             else
                 $model->domingo = 'Folga';
 
@@ -177,12 +177,12 @@ class HorariofuncionamentoController extends Controller
      * Finds the HorarioFuncionamento model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return HorarioFuncionamento the loaded model
+     * @return Horariofuncionamento the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = HorarioFuncionamento::findOne(['id' => $id])) !== null) {
+        if (($model = Horariofuncionamento::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

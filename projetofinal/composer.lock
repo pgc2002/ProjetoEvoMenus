@@ -3651,6 +3651,7 @@
             "time": "2020-11-16T17:02:08+00:00"
         },
         {
+
             "name": "symfony/polyfill-ctype",
             "version": "v1.19.0",
             "source": {
@@ -3662,6 +3663,17 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/aed596913b70fae57be53d86faa2e9ef85a2297b",
                 "reference": "aed596913b70fae57be53d86faa2e9ef85a2297b",
+            "name": "symfony/service-contracts",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/service-contracts.git",
+                "reference": "aac98028c69df04ee77eb69b96b86ee51fbf4b75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/aac98028c69df04ee77eb69b96b86ee51fbf4b75",
+                "reference": "aac98028c69df04ee77eb69b96b86ee51fbf4b75",
                 "shasum": ""
             },
             "require": {
@@ -3673,7 +3685,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.19-dev"
+                    "dev-main": "1.19-dev",
+                    "dev-main": "3.3-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -3711,7 +3724,8 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.19.0",
+                "source": "https://github.com/symfony/service-contracts/tree/v3.2.0"
             },
             "funding": [
                 {
@@ -3728,7 +3742,7 @@
                 }
             ],
             "time": "2020-10-23T09:01:57+00:00"
-        },
+        } },
         {
             "name": "symfony/polyfill-mbstring",
             "version": "v1.19.0",
@@ -3741,6 +3755,21 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/b5f7b932ee6fa802fc792eabd77c4c88084517ce",
                 "reference": "b5f7b932ee6fa802fc792eabd77c4c88084517ce",
+                "time": "2022-11-25T10:21:52+00:00"
+            }},
+
+        {
+            "name": "symfony/string",
+            "version": "v6.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/string.git",
+                "reference": "863219fd713fa41cbcd285a79723f94672faff4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/string/zipball/863219fd713fa41cbcd285a79723f94672faff4d",
+                "reference": "863219fd713fa41cbcd285a79723f94672faff4d",
                 "shasum": ""
             },
             "require": {
@@ -3791,7 +3820,9 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.19.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.19.0",
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.19.0",
+                "source": "https://github.com/symfony/string/tree/v6.2.2"
             },
             "funding": [
                 {
@@ -3807,7 +3838,9 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-23T09:01:57+00:00"
+            "time": "2020-10-23T09:01:57+00:00",
+            "time": "2020-10-23T09:01:57+00:00",
+            "time": "2022-12-14T16:11:27+00:00"
         },
         {
             "name": "symfony/yaml",

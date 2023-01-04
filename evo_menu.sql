@@ -46,13 +46,13 @@ CREATE TABLE `categoria` (
 DROP TABLE IF EXISTS `horario_funcionamento`;
 CREATE TABLE `horario_funcionamento` (
   `id` int(11) NOT NULL,
-  `segunda` varchar(11) NOT NULL,
-  `terca` varchar(11) NOT NULL,
-  `quarta` varchar(11) NOT NULL,
-  `quinta` varchar(11) NOT NULL,
-  `sexta` varchar(11) NOT NULL,
-  `sabado` varchar(11) NOT NULL,
-  `domingo` varchar(11) NOT NULL
+  `segunda` varchar(23) NOT NULL,
+  `terca` varchar(23) NOT NULL,
+  `quarta` varchar(23) NOT NULL,
+  `quinta` varchar(23) NOT NULL,
+  `sexta` varchar(23) NOT NULL,
+  `sabado` varchar(23) NOT NULL,
+  `domingo` varchar(23) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

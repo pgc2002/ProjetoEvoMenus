@@ -12,6 +12,9 @@ use Yii;
  * @property int $idRestaurante
  *
  * @property Restaurante $idRestaurante0
+ * @property int $idEmenta
+ *
+ * @property Ementa $idEmenta0
  * @property Item[] $items
  * @property Menu[] $menus
  */
@@ -35,6 +38,12 @@ class Categoria extends \yii\db\ActiveRecord
             [['idRestaurante'], 'integer'],
             [['nome'], 'string', 'max' => 100],
             [['idRestaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['idRestaurante' => 'id']],
+
+            [['nome', 'idEmenta'], 'required'],
+            [['idEmenta'], 'integer'],
+            [['nome'], 'string', 'max' => 100],
+            [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
+
         ];
     }
 
@@ -47,6 +56,7 @@ class Categoria extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'idRestaurante' => 'Id Restaurante',
+            'idEmenta' => 'Id Ementa',
         ];
     }
 
@@ -58,6 +68,16 @@ class Categoria extends \yii\db\ActiveRecord
     public function getIdRestaurante0()
     {
         return $this->hasOne(Restaurante::class, ['id' => 'idRestaurante']);
+    }
+
+        /**
+     * Gets query for [[IdEmenta0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdEmenta0()
+    {
+        return $this->hasOne(Ementa::class, ['id' => 'idEmenta']);
     }
 
     /**

@@ -71,9 +71,15 @@ class Menu extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getItems()
     {
         return $this->hasMany(Item::class, ['id' => 'idItem'])->viaTable('items_menu', ['idMenu' => 'id']);
+    }
+
+    public function getItemsMenus()
+    {
+        return $this->hasMany(ItemsMenu::class, ['idMenu' => 'id']);
     }
 
     /**
@@ -84,5 +90,10 @@ class Menu extends \yii\db\ActiveRecord
     public function getPedido()
     {
         return $this->hasMany(Pedido::class, ['id' => 'idPedido'])->viaTable('menus_pedidos', ['idMenu' => 'id']);
+    }
+
+    public function getMenusPedidos()
+    {
+        return $this->hasMany(MenusPedido::class, ['idMenu' => 'id']);
     }
 }

@@ -18,7 +18,7 @@ use Yii;
  *
  * @property Restaurante[] $restaurantes
  */
-class HorarioFuncionamento extends \yii\db\ActiveRecord
+class Horariofuncionamento extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class HorarioFuncionamento extends \yii\db\ActiveRecord
     {
         return [
             [['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'], 'required'],
-            [['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'], 'string', 'max' => 11],
+            [['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'], 'string', 'max' => 23],
         ];
     }
 
@@ -57,17 +57,30 @@ class HorarioFuncionamento extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Restaurantes]].
+     * Gets query for [[RestauranteId]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
-    public function getRestaurantes()
+    public function getRestauranteId()
     {
-        return $this->hasMany(Restaurante::class, ['idHorario' => 'id']);
+        return Restaurante::findOne(["idHorario" => $this->id])->id;
     }
 
     public function getHorario(){
-        $dias = array($this->segunda, $this->terca, $this->quarta, $this->quinta, $this->sexta, $this->sabado, $this->domingo);
-        
+        $dias = array(
+            "segunda" => $this->segunda,
+            "terca"   => $this->terca,
+            "quarta"  => $this->quarta,
+            "quinta"  => $this->quinta,
+            "sexta"   => $this->sexta,
+            "sabado"  => $this->sabado,
+            "domingo" => $this->domingo
+        );
+
+        foreach ($dias as $key => $value) {
+            $dias[$key] = explode("-", $value);
+        }
+
+        return $dias;
     }
 }
