@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Restaurante;
+use common\models\Menu;
 
 /**
- * RestauranteSearch represents the model behind the search form of `app\models\Restaurante`.
+ * MenuSearch represents the model behind the search form of `common\models\Menu`.
  */
-class RestauranteSearch extends Restaurante
+class MenuSearch extends Menu
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class RestauranteSearch extends Restaurante
     public function rules()
     {
         return [
-            [['id', 'lotacaoMaxima', 'idMorada', 'idHorario'], 'integer'],
-            [['nome', 'email', 'telemovel'], 'safe'],
+            [['id', 'idCategoria'], 'integer'],
+            [['nome', 'fotografia'], 'safe'],
+            [['desconto'], 'number'],
         ];
     }
 
@@ -40,14 +41,13 @@ class RestauranteSearch extends Restaurante
      */
     public function search($params)
     {
-        $query = Restaurante::find();
+        $query = Menu::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
 
         $this->load($params);
 
@@ -60,14 +60,12 @@ class RestauranteSearch extends Restaurante
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'lotacaoMaxima' => $this->lotacaoMaxima,
-            'idMorada' => $this->idMorada,
-            'idHorario' => $this->idHorario,
+            'desconto' => $this->desconto,
+            'idCategoria' => $this->idCategoria,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'telemovel', $this->telemovel]);
+            ->andFilterWhere(['like', 'fotografia', $this->fotografia]);
 
         return $dataProvider;
     }

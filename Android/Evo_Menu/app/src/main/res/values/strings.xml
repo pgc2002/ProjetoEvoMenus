@@ -18,4 +18,9 @@
     <string name="Nif">NIF</string>
     <string name="Telemovel">Telemovel</string>
     <string name="remover" />
+    <string name="etRegistarPais">País</string>
+    <string name="etRegistarCidade">Cidade</string>
+    <string name="etRegistarRua">Rua</string>
+    <string name="etRegistarCodPostal">Código Postal</string>
+    <string name="txtMorada">Morada</string>
 </resources>

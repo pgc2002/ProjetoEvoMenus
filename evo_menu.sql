@@ -34,19 +34,7 @@ DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `idEmenta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `ementa`
---
-
-DROP TABLE IF EXISTS `ementa`;
-CREATE TABLE `ementa` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(100) NOT NULL
+  `idRestaurante` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -240,7 +228,6 @@ CREATE TABLE `restaurante` (
   `email` varchar(100) NOT NULL,
   `lotacaoMaxima` int(11) NOT NULL DEFAULT '0',
   `telemovel` varchar(13) NOT NULL,
-  `idEmenta` int(11) DEFAULT NULL,
   `idHorario` int(11) DEFAULT NULL,
   `idMorada` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -249,8 +236,8 @@ CREATE TABLE `restaurante` (
 -- Extraindo dados da tabela `restaurante`
 --
 
-INSERT INTO `restaurante` (`id`, `nome`, `email`, `lotacaoMaxima`, `telemovel`, `idEmenta`, `idHorario`, `idMorada`) VALUES
-(1, 'teste', 'teste@teste.com', 0, '111111111', NULL, NULL, NULL);
+INSERT INTO `restaurante` (`id`, `nome`, `email`, `lotacaoMaxima`, `telemovel`, `idHorario`, `idMorada`) VALUES
+(1, 'teste', 'teste@teste.com', 0, '111111111', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -295,13 +282,7 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idEmenta` (`idEmenta`);
-
---
--- Índices para tabela `ementa`
---
-ALTER TABLE `ementa`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `idRestaurante` (`idRestaurante`);
 
 --
 -- Índices para tabela `horario_funcionamento`
@@ -388,7 +369,6 @@ ALTER TABLE `pedidoinscricao`
 --
 ALTER TABLE `restaurante`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idEmenta` (`idEmenta`),
   ADD KEY `idHorario` (`idHorario`),
   ADD KEY `idMorada` (`idMorada`);
 
@@ -412,12 +392,6 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de tabela `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `ementa`
---
-ALTER TABLE `ementa`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -488,7 +462,7 @@ ALTER TABLE `horario_funcionamento`
 -- Limitadores para a tabela `categoria`
 --
 ALTER TABLE `categoria`
-  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`idEmenta`) REFERENCES `ementa` (`id`);
+  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`id`);
 
 --
 -- Limitadores para a tabela `item`
@@ -545,7 +519,6 @@ ALTER TABLE `pedido`
 -- Limitadores para a tabela `restaurante`
 --
 ALTER TABLE `restaurante`
-  ADD CONSTRAINT `restaurante_ibfk_1` FOREIGN KEY (`idEmenta`) REFERENCES `ementa` (`id`),
   ADD CONSTRAINT `restaurante_ibfk_2` FOREIGN KEY (`idHorario`) REFERENCES `horario_funcionamento` (`id`),
   ADD CONSTRAINT `restaurante_ibfk_3` FOREIGN KEY (`idMorada`) REFERENCES `morada` (`id`);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace app\models;
 
 use Yii;
 
@@ -12,15 +12,16 @@ use Yii;
  * @property string $email
  * @property int $lotacaoMaxima
  * @property string $telemovel
- * @property int|null $idMorada
+ * @property int $idMorada
  * @property int|null $idEmenta
  * @property int|null $idHorario
  *
- * @property Gestor[] $gestor
- * @property HorarioFuncionamento $horario
- * @property Morada $morada
+ * @property Gestor[] $gestors
+ * @property Ementa $idEmenta0
+ * @property HorarioFuncionamento $idHorario0
+ * @property Morada $idMorada0
  * @property Mesa[] $mesas
- * @property Trabalhador[] $trabalhadores
+ * @property Trabalhador[] $trabalhadors
  */
 class Restaurante extends \yii\db\ActiveRecord
 {
@@ -42,6 +43,7 @@ class Restaurante extends \yii\db\ActiveRecord
             [['lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
+            [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
             [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
             [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
@@ -59,9 +61,8 @@ class Restaurante extends \yii\db\ActiveRecord
             'lotacaoMaxima' => 'Lotacao Maxima',
             'telemovel' => 'Telemovel',
             'idMorada' => 'Id Morada',
+            'idEmenta' => 'Id Ementa',
             'idHorario' => 'Id Horario',
-            'moradaFormatada' => 'Morada',
-            'diasSemana' => 'Horário de funcionamento'
         ];
     }
 
@@ -70,9 +71,19 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGestor()
+    public function getGestors()
     {
         return $this->hasMany(Gestor::class, ['idRestaurante' => 'id']);
+    }
+
+    /**
+     * Gets query for [[IdEmenta0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdEmenta0()
+    {
+        return $this->hasOne(Ementa::class, ['id' => 'idEmenta']);
     }
 
     /**
@@ -80,7 +91,7 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getHorario()
+    public function getIdHorario0()
     {
         return $this->hasOne(HorarioFuncionamento::class, ['id' => 'idHorario']);
     }
@@ -90,7 +101,7 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMorada()
+    public function getIdMorada0()
     {
         return $this->hasOne(Morada::class, ['id' => 'idMorada']);
     }
@@ -110,17 +121,8 @@ class Restaurante extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTrabalhadores()
+    public function getTrabalhadors()
     {
         return $this->hasMany(Trabalhador::class, ['idRestaurante' => 'id']);
-    }
-
-    public function getMoradaFormatada(){
-        return $this->morada ? $this->morada->pais.', '. $this->morada->cidade .', '. $this->morada->rua. ', '.$this->morada->codpost : 'Sem morada';
-    }
-
-    public function getDiasSemana(){
-        //$horario= HorarioFuncionamento::findOne($this->idHorario);
-        return ("Segunda a Domingo");
     }
 }

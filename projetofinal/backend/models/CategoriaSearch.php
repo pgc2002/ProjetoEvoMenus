@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Restaurante;
+use common\models\Categoria;
 
 /**
- * RestauranteSearch represents the model behind the search form of `app\models\Restaurante`.
+ * CategoriaSearch represents the model behind the search form of `common\models\Categoria`.
  */
-class RestauranteSearch extends Restaurante
+class CategoriaSearch extends Categoria
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class RestauranteSearch extends Restaurante
     public function rules()
     {
         return [
-            [['id', 'lotacaoMaxima', 'idMorada', 'idHorario'], 'integer'],
-            [['nome', 'email', 'telemovel'], 'safe'],
+            [['id', 'idRestaurante'], 'integer'],
+            [['nome'], 'safe'],
         ];
     }
 
@@ -40,14 +40,13 @@ class RestauranteSearch extends Restaurante
      */
     public function search($params)
     {
-        $query = Restaurante::find();
+        $query = Categoria::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
 
         $this->load($params);
 
@@ -60,14 +59,10 @@ class RestauranteSearch extends Restaurante
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'lotacaoMaxima' => $this->lotacaoMaxima,
-            'idMorada' => $this->idMorada,
-            'idHorario' => $this->idHorario,
+            'idRestaurante' => $this->idRestaurante,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'telemovel', $this->telemovel]);
+        $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }

@@ -60,6 +60,18 @@ $this->title = $model->nome;
                 'class'=>'button btn btn-info',
             ]
         );
+        
+        echo '<br><br>';
+
+        echo Html::a(
+            'Visualizar ementas',
+            Url::to(['..\categoria\index', 'id' => $model->id]),
+            [
+                'id'=>'grid-custom-button',
+                'data-pjax'=>true,
+                'class'=>'button btn btn-info',
+            ]
+        );
     ?>
 
 </div>
