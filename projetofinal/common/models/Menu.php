@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
+
 
 /**
  * This is the model class for table "menu".
@@ -52,7 +54,8 @@ class Menu extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'fotografia' => 'Fotografia',
             'desconto' => 'Desconto',
-            'idCategoria' => 'Id Categoria',
+            'idCategoria' => 'Categoria',
+            'imagemMenu' => 'Imagem',
         ];
     }
 
@@ -95,5 +98,10 @@ class Menu extends \yii\db\ActiveRecord
     public function getMenusPedidos()
     {
         return $this->hasMany(MenusPedido::class, ['idMenu' => 'id']);
+    }
+
+    public function getImagemMenu()
+    {
+        return Yii::getAlias('@fotografiaUrl').'/'.$this->fotografia;
     }
 }

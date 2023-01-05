@@ -22,13 +22,16 @@ if(count($categorias) > 0)
 
 <div class="menu-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fotografia')->textarea(['rows' => 1]) ?>
+    <?= $form->field($model, 'fotografia')->fileInput()?>
 
     <?= $form->field($model, 'desconto')->textInput() ?>
+
+    <input type="hidden" id="idItems" name="idItems" value=""></div>
 
     <?php /*$form->field($model, 'idCategoria')->hiddenInput(['value' => $idCategoria->label(false))*/ ?>
 
@@ -36,16 +39,6 @@ if(count($categorias) > 0)
         <div class="col-sm-3">
             <?php $url=Url::toRoute('item/lists'); ?>
             <?=
-                /*
-                echo '
-                <select class="form-select" aria-label="Default select example" name="dropCat" id="dropCat">
-                    <option selected>Categorias</option>';
-                        foreach($categorias as $categoria){
-                            echo'<option value='.$categoria->id.'>'.$categoria->nome.'</option>';
-                        }
-                echo '</select>';*/
-                //$url=Url::toRoute('item/lists');
-                //echo $url;
                 $form->field($model, 'idCategoria')->dropDownList(
                     ArrayHelper::map(Categoria::find()->all(), 'id', 'nome'),
                     [
@@ -54,13 +47,9 @@ if(count($categorias) > 0)
                             {
                                 $("select#menu-items").html( data );
                             });'
-
                     ]
                 );
             ?>
-
-
-
         </div>
         <div class="col-sm-7">
             <?=
@@ -71,40 +60,60 @@ if(count($categorias) > 0)
                     ]
                 );
             ?>
-            <?php
-                /*$form->field($model, 'items')->dropDownList(
-                    ArrayHelper::map([], 'id', 'nome'),
-                    [
-                        'disabled' => 'disabled',
-                        'prompt' => 'Escolha a categoria primeiro',
-                        'style' => 'width: 100%;',
-                    ]
-                );*/
-            ?>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-2 my-auto">
             <?php
-                echo Html::a(
-                    'Adicionar item ao menu',
-                    Url::to(['menu/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
-                    [
-                        'id'=>'grid-custom-button',
-                        'data-pjax'=>true,
-                        'class'=>'button btn btn-success',
-                    ]
-                );
-                /*echo Html::dropDownList(ArrayHelper::map($categorias), 'id', 'nome',
-                [
-                    'prompt'=>'Escolha a categoria',
-                ]);*/
+               echo Html::button('Adicionar item',
+                   [
+                       'class' => 'btn btn-primary',
+                       'id' => 'botaoItem',
+                       'name' => 'botaoItem',
+                   ]);
             ?>
         </div>
     </div>
-
+    <table class="table" >
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Categoria</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaItens">
+        </tbody>
+    </table>
     <div class="form-group">
-        <?= Html::submitButton('Guardar alterações', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar alterações', ['class' => 'btn btn-success', 'id' => 'botaoSubmeter',]) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>
+
+
+<script>
+    var array = [];
+
+    $('#botaoItem').on('click', function(e)
+    {
+        e.preventDefault();
+        var id = $( "select#menu-items option:checked" ).val();
+        if(id != "" && !array.includes(id))
+        {
+            array.push(id);
+            console.log(array);
+            const textoItem = $("select#menu-items option:checked").text().split(" | ");
+            var table = document.getElementById("tabelaItens");
+            var row = table.insertRow(0);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = textoItem[0];
+            cell2.innerHTML = textoItem[1];
+            cell3.innerHTML = $("select#menu-idcategoria option:checked").text();
+            if(array.length != 1)
+                $( "input#idItems" ).val($( "input#idItems" ).val() + "," + id);
+            else
+                $( "input#idItems" ).val($( "input#idItems" ).val() + id);
+        }
+    });
+</script>

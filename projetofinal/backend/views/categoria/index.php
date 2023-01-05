@@ -131,15 +131,18 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                     'query' => Item::find()->where(['idCategoria' => $idCategoria])
                                 ]);
 
+
                         
                                 echo ' <h4>'.$categoria->nome.'</h4>';
                                 echo GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '{items}{pager}',
                                     'columns' => [
-                                        'fotografia',
                                         'nome',
                                         'precoFormatado',
+                                        ['attribute' => 'imagemItem',
+                                            'format'=>['image', ['width'=>'150', 'height'=>'100']]
+                                        ]
                                     ],
                                 ]);
                                 echo Html::a(
@@ -175,9 +178,11 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                     'dataProvider' => $dataProvider,
                                     'layout' => '{items}{pager}',
                                     'columns' => [
-                                        'fotografia',
                                         'nome',
                                         'desconto',
+                                        ['attribute' => 'imagemMenu',
+                                            'format'=>['image', ['width'=>'150', 'height'=>'100']]
+                                        ]
                                     ],
                                 ]);
                                 

@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -72,7 +73,13 @@ class ItemController extends Controller
         $model = new Item();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post()))
+            {
+                $image = UploadedFile::getInstance($model, 'fotografia');
+                $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
+                $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
+                $model->fotografia = $imgName;
+                $model->save();
                 return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
             }
         } else {
@@ -146,10 +153,25 @@ class ItemController extends Controller
 
         if ($countItems > 0){
             foreach ($items as $item)
-                echo "<option value='".$item->id."'>".$item->nome."</option>";
+                echo "<option value='".$item->id."'>".$item->nome." | ".$item->preco."€</option>";
         }
         else
-            echo "<option> - </option>";
+            echo "<option></option>";
 
     }
+
+    /*public function actionUpload($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->ImagemPrato = UploadedFile::getInstance($model, 'ImagemPrato');
+            if ($model->upload()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }*/
 }
