@@ -52,7 +52,7 @@ class Pedido extends \yii\db\ActiveRecord
             'valorTotal' => 'Valor Total',
             'estado' => 'Estado',
             'idCliente' => 'Id Cliente',
-            'nomeCliente' => 'Cliente',
+            'usernameCliente' => 'Cliente',
         ];
     }
 
@@ -105,8 +105,8 @@ class Pedido extends \yii\db\ActiveRecord
         return $this->hasMany(Pagamento::class, ['idPedido' => 'id']);
     }
 
-    public function getNomeCliente()
+    public function getUsernameCliente()
     {
-        return User::findOne($this->idCliente)->nome;
+        return User::findOne($this->idCliente)->username;
     }
 }

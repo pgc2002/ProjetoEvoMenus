@@ -32,8 +32,10 @@ if(count($categorias) > 0)
     <?= $form->field($model, 'desconto')->textInput() ?>
 
     <input type="hidden" id="idItems" name="idItems" value=""></div>
-
-    <?php /*$form->field($model, 'idCategoria')->hiddenInput(['value' => $idCategoria->label(false))*/ ?>
+    
+    <?php 
+    echo '<input type="hidden" id="idCategoriaHidden" name="idCategoriaHidden" value="'.$idCategoria.'">'; 
+    ?>
 
     <div class="row">
         <div class="col-sm-3">
@@ -45,7 +47,8 @@ if(count($categorias) > 0)
                         'prompt' => 'Selecionar categoria',
                         'onchange' => '$.post("'.$url.'?id='.'"+$(this).val(), function( data ) 
                             {
-                                $("select#menu-items").html( data );
+                                document.getElementById("menu-items").disabled = false;
+                                $("select#menu-items").html(data);
                             });'
                     ]
                 );
@@ -78,13 +81,14 @@ if(count($categorias) > 0)
                 <th scope="col">Nome</th>
                 <th scope="col">Preço</th>
                 <th scope="col">Categoria</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody id="tabelaItens">
         </tbody>
     </table>
     <div class="form-group">
-        <?= Html::submitButton('Guardar alterações', ['class' => 'btn btn-success', 'id' => 'botaoSubmeter',]) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success', 'id' => 'botaoSubmeter',]) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
@@ -92,6 +96,10 @@ if(count($categorias) > 0)
 
 <script>
     var array = [];
+    var table = document.getElementById("tabelaItens");
+    var i = 0;
+    document.getElementById("menu-items").disabled = true;
+    $("select#menu-items").empty();
 
     $('#botaoItem').on('click', function(e)
     {
@@ -100,20 +108,31 @@ if(count($categorias) > 0)
         if(id != "" && !array.includes(id))
         {
             array.push(id);
-            console.log(array);
             const textoItem = $("select#menu-items option:checked").text().split(" | ");
-            var table = document.getElementById("tabelaItens");
             var row = table.insertRow(0);
+            row.id = i;
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
             cell1.innerHTML = textoItem[0];
             cell2.innerHTML = textoItem[1];
             cell3.innerHTML = $("select#menu-idcategoria option:checked").text();
+            cell4.innerHTML = '<a style="cursor: pointer;" id="retirarItem" name="retirarItem" onClick="retirar(' + id + ', ' + i +')"><span><i class="fa fa-minus" style="color: red;" aria-hidden="true"></i></span></a>';
+            i++;
             if(array.length != 1)
                 $( "input#idItems" ).val($( "input#idItems" ).val() + "," + id);
             else
                 $( "input#idItems" ).val($( "input#idItems" ).val() + id);
         }
     });
+
+    function retirar(id, idRow) {
+        var index = array.indexOf(id);
+        array.splice(index, 1); // 2nd parameter means remove one item only
+        console.log(array);
+        var row = document.getElementById(idRow);
+        row.parentNode.removeChild(row);
+        $( "input#idItems" ).val(array);
+    }
 </script>

@@ -102,8 +102,14 @@ class ItemController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $image = UploadedFile::getInstance($model, 'fotografia');
+            $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
+            $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
+            $model->fotografia = $imgName;
+            $model->save();
+            $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
+            return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
         }
 
         return $this->render('update', [

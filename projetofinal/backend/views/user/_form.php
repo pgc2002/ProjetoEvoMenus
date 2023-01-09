@@ -35,9 +35,8 @@ use common\models\Restaurante;
         <li class="nav-item" id="navUsers" ><a id="navGestor" href="#gestor" onclick="escolhaUtilizador(3)">Gestor</a></li>
         <li class="nav-item" id="navUsers" ><a id="navAdmin" href="#admin" onclick="escolhaUtilizador(4)">Admin</a></li>
     </ul>
-
-
 <div class="tab-content">
+
     <div id="cliente" style="display: block">
 
         <?php $form = ActiveForm::begin(); ?>

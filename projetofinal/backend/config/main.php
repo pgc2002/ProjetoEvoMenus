@@ -55,7 +55,6 @@ return [
                         'GET nif' => 'nif', ],],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/categoria'],
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/ementa'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/item'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/itemspedido'],
@@ -70,8 +69,13 @@ return [
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/restaurante'],
             ],
         ],
-
-
+        /*'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@vendor/hail812/yii2-adminlte3/src/views'
+                ],
+            ],
+        ],*/
 ],
     'params' => $params,
 ];

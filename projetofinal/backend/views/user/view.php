@@ -16,7 +16,6 @@ $morada = Morada::findOne([
 ]);
 
 $this->title = $model->id;
-
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="user-view">
