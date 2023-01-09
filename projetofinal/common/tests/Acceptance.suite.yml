@@ -1,0 +1,8 @@
+suite_namespace: common\tests\Acceptance
+actor: AcceptanceTester
+modules:
+  enabled:
+    - PhpBrowser:
+        url: {http://localhost/ProjetoEvoMenus/projetofinal/backend/web/admin}
+
+

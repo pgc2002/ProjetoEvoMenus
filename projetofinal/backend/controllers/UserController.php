@@ -85,6 +85,13 @@ class UserController extends Controller
                 $user->generateAuthKey();
                 $user->save();
 
+                $auth = \Yii::$app->authManager;
+                $role = $auth->getRole('Cliente');
+                try {
+                    $auth->assign($role, $user->getId());
+                } catch (\Exception $e) {
+                }
+
                 return $this->redirect(['view', 'id' => $user->id]);
             }else if($user->load($this->request->post())){
 
@@ -93,13 +100,32 @@ class UserController extends Controller
                 $user->generateAuthKey();
                 $user->save();
 
+                $auth = \Yii::$app->authManager;
+                switch ($user->tipo){
+                    case 'Admin':
+                        $role = $auth->getRole('Admin');
+                        break;
+                    case 'Gestor':
+                        $role = $auth->getRole('Gestor');
+                        break;
+                    case 'Funcionario':
+                        $role = $auth->getRole('Funcionario');
+                        break;
+                }
+                try {
+                    $auth->assign($role, $user->getId());
+                } catch (\Exception $e) {
+                }
+
                 return $this->redirect(['view', 'id' => $user->id]);
             }
             else if(!Model::validateMultiple([$user, $morada])){
-                echo '<script>alert("Erro!")</script>';
+                Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar um utilizador.');
+                return $this->refresh();
             }
         } else {
             $user->loadDefaultValues();
+            $morada->loadDefaultValues();
         }
 
         return $this->render('create', [

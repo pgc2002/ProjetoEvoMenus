@@ -256,4 +256,14 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+
+    public function actionError()
+    {
+        if (Yii::app()->errorHandler->error['code'] == 404)
+
+            $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
+        else
+            $this->render('error');
+    }
 }

@@ -7,8 +7,6 @@ use yii\helpers\Html;
 /** @var common\models\Morada $morada */
 
 $this->title = 'Create User';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-create">
 
