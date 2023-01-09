@@ -70,8 +70,13 @@ return [
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/restaurante'],
             ],
         ],
-
-
+        /*'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@vendor/hail812/yii2-adminlte3/src/views'
+                ],
+            ],
+        ],*/
 ],
     'params' => $params,
 ];

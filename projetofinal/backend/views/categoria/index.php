@@ -14,8 +14,6 @@ use common\models\Menu;
 /** @var backend\models\CategoriaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Ementa';
-$this->params['breadcrumbs'][] = $this->title;
 
 $idRestaurante = Yii::$app->request->get('id');
 $categorias = Categoria::findAll(['idRestaurante' => $idRestaurante]);
@@ -54,8 +52,7 @@ $idCategoria = Yii::$app->request->get('idCategoria');
     list-style: none;
     padding: 0;
     margin: 0;
-    background-color: #444;
-    min-height: 400px;
+    background-color: #333;
     }
     aside nav ul li{
         padding: 20px;
@@ -63,10 +60,8 @@ $idCategoria = Yii::$app->request->get('idCategoria');
         background-color: #333;
         margin-bottom: 1px;
         border-left: 10px solid transparent;
-        &.active
-        border-color: #e35205;
     }
-    .sidebar{
+    #sidebarCategorias{
     width: 100%;
     height: 100%;
     background-color: #333;
@@ -89,57 +84,69 @@ $idCategoria = Yii::$app->request->get('idCategoria');
     }
 </style>
 <div class="categoria-index" style="height: 100%;">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="row" >
+        <h1>Ementa</h1>
+    </div>
     <div class="row" name="rowEmenta" >
         <div class="col-sm-2">
-            
-            <aside class="sidebar">
+            <aside class="sidebar" id="sidebarCategorias">
                 <h3>Categorias</h3>
                 <nav>
                     <ul>
                         <?php 
                             foreach($categorias as $categoria)
                                 echo '<li><a class="active" href="index?id='.$idRestaurante.'&idCategoria='.$categoria->id.'">'.$categoria->nome.'</a></li>';
-                            
                         ?>
                     </ul>
                 </nav>
             </aside>
         </div>
-
-
         <div class="col-sm-10">
             <div class="container-fluid">
-                <ul class="nav nav-tabs" id="myTabs">
+                <ul class="nav nav-tabs">
                     <li class="nav-item" id="navEmenta" ><a class="active" id="navItems" onclick="escolhaEmenta(1)" >Items</a></li>
                     <li class="nav-item" id="navEmenta" ><a id="navMenus"  onclick="escolhaEmenta(2)">Menus</a></li>
                 </ul>
-
                 <div class="tab-content" style="min-height: 400px;">
                     <div id="items" style="display: block">
                         <?php
                             if($idCategoria != null){
                                 $categoria = Categoria::findOne(['id' => $idCategoria]);
-                                /*$dataProvider = new \yii\data\SqlDataProvider([
-                                    'sql' => 'SELECT * FROM item WHERE idCategoria=:id',
-                                    'params' => [':id' => $idCategoria],
-                                ]);*/
 
                                 $dataProvider = new ActiveDataProvider([
-                                    'query' => Item::find()->where(['idCategoria' => $idCategoria])
+                                    'query' => Item::find()->where(['idCategoria' => $idCategoria]),
+                                    'pagination' => [
+                                        'pageSize' => 4,
+                                    ],
                                 ]);
-
                         
                                 echo ' <h4>'.$categoria->nome.'</h4>';
                                 echo GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '{items}{pager}',
                                     'columns' => [
-                                        'fotografia',
                                         'nome',
                                         'precoFormatado',
+                                        [
+                                            'attribute' => 'imagemItem',
+                                            'format'=>['image', ['width'=>'100', 'height'=>'100']]
+                                        ],
+                                        [
+                                            'format' => 'raw',
+                                            'value' => function($model, $key, $index, $column) {
+                                                return Html::a(
+                                                    '<i class="fa fa-pencil"></i>',
+                                                    Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]), 
+                                                    [
+                                                        'id'=>'grid-custom-button',
+                                                        'data-pjax'=>true,
+                                                        'action'=>Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                        'class'=>'button btn btn-default',
+                                                    ]
+                                                );
+                                            }
+                                        ],
                                     ],
                                 ]);
                                 echo Html::a(
@@ -160,24 +167,38 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                 $categoria = Categoria::findOne(['id' => $idCategoria]);
                                 
                                 $dataProvider = new ActiveDataProvider([
-                                    'query' => Menu::find()->where(['idCategoria' => $idCategoria])
+                                    'query' => Menu::find()->where(['idCategoria' => $idCategoria]),
+                                    'pagination' => [
+                                        'pageSize' => 4,
+                                    ],
                                 ]);
-
-                                /*
-                                
-                                $dataProvider = new \yii\data\SqlDataProvider([
-                                    'sql' => 'SELECT * FROM menu WHERE idCategoria=:id',
-                                    'params' => [':id' => $idCategoria],
-                                ]);*/
                         
                                 echo ' <h4>'.$categoria->nome.'</h4>';
                                 echo GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'layout' => '{items}{pager}',
                                     'columns' => [
-                                        'fotografia',
                                         'nome',
                                         'desconto',
+                                        [
+                                            'attribute' => 'imagemMenu',
+                                            'format'=>['image', ['width'=>'100', 'height'=>'100']]
+                                        ],
+                                        [
+                                            'format' => 'raw',
+                                            'value' => function($model, $key, $index, $column) {
+                                                return Html::a(
+                                                    '<i class="fa fa-pencil"></i>',
+                                                    Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]), 
+                                                    [
+                                                        'id'=>'grid-custom-button',
+                                                        'data-pjax'=>true,
+                                                        'action'=>Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                        'class'=>'button btn btn-default',
+                                                    ]
+                                                );
+                                            }
+                                        ],
                                     ],
                                 ]);
                                 
@@ -195,15 +216,12 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                         ?>
                     </div>
                 </div>
-            
+            </div>
         </div>
-            
-        </div>
-        
     </div>
     
     <div class="row" name="rowEmenta" >
-        <div class="col-sm-2">
+        <div class="col-sm-2" style="vertical-align: center;">
         <?php
             echo Html::a(
                 'Adicionar categoria',
@@ -216,12 +234,7 @@ $idCategoria = Yii::$app->request->get('idCategoria');
             );
         ?>
         </div>
-
-
-        <div class="col-sm-10">
-            
-        </div>
-        
+        <div class="col-sm-10"></div>
     </div>
 
 </div>
@@ -251,23 +264,3 @@ $idCategoria = Yii::$app->request->get('idCategoria');
         }
     }
 </script>
-
-<?php /*
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nome',
-            'idRestaurante',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Categoria $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                }
-            ],
-        ],
-    ]);*/
-?>

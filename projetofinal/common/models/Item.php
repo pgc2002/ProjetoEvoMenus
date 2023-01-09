@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
+
 
 /**
  * This is the model class for table "item".
@@ -19,6 +22,8 @@ use Yii;
  */
 class Item extends \yii\db\ActiveRecord
 {
+    public $imagemPrato;
+
     /**
      * {@inheritdoc}
      */
@@ -54,11 +59,13 @@ class Item extends \yii\db\ActiveRecord
             'preco' => 'Preço',
             'idCategoria' => 'Id Categoria',
             'precoFormatado' => 'Preço',
+            'imagemItem' => 'Imagem',
         ];
     }
 
 
-    public function getPrecoFormatado(){
+    public function getPrecoFormatado()
+    {
         return $this->preco . ' €';
     }
 
@@ -76,13 +83,12 @@ class Item extends \yii\db\ActiveRecord
      * Gets query for [[ItemsMenus]].
      *
      * @return \yii\db\ActiveQuery
-<<<<<<< HEAD
-     * 
+     *
      * public function getItemsMenus()
      * {
      *   return $this->hasMany(ItemsMenu::class, ['idItem' => 'id']);
      * }
-     * 
+     *
      */
 
 
@@ -90,6 +96,7 @@ class Item extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Menu::class, ['id' => 'idMenu'])->viaTable('items_menu', ['idItem' => 'id']);
     }
+
     public function getItemsMenus()
     {
         return $this->hasMany(ItemsMenu::class, ['idItem' => 'id']);
@@ -99,7 +106,7 @@ class Item extends \yii\db\ActiveRecord
      * Gets query for [[ItemsPedidos]].
      *
      * @return \yii\db\ActiveQuery
-     * 
+     *
      * public function getItemsPedidos()
      * {
      *   return $this->hasMany(ItemsPedido::class, ['idItem' => 'id']);
@@ -115,4 +122,11 @@ class Item extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ItemsPedido::class, ['idItem' => 'id']);
     }
+
+    public function getImagemItem()
+    {
+        return Yii::getAlias('@fotografiaUrl').'/'.$this->fotografia;
+    }
+
+
 }

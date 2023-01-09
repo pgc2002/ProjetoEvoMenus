@@ -34,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'fotografia:ntext',
             'preco',
             'idCategoria',
-        ],
+            ['attribute' => 'fotografia',
+                'value'=> Yii::getAlias('@fotografiaUrl').'/'.$model->fotografia,
+                'format'=>['image', ['width'=>'100', 'height'=>'100']]
+            ]
+        ]
     ]) ?>
 
 </div>

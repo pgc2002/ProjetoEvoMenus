@@ -15,12 +15,10 @@ use common\models\Mesa;
  * @property int $lotacaoMaxima
  * @property string $telemovel
  * @property int|null $idMorada
- * @property int|null $idEmenta
  * @property int|null $idHorario
  *
  * @property Gestor[] $gestor
  * @property HorarioFuncionamento $horario
- * @property Ementa $ementa
  * @property Morada $morada
  * @property Mesa[] $mesas
  * @property Trabalhador[] $trabalhadores
@@ -46,7 +44,6 @@ class Restaurante extends \yii\db\ActiveRecord
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
-            [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
             [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
     }

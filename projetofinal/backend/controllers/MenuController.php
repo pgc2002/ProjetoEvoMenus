@@ -2,11 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\Categoria;
+use common\models\Item;
 use common\models\Menu;
 use backend\models\MenuSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
@@ -70,8 +74,21 @@ class MenuController extends Controller
         $model = new Menu();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()))
+            {
+                $image = UploadedFile::getInstance($model, 'fotografia');
+                $imgName = 'img_'.$model->nome.'_Menu.'.$image->getExtension();
+                $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
+                $model->fotografia = $imgName;
+                $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
+                $model->save();
+                $idArray = explode(',' ,Yii::$app->request->post('idItems'));
+                foreach($idArray as $id){
+                    $item = Item::findOne($id);
+                    $model->link('items', $item);
+                }
+                return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+
             }
         } else {
             $model->loadDefaultValues();
@@ -93,8 +110,21 @@ class MenuController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $image = UploadedFile::getInstance($model, 'fotografia');
+            $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
+            $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
+            $model->fotografia = $imgName;
+            $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
+            $model->save();
+            $model->unlinkAll('items', true);
+            $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
+            $idArray = explode(',' ,Yii::$app->request->post('idItems'));
+            foreach($idArray as $id){
+                $item = Item::findOne($id);
+                $model->link('items', $item);
+            }
+            return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
         }
 
         return $this->render('update', [
@@ -130,6 +160,11 @@ class MenuController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAddItem($id)
+    {
+
     }
 
 
