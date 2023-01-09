@@ -36,7 +36,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => Yii::$app->homeUrl],
-        ['label' => 'Restaurante', 'url' => ['/restaurante/index']],
+        ['label' => 'Restaurantes', 'url' => ['/restaurante/index']],
         ['label' => 'Contactos', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {

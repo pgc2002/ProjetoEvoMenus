@@ -17,7 +17,7 @@ class RestauranteSearch extends Restaurante
     public function rules()
     {
         return [
-            [['id', 'lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
+            [['id', 'lotacaoMaxima', 'idMorada', 'idHorario'], 'integer'],
             [['nome', 'email', 'telemovel'], 'safe'],
         ];
     }
@@ -62,7 +62,6 @@ class RestauranteSearch extends Restaurante
             'id' => $this->id,
             'lotacaoMaxima' => $this->lotacaoMaxima,
             'idMorada' => $this->idMorada,
-            'idEmenta' => $this->idEmenta,
             'idHorario' => $this->idHorario,
         ]);
 

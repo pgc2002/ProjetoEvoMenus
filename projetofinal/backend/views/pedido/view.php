@@ -1,5 +1,8 @@
 <?php
 
+use common\models\Pedido;
+use yii\data\ArrayDataProvider;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -14,24 +17,57 @@ $this->title = "Detalhes do pedido ".$model->id;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Voltar para pedidos', ['index'], ['class' => 'btn btn-secondary']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?= Html::a('Voltar para pedidos', ['index#'.$model->estado.'s'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nomeCliente',
+            'usernameCliente',
             'valorTotal',
             'estado',
         ],
     ]) ?>
+    
+    <h2>Conteudos do pedido</h2>
+
+    <?php
+        $pedido = Pedido::find()->where(['id' => $model])->one();
+
+        $menus = $pedido->getMenus()->select('nome')->all();
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $menus,
+        ]);
+
+        echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => '{items}{pager}',
+        'columns' => [
+                [
+                    'label' => 'Menus',
+                    'attribute' => 'nome'
+                ],
+            ]
+        ]);
+
+        $items = $pedido->getItems()->select('nome')->all();
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $items,
+        ]);
+
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'layout' => '{items}',
+            'columns' => [
+                [
+                    'label' => 'Items Individuais',
+                    'attribute' => 'nome'
+                ],
+            ]
+        ]);
+    ?>
+
 
 </div>

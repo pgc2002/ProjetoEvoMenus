@@ -15,12 +15,10 @@ use common\models\Mesa;
  * @property int $lotacaoMaxima
  * @property string $telemovel
  * @property int|null $idMorada
- * @property int|null $idEmenta
  * @property int|null $idHorario
  *
  * @property Gestor[] $gestor
  * @property HorarioFuncionamento $horario
- * @property Ementa $ementa
  * @property Morada $morada
  * @property Mesa[] $mesas
  * @property Trabalhador[] $trabalhadores
@@ -42,11 +40,10 @@ class Restaurante extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'email', 'telemovel', 'idMorada'], 'required'],
-            [['lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
+            [['lotacaoMaxima', 'idMorada', 'idHorario'], 'integer'],
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
-            [['idEmenta'], 'exist', 'skipOnError' => true, 'targetClass' => Ementa::class, 'targetAttribute' => ['idEmenta' => 'id']],
             [['idMorada'], 'exist', 'skipOnError' => true, 'targetClass' => Morada::class, 'targetAttribute' => ['idMorada' => 'id']],
         ];
     }
@@ -65,7 +62,7 @@ class Restaurante extends \yii\db\ActiveRecord
             'idMorada' => 'Id Morada',
             'idHorario' => 'Id Horario',
             'moradaFormatada' => 'Morada',
-            'NumeroMesas' => 'Número de mesas',
+            'numeroMesas' => 'Número de mesas',
         ];
     }
 
@@ -100,9 +97,9 @@ class Restaurante extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Mesas]].
+     * Gets query for [[count Mesas]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
     /*public function getMesas()
     {

@@ -131,4 +131,18 @@ class PedidoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionExpedir($id){
+        $model = Pedido::findOne(['id' => $id]);
+        $model->estado = 'expedido';
+        $model->save();
+        return $this->redirect(['index#recebidos']);
+    }
+
+    public function actionConcluir($id){
+        $model = Pedido::findOne(['id' => $id]);
+        $model->estado = 'concluido';
+        $model->save();
+        return $this->redirect(['index#expedidos']);
+    }
 }

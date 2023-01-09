@@ -55,7 +55,6 @@ return [
                         'GET nif' => 'nif', ],],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/categoria'],
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/ementa'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/item'],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/itemspedido'],

@@ -45,6 +45,7 @@ $this->title = $model->nome." - Detalhes";
         );
 
         $horario = HorarioFuncionamento::findOne($model->idHorario);
+
         $horario = $horario->getHorario();
 
         foreach($horario as $key => $value){
