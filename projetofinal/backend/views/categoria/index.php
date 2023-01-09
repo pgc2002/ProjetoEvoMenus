@@ -1,6 +1,4 @@
 <?php
-
-
 use common\models\Categoria;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -120,7 +118,6 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                         'pageSize' => 4,
                                     ],
                                 ]);
-                        
                                 echo ' <h4>'.$categoria->nome.'</h4>';
                                 echo GridView::widget([
                                     'dataProvider' => $dataProvider,

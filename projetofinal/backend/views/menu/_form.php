@@ -108,7 +108,6 @@ if(count($categorias) > 0)
         if(id != "" && !array.includes(id))
         {
             array.push(id);
-            console.log(array);
             const textoItem = $("select#menu-items option:checked").text().split(" | ");
             var row = table.insertRow(0);
             row.id = i;

@@ -40,7 +40,7 @@ class Restaurante extends \yii\db\ActiveRecord
     {
         return [
             [['nome', 'email', 'telemovel', 'idMorada'], 'required'],
-            [['lotacaoMaxima', 'idMorada', 'idEmenta', 'idHorario'], 'integer'],
+            [['lotacaoMaxima', 'idMorada', 'idHorario'], 'integer'],
             [['nome', 'email'], 'string', 'max' => 100],
             [['telemovel'], 'string', 'max' => 13],
             [['idHorario'], 'exist', 'skipOnError' => true, 'targetClass' => HorarioFuncionamento::class, 'targetAttribute' => ['idHorario' => 'id']],
@@ -62,7 +62,7 @@ class Restaurante extends \yii\db\ActiveRecord
             'idMorada' => 'Id Morada',
             'idHorario' => 'Id Horario',
             'moradaFormatada' => 'Morada',
-            'NumeroMesas' => 'Número de mesas',
+            'numeroMesas' => 'Número de mesas',
         ];
     }
 
@@ -97,9 +97,9 @@ class Restaurante extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Mesas]].
+     * Gets query for [[count Mesas]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return int
      */
     /*public function getMesas()
     {

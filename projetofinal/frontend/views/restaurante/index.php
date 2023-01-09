@@ -24,11 +24,10 @@ $this->title = 'Restaurantes';
         'columns' => [
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => 'Detalhes',
-                'template' => '{viewButton}',
+                'template' => '{detalhes}',
                 'buttons' => [
-                    'viewButton' => function($url, $model, $key) {
-                        return Html::a('Ver',"view?id=$model->id");
+                    'detalhes' => function($url, $model, $key) {
+                        return Html::a('Ver Detalhes','view?id='.$model->id, ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
                     }
                 ]
             ],

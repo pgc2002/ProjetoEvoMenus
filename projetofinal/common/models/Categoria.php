@@ -61,13 +61,6 @@ class Categoria extends \yii\db\ActiveRecord
         return $this->hasOne(Restaurante::class, ['id' => 'idRestaurante']);
     }
 
-        /**
-     * Gets query for [[IdEmenta0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-
-
     /**
      * Gets query for [[Items]].
      *
