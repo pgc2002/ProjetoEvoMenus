@@ -4,10 +4,10 @@ use yii\helpers\Html;
 $this->title = 'Evo Menus';
 ?>
 <style type="text/css">
-    .div-1 {
-        background-image: url('../web/resources/backgroundindex2.jpg');
-        background-size:initial;
-        height:550px;
+    .d-flex{
+        background-image: url('../web/resources/image-from-rawpixel-id-3283405-jpeg.jpg');
+        background-size:cover;
+        height:auto;
     }
     .body-content {
         text-align: center;
@@ -17,29 +17,27 @@ $this->title = 'Evo Menus';
     .explanation-content{
         text-align: center;
         padding: 1px;
-        background-color:white;
+        background-color:darkorange;
         margin: 20px;
         border-radius:25px;
     }
     .btn-outline-secondary{
-        background-color: steelblue;
+        background-color: darkorange;
         color:black;
+
     }
+
 </style>
 <div class="site-index">
     
     <div class="div-1" >
             <div class="jumbotron text-center bg-transparent" >
-                <h1>Bem Vindo!!</h1>
-
+                    <h1 class="explanation-content">Bem Vindo!!<p>Queres inscrever o teu restaurante na nossa app??</p> </h1>
             </div>
-            
-
         <div class="body-content">
             <div class="center">
                     <div>
-                        <h2>Queres inscrever o teu restaurante na nossa app??</h2>
-                        <p><?=Html::a('Inscreve-te aqui!', ['pedidoinscricao/create'], ['data-method' => 'post', 'class' => 'btn btn-primary'])?></p>
+                        <h1><?=Html::a('Inscreve-te aqui!', ['pedidoinscricao/create'], ['data-method' => 'post', 'class' => 'btn-outline-secondary'])?></h1>
                     </div>
             </div>
         </div>
@@ -47,7 +45,7 @@ $this->title = 'Evo Menus';
         <div class="explanation-content">
             <div class="container">
                 <div>
-                    <h1>Sobre nós...</h1>
+                    <h1 >Sobre nós...</h1>
                     <h>O nosso sistema foca-se na gestão de diversos restaurantes.
                         Facilitamos a publicitação do seu negocio, fornecendo aos nossos utilizadores os dados relevantes do seu restaurante, bem como uma forma simples e eficaz de interagir com eles, desde a realização de reservas até a pedidos nas mesas ou ao domicilio.
                         Assim que for aceite a sua candidatura a gestão do restaurante na aplicação ficara a cargo do gestor de restaurante.

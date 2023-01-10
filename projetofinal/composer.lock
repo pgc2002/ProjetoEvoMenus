@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a9944e0b05829891781ad837b095126",
+    "content-hash": "27503bd6ec11b0bc8c6d5d404fba1dca",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -719,7 +719,7 @@
             "version": "v10.6.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:seiyria/bootstrap-slider.git",
+                "url": "https://github.com/seiyria/bootstrap-slider.git",
                 "reference": "16ebedebe70584c561bc0d1c5af7e91b93e81ec4"
             },
             "dist": {
@@ -6848,5 +6848,5 @@
         "php": "8.1.*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
