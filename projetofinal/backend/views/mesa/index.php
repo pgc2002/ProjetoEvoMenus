@@ -31,10 +31,10 @@ $this->title = 'Mesas';
             [
                 'class'=>'btn btn-secondary',
             ]);
-            echo " ".Html::a('Create Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']);
+            echo " ".Html::a('Criar Mesa', ['create', 'idRestaurante' => $_GET['idRestaurante']], ['class' => 'btn btn-success']);
         }
         else
-            echo Html::a('Create Mesa', ['create'], ['class' => 'btn btn-success']);
+            echo Html::a('Criar Mesa', ['create'], ['class' => 'btn btn-success']);
         ?>
     </p>
 

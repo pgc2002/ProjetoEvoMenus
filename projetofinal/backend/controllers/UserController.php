@@ -86,7 +86,7 @@ class UserController extends Controller
                 $user->save();
 
                 $auth = \Yii::$app->authManager;
-                $role = $auth->getRole('Cliente');
+                //$role = $auth->getRole('Cliente');
                 try {
                     $auth->assign($role, $user->getId());
                 } catch (\Exception $e) {
@@ -100,6 +100,7 @@ class UserController extends Controller
                 $user->generateAuthKey();
                 $user->save();
 
+                /*
                 $auth = \Yii::$app->authManager;
                 switch ($user->tipo){
                     case 'Admin':
@@ -115,7 +116,7 @@ class UserController extends Controller
                 try {
                     $auth->assign($role, $user->getId());
                 } catch (\Exception $e) {
-                }
+                }*/
 
                 return $this->redirect(['view', 'id' => $user->id]);
             }

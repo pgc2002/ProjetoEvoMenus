@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Mesa;
+use common\models\Restaurante;
 use backend\models\MesaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -67,12 +68,18 @@ class MesaController extends Controller
      */
     public function actionCreate()
     {
+
         $model = new Mesa();
+        $restaurante = new Restaurante();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->numero = \common\models\Restaurante::findOne($model->idRestaurante)->getNumeroMesas() + 1;
+                $restaurante = Restaurante::findOne($model->idRestaurante);
+                $model->estado = "Vazia";
+                $model->numero = $restaurante->getNumeroMesas() + 1;
                 $model->save();
+                $restaurante->lotacaoMaxima += $model->capacidade;
+                $restaurante->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -114,8 +121,12 @@ class MesaController extends Controller
     public function actionDelete($id)
     {
         $idRestaurante = $this->findModel($id)->idRestaurante;
+        $restaurante = Restaurante::findOne($idRestaurante);
+        $mesa = Mesa::findOne($id);
+        $restaurante->lotacaoMaxima -= $mesa->capacidade;
+        $restaurante->save(false);
         $this->findModel($id)->delete();
-
+        
         if(isset($_GET['idRestaurante'])) {
             return $this->redirect(['index', 'idRestaurante' => $idRestaurante]);
         }else{

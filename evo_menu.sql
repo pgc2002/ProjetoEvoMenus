@@ -197,6 +197,7 @@ CREATE TABLE `pedido` (
   `id` int(11) NOT NULL,
   `valorTotal` double NOT NULL,
   `estado` varchar(20) NOT NULL,
+  `idRestaurante` int(11) NOT NULL,
   `idCliente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -235,9 +236,11 @@ CREATE TABLE `restaurante` (
 --
 -- Extraindo dados da tabela `restaurante`
 --
+INSERT INTO `horario_funcionamento` (`id`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `sabado`, `domingo`) VALUES 
+(1, '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00', '12:00-15:00-18:00-22:00');
 
 INSERT INTO `restaurante` (`id`, `nome`, `email`, `lotacaoMaxima`, `telemovel`, `idHorario`, `idMorada`) VALUES
-(1, 'teste', 'teste@teste.com', 0, '111111111', NULL, NULL);
+(1, 'teste', 'teste@teste.com', 0, '111111111', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -356,6 +359,7 @@ ALTER TABLE `pagamento`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `idRestaurante` (`idRestaurante`),
   ADD KEY `idCliente` (`idCliente`);
 
 --
@@ -513,7 +517,8 @@ ALTER TABLE `pagamento`
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`id`);
 
 --
 -- Limitadores para a tabela `restaurante`

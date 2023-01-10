@@ -130,6 +130,18 @@ $this->title = $model->nome." - Detalhes";
                 'class'=>'button btn btn-info',
             ]
         );
+
+        echo '<br><br>';
+
+        echo Html::a(
+            'Visualizar pedidos',
+            Url::to(['..\pedido\index', 'id' => $model->id]),
+            [
+                'id'=>'grid-custom-button',
+                'data-pjax'=>true,
+                'class'=>'button btn btn-info',
+            ]
+        );
     ?>
 
 </div>

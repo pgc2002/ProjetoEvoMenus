@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\User;
+use common\models\Restaurante;
 use Yii;
 
 /**
@@ -11,9 +12,11 @@ use Yii;
  * @property int $id
  * @property float $valorTotal
  * @property string $estado
+ * @property int $idRestaurante
  * @property int $idCliente
  *
  * @property User $idCliente0
+ * @property Restaurante $idRestaurante0
  * @property ItemsPedido[] $itemsPedidos
  * @property MenusPedido[] $menusPedidos
  * @property Pagamento[] $pagamentos
@@ -34,11 +37,12 @@ class Pedido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['valorTotal', 'estado', 'idCliente'], 'required'],
+            [['valorTotal', 'estado', 'idRestaurante', 'idCliente'], 'required'],
             [['valorTotal'], 'number'],
-            [['idCliente'], 'integer'],
+            [['idRestaurante', 'idCliente'], 'integer'],
             [['estado'], 'string', 'max' => 20],
             [['idCliente'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['idCliente' => 'id']],
+            [['idRestaurante'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurante::class, 'targetAttribute' => ['idRestaurante' => 'id']],
         ];
     }
 
@@ -51,6 +55,7 @@ class Pedido extends \yii\db\ActiveRecord
             'id' => 'ID',
             'valorTotal' => 'Valor Total',
             'estado' => 'Estado',
+            'idRestaurante' => 'Id Restaurante',
             'idCliente' => 'Id Cliente',
             'usernameCliente' => 'Cliente',
         ];
@@ -67,6 +72,16 @@ class Pedido extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[IdRestaurante0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdRestaurante()
+    {
+        return $this->hasOne(Restaurante::class, ['id' => 'idRestaurante']);
+    }
+
+    /**
      * Gets query for [[ItemsPedidos]].
      *
      * @return \yii\db\ActiveQuery
@@ -75,6 +90,7 @@ class Pedido extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Item::class, ['id' => 'idItem'])->viaTable('items_pedido', ['idPedido' => 'id']);
     }
+
     public function getItemsPedidos()
     {
         return $this->hasMany(ItemsPedido::class, ['idPedido' => 'id']);

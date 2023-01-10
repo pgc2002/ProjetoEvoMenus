@@ -28,7 +28,7 @@ $this->title = 'Restaurantes';
                 'template' => '{detalhes}',
                 'buttons' => [
                     'detalhes' => function($url, $model, $key) {
-                        return Html::a('Ver Detalhes','view?id='.$model->id, ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                        return Html::a('Detalhes','view?id='.$model->id, ['class' => 'btn btn-success', 'data-pjax' => 0]);
                     }
                 ]
             ],

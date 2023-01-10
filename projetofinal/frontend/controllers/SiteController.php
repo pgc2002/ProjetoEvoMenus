@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
@@ -11,10 +13,12 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\CookieCollection;
 
 /**
  * Site controller
@@ -91,6 +95,16 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            $cookies = Yii::$app->response->cookies;
+
+            $user = User::findOne(Yii::$app->user->identity->id);
+            if($user->tipo == "Funcionario" || $user->tipo == "Gestor")
+                $cookies->add(new \yii\web\Cookie([
+                    'name' => 'idRestaurante',
+                    'value' => $user->idRestaurante,
+                ]));
+
             return $this->goBack();
         }
 
@@ -109,6 +123,10 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+
+        $cookies = Yii::$app->response->cookies;
+        
+        $cookies->remove('idRestaurante');
 
         return $this->goHome();
     }

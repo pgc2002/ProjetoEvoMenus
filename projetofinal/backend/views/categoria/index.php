@@ -111,7 +111,7 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                         <?php
                             if($idCategoria != null){
                                 $categoria = Categoria::findOne(['id' => $idCategoria]);
-
+                                
                                 $dataProvider = new ActiveDataProvider([
                                     'query' => Item::find()->where(['idCategoria' => $idCategoria]),
                                     'pagination' => [

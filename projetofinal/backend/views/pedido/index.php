@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Pedido;
+
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -29,8 +30,6 @@ $this->title = 'Pedidos';
             border-bottom: 3px solid #0080ff;
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <ul class="nav">
@@ -90,8 +89,12 @@ $this->title = 'Pedidos';
             ]
         ]);
         echo '</div>';
-
-        $pedidos = Pedido::find()->where(['estado' => 'expedido'])->all();
+        if(Yii::$app->request->get('id')){
+            $pedidos = Pedido::find()->where(['estado' => 'expedido'])->all();
+        }else{
+            $pedidos = Pedido::find()->where(['estado' => 'expedido'])->all();
+        }
+        
 
         $dataProvider = new ArrayDataProvider([
             'allModels' => $pedidos,
@@ -188,6 +191,7 @@ $this->title = 'Pedidos';
         ]);
         echo '</div>';
     ?>
+    </div>
     <script>
         $(document).ready(function() {
             if (window.location.href.indexOf("#recebidos") > -1)
