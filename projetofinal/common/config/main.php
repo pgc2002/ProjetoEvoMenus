@@ -5,16 +5,19 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'modules' => [
+    /*'modules' => [
         'admin' => [ 'class' => 'mdm\admin\Module',]
-    ],
+    ],*/
     'components' => [
-        'user' => [
+        /*'user' => [
             'identityClass' => 'mdm\admin\models\User',
             'loginUrl' => ['site/login'],
         ],
+            'loginUrl' => ['admin/user/login'],
+        ],*/
         'authManager' => [
-          'class' => 'yii\rbac\DBManager',
+            'class' => 'yii\rbac\DBManager',
+            'defaultRoles' => ['guest'],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

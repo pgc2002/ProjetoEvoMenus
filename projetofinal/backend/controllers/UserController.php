@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
+use PHPUnit\Framework\Error\Error;
 use yii;
 use common\models\User;
 use common\models\Morada;
 use app\models\UserSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
@@ -77,10 +79,19 @@ class UserController extends Controller
 
         if ($this->request->isPost) {
             if ($user->load($this->request->post()) && $morada->load($this->request->post()) ) {
-
                 $this->password = Yii::$app->request->post('password');
-                $morada->save(false);
-                $user->idMorada = $morada->id;
+
+                $checkMorada = Morada::find()->where(['pais' => $morada->pais, 'cidade' => $morada->cidade,
+                    'rua' => $morada->rua, 'codpost' => $morada->codpost])->one();
+
+                if($checkMorada){
+                    $idMorada = $checkMorada->id;
+                }else {
+                    $morada->save(false);
+                    $idMorada = $morada->id;
+                }
+
+                $user->idMorada = $idMorada;
                 $user->setPassword($this->password);
                 $user->generateAuthKey();
                 $user->save();
@@ -88,10 +99,10 @@ class UserController extends Controller
                 $auth = \Yii::$app->authManager;
                 //$role = $auth->getRole('Cliente');
                 try {
-                    $auth->assign($role, $user->getId());
+                    $auth->assign($role, $user->id);
                 } catch (\Exception $e) {
                 }
-
+                
                 return $this->redirect(['view', 'id' => $user->id]);
             }else if($user->load($this->request->post())){
 
@@ -114,7 +125,7 @@ class UserController extends Controller
                         break;
                 }
                 try {
-                    $auth->assign($role, $user->getId());
+                    $auth->assign($role, $user->id);
                 } catch (\Exception $e) {
                 }*/
 
