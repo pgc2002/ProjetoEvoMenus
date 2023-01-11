@@ -4,11 +4,16 @@ use common\models\User;
 
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4" >
+    <style>
+        .image{text-align: center;}
+    </style>
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home().'site\index'?>" class="brand-link">
-        <img src="../web/resources/logo.png" alt="Evo Menus" class="brand-image img-circle elevation-2" style="height:auto; width: auto;">
-        <span class="brand-text font-weight-light">Evo Menus</span>
+        <div class="image"  >
+            <img src="../../../common/logo/logotipo.png" class="img-circle elevation-2" style="width:55%">
+        </div>
     </a>
+
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebarPrincipal">

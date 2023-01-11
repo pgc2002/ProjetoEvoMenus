@@ -13,6 +13,7 @@ use yii\grid\GridView;
 $this->title = 'Restaurantes';
 
 ?>
+
 <div class="restaurante-index">
 
     <?php /*echo $this->render('_search', ['model' => $searchModel]);*/ ?>

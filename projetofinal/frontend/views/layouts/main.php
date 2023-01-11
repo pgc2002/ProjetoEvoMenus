@@ -28,7 +28,7 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => "Evo Menus",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
@@ -71,7 +71,7 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-white" style="background-color: #383c44;">
     <div class="container-fluid">
-        <p class="float-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <p class="float-left">&copy; Evo Menus <?= date('Y') ?></p>
     </div>
 </footer>
 
