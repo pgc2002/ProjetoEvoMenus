@@ -6,11 +6,12 @@ use yii\helpers\Html;
 /** @var common\models\User $user */
 /** @var common\models\Morada $morada */
 
-$this->title = 'Create User';
+$this->title = 'Criar Utilizador';
+
+
 ?>
 <div class="user-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p>&nbsp&nbsp<?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?></p>
 
     <?= $this->render('_form', [
         'user' => $user,

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\User;
 use Yii;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -61,11 +62,15 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if(Yii::$app->user->can('acessoBackend')){
+            return $this->render('index');
+        }else{
+            return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
+        }
     }
 
     /**
@@ -83,7 +88,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            if(Yii::$app->user->can('acessoBackend')){
+                return $this->goBack();
+            }else{
+                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
+            }
         }
 
         $model->password = '';
@@ -91,14 +100,6 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
-
-    public function actionError()
-    {
-        if (Yii::app()->errorHandler->error['code'] == 404)
-            $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
-        else
-            $this->render('error');
     }
 
     /**
@@ -110,7 +111,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
     }
 
 

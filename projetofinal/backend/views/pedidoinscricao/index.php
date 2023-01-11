@@ -20,6 +20,7 @@ $this->title = 'Pedido Inscrição';
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'layout' => '{items}{pager}',
         'filterModel' => $searchModel,
         'columns' => [
             [

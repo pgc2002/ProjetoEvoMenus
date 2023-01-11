@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Horariofuncionamento;
 use common\models\PedidoInscricao;
 use backend\models\PedidoInscricaoSearch;
 use common\models\Morada;
@@ -55,6 +56,7 @@ class PedidoinscricaoController extends Controller
         $pedidoInscricao = $this->findModel($id);
         $restaurante = new Restaurante();
         $morada = new Morada();
+        $horario = new Horariofuncionamento();
 
         $restaurante->nome = $pedidoInscricao->nome;
         $restaurante->email = $pedidoInscricao->email;
@@ -67,7 +69,17 @@ class PedidoinscricaoController extends Controller
         $morada->codpost = $arrayMorada[3];
         $morada->save(false);
 
+        $horario->segunda = "12:00-15:00-19:00-23:00";
+        $horario->terca = "12:00-15:00-19:00-23:00";
+        $horario->quarta = "12:00-15:00-19:00-23:00";
+        $horario->quinta = "12:00-15:00-19:00-23:00";
+        $horario->sexta = "12:00-15:00-19:00-23:00";
+        $horario->sabado = "12:00-15:00-19:00-23:00";
+        $horario->domingo = "12:00-15:00-19:00-23:00";
+        $horario->save(false);
+
         $restaurante->idMorada = $morada->id;
+        $restaurante->idHorario = $horario->id;
         $restaurante->save(false);
 
         $pedidoInscricao->delete();

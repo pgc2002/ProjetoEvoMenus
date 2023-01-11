@@ -53,7 +53,6 @@ $this->title = 'Mesas';
         'filterModel' => $searchModel,
         'layout' => '{items}{pager}',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             'numero',
             'capacidade',
             'estado',
@@ -74,7 +73,6 @@ $this->title = 'Mesas';
             'filterModel' => $searchModel,
             'layout' => '{items}{pager}',
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
                 'nomeRestaurante',
                 'numero',
                 'capacidade',

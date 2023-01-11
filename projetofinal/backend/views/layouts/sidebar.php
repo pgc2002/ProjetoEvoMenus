@@ -1,23 +1,32 @@
+<?php
+
+use common\models\User;
+
+?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4" >
+    <style>
+        .image{text-align: center;}
+    </style>
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home().'site\index'?>" class="brand-link">
-        <!--<img src="<?=$assetDir?>/img/logo-evo-menus.png" alt="Evo Menus" class="brand-image img-circle elevation-3" style="opacity: .8">-->
-        <span class="brand-text font-weight-light">Evo Menus</span>
+        <div class="image"  >
+            <img src="../../../common/logo/logotipo.png" class="img-circle elevation-2" style="width:55%">
+        </div>
     </a>
+
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebarPrincipal">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <?php
+                    echo '<a href="../user/view?id='.Yii::$app->user->identity->id.'&sb=1"class="d-block">Perfil de Utilizador</a>'
+                ?>
             </div>
         </div>
 
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <!--div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <input type="checkbox" id="button" style="display: none;">
             <div class="image">
                 <label for="button" class="fa fa-moon-o " style="cursor: pointer; align: center;"></label>
@@ -26,10 +35,10 @@
             <div class="info">
                 <a class="d-block" id="buttonText">Dark Mode</a>
             </div>
-        </div>
+        </div>-->
 
         <script>
-            let $sidebar = $('#sidebarPrincipal');
+            /*let $sidebar = $('#sidebarPrincipal');
             let $container = $('<div />', {
                 class: 'p-3 control-sidebar-content'
             });
@@ -43,7 +52,7 @@
                 } else {
                     $('body').removeClass('dark-mode');
                 }
-            });
+            });*/
 
         </script>
 

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Horariofuncionamento;
 use common\models\Pedidoinscricao;
 use common\models\Restaurante;
 use app\models\PedidoinscricaoSearch;
@@ -44,8 +45,6 @@ class PedidoinscricaoController extends Controller
     public function actionCreate()
     {
         $model = new Pedidoinscricao();
-
-
         try {
             if ($this->request->isPost) {
                 if ($model->load($this->request->post())) {
@@ -68,9 +67,6 @@ class PedidoinscricaoController extends Controller
                         Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
                         return $this->refresh();
                     }
-                }else {
-                    Yii::$app->session->setFlash('error', 'Ocorreu um erro ao se inscrever.');
-                    return $this->refresh();
                 }
             }
 

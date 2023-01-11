@@ -48,6 +48,7 @@ $this->title = $model->nome." - Detalhes";
 
         $horario = $horario->getHorario();
 
+        //print_r($horario);
         foreach($horario as $key => $value){
             if(in_array( "Folga", $horario[$key], true )){
                 $dias[$key][0] = "Folga";
