@@ -42,13 +42,15 @@ class MenuController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MenuSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $searchModel = new MenuSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -59,9 +61,11 @@ class MenuController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('acessoBackend')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -71,32 +75,33 @@ class MenuController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Menu();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = new Menu();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()))
-            {
-                $image = UploadedFile::getInstance($model, 'fotografia');
-                $imgName = 'img_'.$model->nome.'_Menu.'.$image->getExtension();
-                $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
-                $model->fotografia = $imgName;
-                $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
-                $model->save();
-                $idArray = explode(',' ,Yii::$app->request->post('idItems'));
-                foreach($idArray as $id){
-                    $item = Item::findOne($id);
-                    $model->link('items', $item);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $image = UploadedFile::getInstance($model, 'fotografia');
+                    $imgName = 'img_' . $model->nome . '_Menu.' . $image->getExtension();
+                    $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
+                    $model->fotografia = $imgName;
+                    $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
+                    $model->save();
+                    $idArray = explode(',', Yii::$app->request->post('idItems'));
+                    foreach ($idArray as $id) {
+                        $item = Item::findOne($id);
+                        $model->link('items', $item);
+                    }
+                    return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+
                 }
-                return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
-
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -108,28 +113,30 @@ class MenuController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $image = UploadedFile::getInstance($model, 'fotografia');
-            $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
-            $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
-            $model->fotografia = $imgName;
-            $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
-            $model->save();
-            $model->unlinkAll('items', true);
-            $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
-            $idArray = explode(',' ,Yii::$app->request->post('idItems'));
-            foreach($idArray as $id){
-                $item = Item::findOne($id);
-                $model->link('items', $item);
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                $image = UploadedFile::getInstance($model, 'fotografia');
+                $imgName = 'img_' . $model->nome . '_Item_.' . $image->getExtension();
+                $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
+                $model->fotografia = $imgName;
+                $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
+                $model->save();
+                $model->unlinkAll('items', true);
+                $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
+                $idArray = explode(',', Yii::$app->request->post('idItems'));
+                foreach ($idArray as $id) {
+                    $item = Item::findOne($id);
+                    $model->link('items', $item);
+                }
+                return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
             }
-            return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
-        }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -141,9 +148,11 @@ class MenuController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**

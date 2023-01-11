@@ -7,6 +7,7 @@ use common\models\PedidoInscricao;
 use backend\models\PedidoInscricaoSearch;
 use common\models\Morada;
 use common\models\Restaurante;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,57 +42,62 @@ class PedidoinscricaoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PedidoInscricaoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $searchModel = new PedidoInscricaoSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     public function actionAceitar($id)
     {
-        $pedidoInscricao = $this->findModel($id);
-        $restaurante = new Restaurante();
-        $morada = new Morada();
-        $horario = new Horariofuncionamento();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $pedidoInscricao = $this->findModel($id);
+            $restaurante = new Restaurante();
+            $morada = new Morada();
+            $horario = new Horariofuncionamento();
 
-        $restaurante->nome = $pedidoInscricao->nome;
-        $restaurante->email = $pedidoInscricao->email;
-        $restaurante->telemovel = $pedidoInscricao->telemovel;
+            $restaurante->nome = $pedidoInscricao->nome;
+            $restaurante->email = $pedidoInscricao->email;
+            $restaurante->telemovel = $pedidoInscricao->telemovel;
 
-        $arrayMorada= explode("!%$#%&()", $pedidoInscricao->morada );
-        $morada->pais = $arrayMorada[0];
-        $morada->cidade = $arrayMorada[1];
-        $morada->rua = $arrayMorada[2];
-        $morada->codpost = $arrayMorada[3];
-        $morada->save(false);
+            $arrayMorada = explode("!%$#%&()", $pedidoInscricao->morada);
+            $morada->pais = $arrayMorada[0];
+            $morada->cidade = $arrayMorada[1];
+            $morada->rua = $arrayMorada[2];
+            $morada->codpost = $arrayMorada[3];
+            $morada->save(false);
 
-        $horario->segunda = "12:00-15:00-19:00-23:00";
-        $horario->terca = "12:00-15:00-19:00-23:00";
-        $horario->quarta = "12:00-15:00-19:00-23:00";
-        $horario->quinta = "12:00-15:00-19:00-23:00";
-        $horario->sexta = "12:00-15:00-19:00-23:00";
-        $horario->sabado = "12:00-15:00-19:00-23:00";
-        $horario->domingo = "12:00-15:00-19:00-23:00";
-        $horario->save(false);
+            $horario->segunda = "12:00-15:00-19:00-23:00";
+            $horario->terca = "12:00-15:00-19:00-23:00";
+            $horario->quarta = "12:00-15:00-19:00-23:00";
+            $horario->quinta = "12:00-15:00-19:00-23:00";
+            $horario->sexta = "12:00-15:00-19:00-23:00";
+            $horario->sabado = "12:00-15:00-19:00-23:00";
+            $horario->domingo = "12:00-15:00-19:00-23:00";
+            $horario->save(false);
 
-        $restaurante->idMorada = $morada->id;
-        $restaurante->idHorario = $horario->id;
-        $restaurante->save(false);
+            $restaurante->idMorada = $morada->id;
+            $restaurante->idHorario = $horario->id;
+            $restaurante->save(false);
 
-        $pedidoInscricao->delete();
-        return $this->redirect('index');
+            $pedidoInscricao->delete();
+            return $this->redirect('index');
+        }
     }
 
     public function actionRecusar($id)
     {
-        $pedidoInscricao = $this->findModel($id);
-        $pedidoInscricao->delete();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $pedidoInscricao = $this->findModel($id);
+            $pedidoInscricao->delete();
 
-        return $this->redirect('index');
+            return $this->redirect('index');
+        }
     }
 
     /**
@@ -102,9 +108,11 @@ class PedidoinscricaoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('acessoBackend')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -114,19 +122,21 @@ class PedidoinscricaoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new PedidoInscricao();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = new PedidoInscricao();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -138,15 +148,17 @@ class PedidoinscricaoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -158,9 +170,11 @@ class PedidoinscricaoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**

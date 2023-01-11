@@ -6,6 +6,7 @@ use common\models\User;
 <aside class="main-sidebar sidebar-dark-primary elevation-4" >
     <style>
         .image{text-align: center;}
+        .d-block{text-align: center;}
     </style>
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home().'site\index'?>" class="brand-link">
@@ -14,17 +15,16 @@ use common\models\User;
         </div>
     </a>
 
-
     <!-- Sidebar -->
     <div class="sidebar" id="sidebarPrincipal">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
             <div class="info">
                 <?php
-                    echo '<a href="../user/view?id='.Yii::$app->user->identity->id.'&sb=1"class="d-block">Perfil de Utilizador</a>'
+                    echo '<a href="../user/view?id='.Yii::$app->user->identity->id.'&sb=1"class="d-block">Perfil</a>'
                 ?>
             </div>
-        </div>
+
 
         <!--div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <input type="checkbox" id="button" style="display: none;">

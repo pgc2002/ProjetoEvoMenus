@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Pedido;
 use app\models\PedidoSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,13 +39,15 @@ class PedidoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PedidoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $searchModel = new PedidoSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -55,9 +58,11 @@ class PedidoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('acessoBackend')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -67,19 +72,21 @@ class PedidoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Pedido();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = new Pedido();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -91,15 +98,17 @@ class PedidoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -111,9 +120,11 @@ class PedidoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -133,16 +144,20 @@ class PedidoController extends Controller
     }
 
     public function actionExpedir($id){
-        $model = Pedido::findOne(['id' => $id]);
-        $model->estado = 'expedido';
-        $model->save();
-        return $this->redirect(['index#recebidos']);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = Pedido::findOne(['id' => $id]);
+            $model->estado = 'expedido';
+            $model->save();
+            return $this->redirect(['index#recebidos']);
+        }
     }
 
     public function actionConcluir($id){
-        $model = Pedido::findOne(['id' => $id]);
-        $model->estado = 'concluido';
-        $model->save();
-        return $this->redirect(['index#expedidos']);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = Pedido::findOne(['id' => $id]);
+            $model->estado = 'concluido';
+            $model->save();
+            return $this->redirect(['index#expedidos']);
+        }
     }
 }

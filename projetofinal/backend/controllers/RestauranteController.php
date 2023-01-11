@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Restaurante;
 use app\models\RestauranteSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,13 +39,15 @@ class RestauranteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RestauranteSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('acessoBackend')) {
+            $searchModel = new RestauranteSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -55,9 +58,11 @@ class RestauranteController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('acessoBackend')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -67,19 +72,21 @@ class RestauranteController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Restaurante();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $model = new Restaurante();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -91,6 +98,7 @@ class RestauranteController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->can('acessoBackend')){
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -100,6 +108,7 @@ class RestauranteController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+        }
     }
 
     /**
@@ -111,9 +120,11 @@ class RestauranteController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('acessoBackend')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**
