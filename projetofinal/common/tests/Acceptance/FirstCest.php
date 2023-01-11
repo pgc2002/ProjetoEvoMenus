@@ -1,6 +1,6 @@
 <?php
 
-namespace Acceptance;
+namespace common\tests\Acceptance;
 
 class FirstCest
 {

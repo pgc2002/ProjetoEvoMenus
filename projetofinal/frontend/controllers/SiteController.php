@@ -105,7 +105,7 @@ class SiteController extends Controller
                     'value' => $user->idRestaurante,
                 ]));
             else if($user->tipo == 'Admin'){
-                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/backend/web/');
+                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/backend/web/site/index');
             } else{
                 Yii::$app->user->logout();
             }
@@ -164,16 +164,11 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
+   /* public function actionAbout()
     {
         return $this->render('about');
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -187,11 +182,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
+
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
@@ -210,13 +201,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
+
     public function actionResetPassword($token)
     {
         try {
@@ -236,13 +221,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Verify email address
-     *
-     * @param string $token
-     * @throws BadRequestHttpException
-     * @return yii\web\Response
-     */
+
     public function actionVerifyEmail($token)
     {
         try {
@@ -259,11 +238,7 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Resend verification email
-     *
-     * @return mixed
-     */
+
     public function actionResendVerificationEmail()
     {
         $model = new ResendVerificationEmailForm();
@@ -278,5 +253,5 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
-    }
+    }*/
 }

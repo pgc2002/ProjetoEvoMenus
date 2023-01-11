@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Categoria;
 use backend\models\CategoriaSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,13 +39,15 @@ class CategoriaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategoriaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('crudMenus') || Yii::$app->user->can('visualizarMenus')) {
+            $searchModel = new CategoriaSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -55,9 +58,11 @@ class CategoriaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('crudMenus') || Yii::$app->user->can('visualizarMenus')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -67,19 +72,21 @@ class CategoriaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Categoria();
+        if(Yii::$app->user->can('crudMenus')) {
+            $model = new Categoria();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['index', 'id' => $model->idRestaurante]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['index', 'id' => $model->idRestaurante]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }   
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -91,15 +98,17 @@ class CategoriaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('crudMenus')) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -111,9 +120,11 @@ class CategoriaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('crudMenus')) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**

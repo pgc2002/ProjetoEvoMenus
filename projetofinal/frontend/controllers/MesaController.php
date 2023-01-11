@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Mesa;
 use common\models\Restaurante;
 use backend\models\MesaSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,13 +40,15 @@ class MesaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MesaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('visualizarMesas') || Yii::$app->user->can('crudMesas')) {
+            $searchModel = new MesaSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -56,9 +59,11 @@ class MesaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('visualizarMesas') || Yii::$app->user->can('crudMesas')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -68,7 +73,7 @@ class MesaController extends Controller
      */
     public function actionCreate()
     {
-
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMesas'))) {
         $model = new Mesa();
         $restaurante = new Restaurante();
 
@@ -80,7 +85,7 @@ class MesaController extends Controller
                 $model->save();
                 $restaurante->lotacaoMaxima += $model->capacidade;
                 $restaurante->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['restaurante/view', 'id' => $model->idRestaurante]);
             }
         } else {
             $model->loadDefaultValues();
@@ -89,6 +94,8 @@ class MesaController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
+        }
     }
 
     /**
@@ -100,15 +107,17 @@ class MesaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMesas'))) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -120,17 +129,19 @@ class MesaController extends Controller
      */
     public function actionDelete($id)
     {
-        $idRestaurante = $this->findModel($id)->idRestaurante;
-        $restaurante = Restaurante::findOne($idRestaurante);
-        $mesa = Mesa::findOne($id);
-        $restaurante->lotacaoMaxima -= $mesa->capacidade;
-        $restaurante->save(false);
-        $this->findModel($id)->delete();
-        
-        if(isset($_GET['idRestaurante'])) {
-            return $this->redirect(['index', 'idRestaurante' => $idRestaurante]);
-        }else{
-            return $this->redirect(['index']);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMesas'))) {
+            $idRestaurante = $this->findModel($id)->idRestaurante;
+            $restaurante = Restaurante::findOne($idRestaurante);
+            $mesa = Mesa::findOne($id);
+            $restaurante->lotacaoMaxima -= $mesa->capacidade;
+            $restaurante->save(false);
+            $this->findModel($id)->delete();
+
+            if (isset($_GET['idRestaurante'])) {
+                return $this->redirect(['index', 'idRestaurante' => $idRestaurante]);
+            } else {
+                return $this->redirect(['index']);
+            }
         }
     }
 

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Restaurante;
 use app\models\RestauranteSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,13 +39,15 @@ class RestauranteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RestauranteSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can('visualizarMenus') || Yii::$app->user->can('crudMenus')) {
+            $searchModel = new RestauranteSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -55,9 +58,11 @@ class RestauranteController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('visualizarMenus') || Yii::$app->user->can('crudMenus')) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**

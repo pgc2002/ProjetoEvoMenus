@@ -41,13 +41,15 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ItemSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+            $searchModel = new ItemSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -58,9 +60,11 @@ class ItemController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -70,25 +74,26 @@ class ItemController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Item();
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+            $model = new Item();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()))
-            {
-                $image = UploadedFile::getInstance($model, 'fotografia');
-                $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
-                $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
-                $model->fotografia = $imgName;
-                $model->save();
-                return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    $image = UploadedFile::getInstance($model, 'fotografia');
+                    $imgName = 'img_' . $model->nome . '_Item_.' . $image->getExtension();
+                    $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
+                    $model->fotografia = $imgName;
+                    $model->save();
+                    return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -100,21 +105,23 @@ class ItemController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $image = UploadedFile::getInstance($model, 'fotografia');
-            $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
-            $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
-            $model->fotografia = $imgName;
-            $model->save();
-            $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
-            return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                $image = UploadedFile::getInstance($model, 'fotografia');
+                $imgName = 'img_' . $model->nome . '_Item_.' . $image->getExtension();
+                $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
+                $model->fotografia = $imgName;
+                $model->save();
+                $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
+                return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -126,9 +133,11 @@ class ItemController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**

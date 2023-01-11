@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `evo_menu`
 --
+DROP DATABASE IF EXISTS `evo_menu`;
 CREATE DATABASE IF NOT EXISTS `evo_menu` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
 USE `evo_menu`;
 
@@ -619,6 +620,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
   `valorTotal` double NOT NULL,
   `estado` varchar(20) NOT NULL,
   `idCliente` int NOT NULL,
+  `idRestaurante` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idCliente` (`idCliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
@@ -786,7 +788,8 @@ ALTER TABLE `pagamento`
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`idRestaurante`) REFERENCES `restaurante` (`id`);
 
 --
 -- Limitadores para a tabela `restaurante`

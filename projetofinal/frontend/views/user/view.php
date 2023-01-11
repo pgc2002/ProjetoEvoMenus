@@ -15,14 +15,15 @@ $morada = Morada::findOne([
     'id' => $model->idMorada,
 ]);
 
-$this->title = $model->id;
+$this->title = 'Detalhes do Funcionário';
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <br>
 
     <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -33,16 +34,16 @@ $this->title = $model->id;
         ]) ?>
     </p>
 
+    <h1><?= Html::encode($this->title) ?></h1>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             //'id',
             'username',
             'nome',
-            'auth_key',
-            'password_hash',
             //'password_reset_token',
-            'email:email',
+            'email',
             //'status',
             [
                 'attribute' => 'created_at',
@@ -54,7 +55,6 @@ $this->title = $model->id;
             'telemovel',
             'nif',
             'tipo',
-            'moradaFormatada',
             //'idRestaurante',
             //'idMorada',
             //'idMesa',

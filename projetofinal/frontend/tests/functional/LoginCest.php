@@ -52,13 +52,13 @@ class LoginCest
 
     public function checkInactiveAccount(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('test.test', 'Test1234'));
+        $I->submitForm('#login-form', $this->formParams('teste', '12345678'));
         $I->seeValidationError('Incorrect username or password');
     }
 
     public function checkValidLogin(FunctionalTester $I)
     {
-        $I->submitForm('#login-form', $this->formParams('erau', 'password_0'));
+        $I->submitForm('#login-form', $this->formParams('teste', '12345678'));
         $I->see('Logout (erau)', 'form button[type=submit]');
         $I->dontSeeLink('Login');
         $I->dontSeeLink('Signup');

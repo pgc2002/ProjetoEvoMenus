@@ -42,13 +42,15 @@ class MenuController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MenuSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+            $searchModel = new MenuSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -59,9 +61,12 @@ class MenuController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -71,6 +76,7 @@ class MenuController extends Controller
      */
     public function actionCreate()
     {
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
         $model = new Menu();
 
         if ($this->request->isPost) {
@@ -97,6 +103,7 @@ class MenuController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+        }
     }
 
     /**
@@ -108,28 +115,30 @@ class MenuController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+            $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $image = UploadedFile::getInstance($model, 'fotografia');
-            $imgName = 'img_' .$model->nome.'_Item_.'.$image->getExtension();
-            $image->saveAs(Yii::getAlias('@fotografiaPath').'/'. $imgName);
-            $model->fotografia = $imgName;
-            $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
-            $model->save();
-            $model->unlinkAll('items', true);
-            $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
-            $idArray = explode(',' ,Yii::$app->request->post('idItems'));
-            foreach($idArray as $id){
-                $item = Item::findOne($id);
-                $model->link('items', $item);
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                $image = UploadedFile::getInstance($model, 'fotografia');
+                $imgName = 'img_' . $model->nome . '_Item_.' . $image->getExtension();
+                $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
+                $model->fotografia = $imgName;
+                $model->idCategoria = Yii::$app->request->post('idCategoriaHidden');
+                $model->save();
+                $model->unlinkAll('items', true);
+                $categoria = Categoria::find()->where(['id' => $model->idCategoria])->one();
+                $idArray = explode(',', Yii::$app->request->post('idItems'));
+                foreach ($idArray as $id) {
+                    $item = Item::findOne($id);
+                    $model->link('items', $item);
+                }
+                return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
             }
-            return $this->redirect(['..\categoria\index', 'id' => $categoria->idRestaurante, 'idCategoria' => $model->idCategoria]);
-        }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -141,9 +150,11 @@ class MenuController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
     }
 
     /**

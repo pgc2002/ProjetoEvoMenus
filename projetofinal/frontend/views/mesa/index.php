@@ -2,6 +2,7 @@
 
 use common\models\Mesa;
 use common\models\Restaurante;
+use common\models\User;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -21,12 +22,15 @@ if(isset($_GET['idRestaurante'])){
 }
 else
     $this->title = 'Mesas';
+
+$user = User::findOne(Yii::$app->user->identity->id);   
 ?>
 <div class="mesa-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?php
-            echo " ".Html::a('Criar Mesa', ['create', 'idRestaurante' => $idRestaurante], ['class' => 'btn btn-success']);
+            if(Yii::$app->user->can('crudMesas'))
+                echo " ".Html::a('Criar Mesa', ['create', 'idRestaurante' => $idRestaurante], ['class' => 'btn btn-success']);
         ?>
     </p>
 
