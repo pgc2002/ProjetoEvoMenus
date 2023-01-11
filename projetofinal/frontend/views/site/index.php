@@ -4,10 +4,10 @@ use yii\helpers\Html;
 $this->title = 'Evo Menus';
 ?>
 <style type="text/css">
-    .div-1 {
-        background-image: url('../web/resources/backgroundindex2.jpg');
-        background-size:initial;
-        height:550px;
+    body{
+        background-image: url('../web/resources/image-from-rawpixel-id-3283405-jpeg.jpg');
+        background-size:cover;
+        height:auto;
     }
     .body-content {
         text-align: center;
@@ -27,7 +27,6 @@ $this->title = 'Evo Menus';
     }
 </style>
 <div class="site-index">
-    
     <div class="div-1" >
             <div class="jumbotron text-center bg-transparent" >
                 <h1>Bem Vindo!!</h1>

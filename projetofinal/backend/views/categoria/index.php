@@ -12,11 +12,10 @@ use common\models\Menu;
 /** @var backend\models\CategoriaSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-
 $idRestaurante = Yii::$app->request->get('id');
 $categorias = Categoria::findAll(['idRestaurante' => $idRestaurante]);
 $idCategoria = Yii::$app->request->get('idCategoria');
-
+$this->title = 'Ementa de: '.\common\models\Restaurante::findOne($idRestaurante)->nome;
 ?>
 <style>
     h1 {
@@ -82,9 +81,14 @@ $idCategoria = Yii::$app->request->get('idCategoria');
     }
 </style>
 <div class="categoria-index" style="height: 100%;">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?= Html::a(
+        'Voltar para restaurante',
+        Url::to(['..\restaurante\view', 'id' => $idRestaurante]),
+        [
+            'class'=>'btn btn-secondary',
+        ]); ?>
     <div class="row" >
-        <h1>Ementa</h1>
+        <h1><?= Html::encode($this->title) ?></h1>
     </div>
     <div class="row" name="rowEmenta" >
         <div class="col-sm-2">

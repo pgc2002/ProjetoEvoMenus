@@ -81,7 +81,7 @@ class m230110_022819_init_rbac extends Migration
         //
 
         // Roles
-        $admin = $auth->createRole('Admin');
+        $admin = $auth->createRole('Administrador');
         $admin->description = 'Tem permissões para tudo';
         $auth->add($admin);
         $auth->addChild($admin, $acessoBackend);

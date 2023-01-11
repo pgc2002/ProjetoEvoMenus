@@ -11,8 +11,8 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var backend\models\PedidoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-
-$this->title = 'Pedidos';
+$idRestaurante = Yii::$app->request->get('id');
+$this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante)->nome;
 ?>
 <div class="pedidos-index">
     <style>
@@ -30,6 +30,14 @@ $this->title = 'Pedidos';
             border-bottom: 3px solid #0080ff;
         }
     </style>
+
+    <?= Html::a(
+        'Voltar para restaurante',
+        Url::to(['..\restaurante\view', 'id' => $idRestaurante]),
+        [
+            'class'=>'btn btn-secondary',
+        ]); ?>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <ul class="nav">

@@ -3,19 +3,23 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\User $model */
+/** @var common\models\User $user */
+/** @var common\models\Morada $morada */
 
-$this->title = 'Update User: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Update User: ' . $user->id;
 ?>
 <div class="user-update">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <?php
+        if($user->tipo == 'Cliente'){
+            return $this->render('formUpdateClientes', [
+                'user' => $user,
+                'morada' => $morada,
+            ]);
+        }else{
+            return $this->render('formUpdate', [
+                'user' => $user,
+            ]);
+        }
+    ?>
 </div>

@@ -10,13 +10,13 @@ use yii\grid\GridView;
 /** @var app\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Users';
+$this->title = 'Utilizadores';
 ?>
 
 <div class="user-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p><?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?></p>
+    <p><?= Html::a('Criar Utilizador', ['create'], ['class' => 'btn btn-success']) ?></p>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -24,12 +24,11 @@ $this->title = 'Users';
         'filterModel' => $searchModel,
         'layout' => '{items}{pager}',
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
             'id',
             'username',
             [
                 'attribute' => 'nome',
-                'label' => 'Nome Completo',
+                'label' => 'Nome',
             ],
             //'auth_key',
             //'password_hash',
@@ -50,12 +49,24 @@ $this->title = 'Users';
             //'idMesa',
             [
                 'class' => ActionColumn::className(),
+                'template' => '{view} {update} {delete}',
+                'buttons' => [
+                    'delete' => function ($url, $model, $key) {
+                        if(Yii::$app->user->identity->id != $model->id) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
+                                'class' => 'fa fa-trash',
+                                'data' => [
+                                    'confirm' => 'Tem a certeza que quer apagar este utilizador?',
+                                    'method' => 'post',
+                                ],
+                            ]);
+                        }
+                    }
+                ],
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],
     ]); ?>
-
-
 </div>

@@ -27,7 +27,7 @@ $this->title = $model->id;
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Tem a certeza que quer apagar este utilizador?',
                 'method' => 'post',
             ],
         ]) ?>

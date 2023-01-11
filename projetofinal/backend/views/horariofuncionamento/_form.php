@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     .folga{
         padding-left: 5px;
         padding-right: 5px;
-        padding-top: 3.5%;
+        padding-top: 2.4%;
     }
 </style>
 
@@ -77,6 +77,7 @@ use yii\widgets\ActiveForm;
 
 <div class="horario-funcionamento-form">
 
+
     <?php
         $form = ActiveForm::begin();
         $dias = $model->getHorario();
@@ -101,12 +102,7 @@ use yii\widgets\ActiveForm;
         }
     ?>
     <h4>Segunda-feira</h4>
-    <?= Html::a(
-    'Voltar para restaurante',
-    Url::to(['..\restaurante\view', 'id' => $model->getRestauranteId()]),
-    [
-    'class'=>'btn btn-secondary',
-    ]); ?>
+
     <div class="row" id="segunda">
         <div class="column">
             <?= Html::label('Início Almoço', 'segunda_almoco_inicio')?>

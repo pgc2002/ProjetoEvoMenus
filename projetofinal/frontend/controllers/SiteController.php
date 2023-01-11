@@ -104,6 +104,11 @@ class SiteController extends Controller
                     'name' => 'idRestaurante',
                     'value' => $user->idRestaurante,
                 ]));
+            else if($user->tipo == 'Admin'){
+                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/backend/web/');
+            } else{
+                Yii::$app->user->logout();
+            }
 
             return $this->goBack();
         }
@@ -273,15 +278,5 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
-    }
-
-
-    public function actionError()
-    {
-        if (Yii::app()->errorHandler->error['code'] == 404)
-
-            $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
-        else
-            $this->render('error');
     }
 }

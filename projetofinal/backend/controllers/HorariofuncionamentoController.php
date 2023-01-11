@@ -151,9 +151,9 @@ class HorariofuncionamentoController extends Controller
 
             $model->save(false);
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['restaurante/view', 'id' => $model->getRestauranteId()]);
         }
-
+        
         return $this->render('update', [
             'model' => $model,
         ]);

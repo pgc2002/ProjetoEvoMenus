@@ -15,23 +15,24 @@ $morada = Morada::findOne([
     'id' => $model->idMorada,
 ]);
 
-$this->title = $model->id;
-\yii\web\YiiAsset::register($this);
+$this->title = 'Detalhes do Utilizador: '.$model->username;
 ?>
 <div class="user-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+
+        <?php
+            if(isset($_GET['sb'])){
+                /*switch (){
+                    case 'homePage':
+                        echo Html::a('Voltar', ['site/index'], ['class' => 'btn btn-secondary']);
+                        break;
+                }*/
+            }else
+                echo Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary'])
+        ?>
     </p>
+
+    <h3><?= Html::encode($this->title) ?></h3>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -39,25 +40,45 @@ $this->title = $model->id;
             //'id',
             'username',
             'nome',
-            'auth_key',
-            'password_hash',
+            //'auth_key',
+            //'password_hash',
             //'password_reset_token',
-            'email:email',
+            'email',
             //'status',
+            //'updated_at',
+            //'verification_token',
+            'telemovel',
+            'nif',
+            'moradaFormatada',
+            //'idRestaurante',
+            //'idMorada',
+            //'idMesa',
+            'tipo',
             [
                 'attribute' => 'created_at',
                 'label' => 'Criádo em',
                 'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d-m-Y H:i:s'),
             ],
-            //'updated_at',
-            //'verification_token',
-            'telemovel',
-            'nif',
-            'tipo',
-            'moradaFormatada',
-            //'idRestaurante',
-            //'idMorada',
-            //'idMesa',
         ],
     ]) ?>
+
+    <p>
+        <?php
+            if(isset($_GET['sb'])){
+                echo Html::a('Editar', ['update', 'id' => $model->id, 'e' => 1, 'sb' => $_GET['sb']], ['class' => 'btn btn-primary']);
+            }else{
+                echo Html::a('Editar', ['update', 'id' => $model->id, 'e' => 1], ['class' => 'btn btn-primary']);
+            }
+        ?>
+
+        <?php
+            if(Yii::$app->user->identity->id != $model->id)
+                echo Html::a('Apagar', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Tem a certeza que quer apagar este utilizador?',
+                    'method' => 'post',
+                ],]);
+        ?>
+    </p>
 </div>
