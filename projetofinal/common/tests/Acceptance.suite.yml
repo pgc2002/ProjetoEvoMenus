@@ -1,8 +1,16 @@
-suite_namespace: common\tests\Acceptance
 actor: AcceptanceTester
 modules:
   enabled:
-    - PhpBrowser:
-        url: {http://localhost/ProjetoEvoMenus/projetofinal/backend/web/admin}
+    - Yii2:
+        configFile: 'config/test.php'
+        part: orm # allow to use AR methods
+        transaction: false # don't wrap test in transaction
+        cleanup: false # don't cleanup the fixtures
+        entryScript: index-test.php
+  config:
+    WebDriver:
+      url: http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/admin
+      browser: phantomjs
+      port: 4444
 
 

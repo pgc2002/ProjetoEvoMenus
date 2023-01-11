@@ -21,7 +21,7 @@ use yii\bootstrap4\ActiveForm;
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button', 'id' => 'login-button']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
