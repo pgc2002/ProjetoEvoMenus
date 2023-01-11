@@ -80,7 +80,7 @@ class MesaController extends Controller
                 $model->save();
                 $restaurante->lotacaoMaxima += $model->capacidade;
                 $restaurante->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['restaurante/view', 'id' => $model->idRestaurante]);
             }
         } else {
             $model->loadDefaultValues();

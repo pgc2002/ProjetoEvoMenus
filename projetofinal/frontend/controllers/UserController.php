@@ -143,15 +143,36 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('crudFuncionarios')) {
+            $user = $this->findModel($id);
+            $morada = Morada::findOne($user->idMorada);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost) {
+
+                if($morada == null){
+                    if ($user->load($this->request->post()))
+                        $user->save();
+                }else{
+                    if($user->load($this->request->post()) && $morada->load($this->request->post() )){
+                        $morada->save();
+                        $user->save();
+                    }
+                }
+
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
+
+            if($user->tipo == 'Cliente') {
+                return $this->render('formUpdateClientes', [
+                    'user' => $user,
+                    'morada' => $morada,
+                ]);
+            }else{
+                return $this->render('formUpdate', [
+                    'user' => $user,
+                ]);
+            }
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**

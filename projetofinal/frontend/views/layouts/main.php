@@ -9,8 +9,11 @@ use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use common\models\User;
 
 AppAsset::register($this);
+
+$cookies = Yii::$app->request->cookies;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,12 +24,16 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://kit.fontawesome.com/7809ee6006.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
 <header>
     <?php
+    $menuItems = null;
+    $user = null;
     NavBar::begin([
         'brandLabel' => "Evo Menus",
         'brandUrl' => Yii::$app->homeUrl,
@@ -34,23 +41,45 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => Yii::$app->homeUrl],
+    if(!Yii::$app->user->isGuest){
+        $user = User::findOne(Yii::$app->user->identity->id);
+        switch($user->tipo){
+            case 'Funcionario':
+                $menuItems = [
+                    ['label' => 'Home', 'url' => Yii::$app->homeUrl],
+                    ['label' => 'Restaurante', 'url' => ['/restaurante/view?id='.$cookies->getValue('idRestaurante')]],
+                    ['label' => 'Ementa', 'url' => ['/categoria/index']],
+                    ['label' => 'Mesa', 'url' => ['/mesa/index?id='.$cookies->getValue('idRestaurante')]],
+                    ['label' => 'Pedido', 'url' => ['/pedido/index']],
+                ];
+                break;
+            case 'Gestor':
+                $menuItems = [
+                    ['label' => 'Home', 'url' => Yii::$app->homeUrl],
+                    ['label' => 'Restaurante', 'url' => ['/restaurante/view?id='.$cookies->getValue('idRestaurante')]],
+                    ['label' => 'Ementa', 'url' => ['/categoria/index']],
+                    ['label' => 'Mesa', 'url' => ['/mesa/index?id='.$cookies->getValue('idRestaurante')]],
+                    ['label' => 'Pedido', 'url' => ['/pedido/index']],
+                    ['label' => 'Funcionários', 'url' => ['/user/index']],
+                ];
+                break;
+        }
+    $menuItems[] = '<li>'
+        . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
+        . Html::submitButton(
+            'Logout (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+    }else{
+        $menuItems = [['label' => 'Home', 'url' => Yii::$app->homeUrl],
         ['label' => 'Restaurantes', 'url' => ['/restaurante/index']],
         ['label' => 'Contactos', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        ['label' => 'Login', 'url' => ['/site/login']]];
     }
+
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ml-auto'],
         'items' => $menuItems,

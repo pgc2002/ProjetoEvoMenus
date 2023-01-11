@@ -7,6 +7,7 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use common\models\Item;
 use common\models\Menu;
+use common\models\User;
 
 /** @var yii\web\View $this */
 /** @var backend\models\CategoriaSearch $searchModel */
@@ -18,6 +19,8 @@ $idRestaurante = $cookies->getValue('idRestaurante');
 
 $categorias = Categoria::findAll(['idRestaurante' => $idRestaurante]);
 $idCategoria = Yii::$app->request->get('idCategoria');
+
+$user = User::findOne(Yii::$app->user->identity->id);   
 ?>
 
 <style>
@@ -148,15 +151,16 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                         ],
                                     ],
                                 ]);
-                                echo Html::a(
-                                    'Adicionar item',
-                                    Url::to(['item/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
-                                    [
-                                        'id'=>'grid-custom-button',
-                                        'data-pjax'=>true,
-                                        'class'=>'button btn btn-success',
-                                    ]
-                                );
+                                if(Yii::$app->user->can('crudMenus'))
+                                    echo Html::a(
+                                        'Adicionar item',
+                                        Url::to(['item/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
+                                        [
+                                            'id'=>'grid-custom-button',
+                                            'data-pjax'=>true,
+                                            'class'=>'button btn btn-success',
+                                        ]
+                                    );
                             }
                         ?>
                     </div>
@@ -200,16 +204,16 @@ $idCategoria = Yii::$app->request->get('idCategoria');
                                         ],
                                     ],
                                 ]);
-                                
-                                echo Html::a(
-                                    'Adicionar menu',
-                                    Url::to(['menu/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
-                                    [
-                                        'id'=>'grid-custom-button',
-                                        'data-pjax'=>true,
-                                        'class'=>'button btn btn-success',
-                                    ]
-                                );
+                                if(Yii::$app->user->can('crudMenus'))
+                                    echo Html::a(
+                                        'Adicionar menu',
+                                        Url::to(['menu/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
+                                        [
+                                            'id'=>'grid-custom-button',
+                                            'data-pjax'=>true,
+                                            'class'=>'button btn btn-success',
+                                        ]
+                                    );
                             }
                             
                         ?>
@@ -222,15 +226,16 @@ $idCategoria = Yii::$app->request->get('idCategoria');
     <div class="row" name="rowEmenta" >
         <div class="col-sm-2" style="vertical-align: center;">
         <?php
-            echo Html::a(
-                'Adicionar categoria',
-                Url::to(['create', 'id' => $idRestaurante]),
-                [
-                    'id'=>'grid-custom-button',
-                    'data-pjax'=>true,
-                    'class'=>'button btn btn-success',
-                ]
-            );
+            if(Yii::$app->user->can('crudMenus'))
+                echo Html::a(
+                    'Adicionar categoria',
+                    Url::to(['create', 'id' => $idRestaurante]),
+                    [
+                        'id'=>'grid-custom-button',
+                        'data-pjax'=>true,
+                        'class'=>'button btn btn-success',
+                    ]
+                );
         ?>
         </div>
         <div class="col-sm-10"></div>

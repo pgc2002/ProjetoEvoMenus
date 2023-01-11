@@ -43,7 +43,7 @@ $this->title = $model->nome." - Detalhes";
                 'class'=>'button btn btn-info',
             ]
         );
-
+        
         $horario = HorarioFuncionamento::findOne($model->idHorario);
 
         $horario = $horario->getHorario();
