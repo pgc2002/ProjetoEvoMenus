@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use yii;
 use common\models\User;
-use common\models\Morada;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -72,65 +71,26 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+
         $user = new User();
-        $morada = new Morada();
-
-        if ($this->request->isPost) {
-            if ($user->load($this->request->post()) && $morada->load($this->request->post()) ) {
-
-                $this->password = Yii::$app->request->post('password');
-                $morada->save(false);
-                $user->idMorada = $morada->id;
-                $user->setPassword($this->password);
-                $user->generateAuthKey();
-                $user->save();
-
-                $auth = \Yii::$app->authManager;
-                $role = $auth->getRole('Cliente');
-                try {
-                    $auth->assign($role, $user->getId());
-                } catch (\Exception $e) {
-                }
-
-                return $this->redirect(['view', 'id' => $user->id]);
-            }else if($user->load($this->request->post())){
-
+        if($user->load($this->request->post())){
                 $this->password = Yii::$app->request->post('password');
                 $user->setPassword($this->password);
                 $user->generateAuthKey();
                 $user->save();
-
                 $auth = \Yii::$app->authManager;
-                switch ($user->tipo){
-                    case 'Admin':
-                        $role = $auth->getRole('Admin');
-                        break;
-                    case 'Gestor':
-                        $role = $auth->getRole('Gestor');
-                        break;
-                    case 'Funcionario':
-                        $role = $auth->getRole('Funcionario');
-                        break;
-                }
+                $role = $auth->getRole('Funcionario');
                 try {
                     $auth->assign($role, $user->getId());
                 } catch (\Exception $e) {
                 }
-
                 return $this->redirect(['view', 'id' => $user->id]);
-            }
-            else if(!Model::validateMultiple([$user, $morada])){
-                Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar um utilizador.');
-                return $this->refresh();
-            }
         } else {
             $user->loadDefaultValues();
-            $morada->loadDefaultValues();
         }
 
         return $this->render('create', [
             'user' => $user,
-            'morada' => $morada,
         ]);
     }
 
@@ -143,15 +103,17 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (Yii::$app->user->can('crudFuncionarios')) {
+            $user = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost && $user->load($this->request->post()) && $user->save(false)) {
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
+
+            return $this->render('update', [
+                'user' => $user,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**

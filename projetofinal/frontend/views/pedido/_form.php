@@ -9,7 +9,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="pedidos-form">
-
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'valorTotal')->textInput() ?>
@@ -25,3 +24,4 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+

@@ -6,7 +6,10 @@ use common\models\User;
 <aside class="main-sidebar sidebar-dark-primary elevation-4" >
     <style>
         .image{text-align: center;}
+
         .texto{text-align: center;}
+
+        .d-block{text-align: center;}
     </style>
     <!-- Brand Logo -->
     <a href="<?=\yii\helpers\Url::home().'site\index'?>" class="brand-link">
@@ -14,7 +17,6 @@ use common\models\User;
             <img src="../../../common/logo/logotipo.png" class="img-circle elevation-2" style="width:55%">
         </div>
     </a>
-
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebarPrincipal">
@@ -26,6 +28,9 @@ use common\models\User;
                     ?>
                 </div>
         </div>
+
+
+
         <!--div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <input type="checkbox" id="button" style="display: none;">
             <div class="image">

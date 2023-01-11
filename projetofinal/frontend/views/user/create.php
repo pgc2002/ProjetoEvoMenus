@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var common\models\User $user */
 /** @var common\models\Morada $morada */
 
-$this->title = 'Criar Utilizador';
+$this->title = 'Criar Funcionário';
 ?>
 <div class="user-create">
 
@@ -14,7 +14,6 @@ $this->title = 'Criar Utilizador';
 
     <?= $this->render('_form', [
         'user' => $user,
-        'morada' => $morada,
     ]) ?>
 
 </div>

@@ -10,6 +10,7 @@ use yii\grid\GridView;
 
 $cookies = Yii::$app->request->cookies;
 $idRestaurante = $cookies->getValue('idRestaurante');
+//$idRestaurante = \common\models\User::findOne(Yii::$app->user->id)->idRestaurante;
 
 /** @var yii\web\View $this */
 /** @var backend\models\PedidoSearch $searchModel */

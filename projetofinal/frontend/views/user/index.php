@@ -11,25 +11,30 @@ use yii\data\ActiveDataProvider;
 /** @var app\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Users';
+$this->title = 'Funcionários';
+
 ?>
 
 <div class="user-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p><?= Html::a('Criar Utilizadores', ['create'], ['class' => 'btn btn-success']) ?></p>
+    <p><?php
+    if(Yii::$app->user->can('crudFuncionarios'));
+    echo Html::a('Criar Funcionários', ['create?c=1'], ['class' => 'btn btn-success']);
+    ?></p>
     <?php 
         $cookies = Yii::$app->request->cookies;
         $idRestaurante = $cookies->getValue('idRestaurante');
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['idRestaurante' => $idRestaurante]),
+            'query' => User::find()->where(['idRestaurante' => $idRestaurante, 'tipo' => 'Funcionario']),
             'pagination' => [
                 'pageSize' => 4,
             ],
         ]);
     ?>
 
-    
+
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -68,6 +73,4 @@ $this->title = 'Users';
             ],
         ],
     ]); ?>
-
-
 </div>
