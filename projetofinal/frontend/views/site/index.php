@@ -1,7 +1,9 @@
 <?php
 use yii\helpers\Html;
+use common\models\Restaurante;
 /** @var yii\web\View $this */
 $this->title = 'Evo Menus';
+$ContagemRestaurantes = Restaurante::find()->count();
 ?>
 <style type="text/css">
     .d-flex{
@@ -33,7 +35,16 @@ $this->title = 'Evo Menus';
     <div class="div-1" >
             <div class="jumbotron text-center bg-transparent" >
                     <h1 class="explanation-content">Bem Vindo!!<p>Queres inscrever o teu restaurante na nossa app??</p> </h1>
+                <?php
+                if($ContagemRestaurantes != 0) {
+                    if($ContagemRestaurantes > 1) {
+                        echo '<h1 class="explanation-content"> Já trabalham ' . $ContagemRestaurantes . ' restaurantes connosco!!!</h1>';
+                    }
+                    else{ echo '<h1 class="explanation-content"> Já trabalha ' . $ContagemRestaurantes . ' restaurante connosco!!!</h1>';}
+                }
+                ?>
             </div>
+
         <div class="body-content">
             <div class="center">
                     <div>

@@ -1,40 +1,72 @@
 <?php
+
+use common\models\PedidoInscricao;
+use common\models\user;
+use common\models\Restaurante;
+
+/** @var app\models\PedidoInscricaoSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+
 $this->title = 'Starter Page';
 $this->params['breadcrumbs'] = [['label' => $this->title]];
+$pedidosInscricao = Pedidoinscricao::find()->count();
+$UserAdminCount = User::find()->where(['tipo'=>'Admin']) ->count();
+$UserGestorCount = User::find()->where(['tipo'=>'Gestor']) ->count();
+$UserFuncionarioCount = User::find()->where(['tipo'=>'Funcionario']) ->count();
+$UserClientesCount = User::find()->where(['tipo'=>'Cliente']) ->count();
+$RestaurantesCount = Restaurante::find()->count();
+
 ?>
 <div class="container-fluid">
-
     <div class="row">
         <div class="col-md-4 col-sm-6 col-12">
             <?= \hail812\adminlte\widgets\InfoBox::widget([
-                'text' => 'Messages',
-                'number' => '1,410',
+                'text' => 'Utilizadores Admin',
+                'number' => $UserAdminCount,
+                'icon' => 'fas fa-id-badge',
+            ]) ?>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+            <?= \hail812\adminlte\widgets\InfoBox::widget([
+                'text' => 'Utilizadores Gestor',
+                'number' => $UserGestorCount,
+                'icon' => 'fas fa-id-badge',
+            ]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-12">
+            <?= \hail812\adminlte\widgets\InfoBox::widget([
+                'text' => 'Utilizadores Funcionarios',
+                'number' => $UserFuncionarioCount,
+                'icon' => 'fas fa-id-badge',
+            ]) ?>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+            <?= \hail812\adminlte\widgets\InfoBox::widget([
+                'text' => 'Utilizadores Clientes',
+                'number' => $UserClientesCount,
+                'icon' => 'fas fa-id-badge',
+            ]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-12">
+            <?= \hail812\adminlte\widgets\InfoBox::widget([
+                'text' => 'Pedidos de inscrição',
+                'number' => $pedidosInscricao,
                 'icon' => 'far fa-envelope',
             ]) ?>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-4 col-sm-6 col-12">
             <?= \hail812\adminlte\widgets\InfoBox::widget([
-                'text' => 'Bookmarks',
-                'number' => '41,410',
-                'icon' => 'far fa-bookmark',
-                'progress' => [
-                    'width' => '70%',
-                    'description' => '70% Increase in 30 Days'
-                ]
+                'text' => 'Numero de restaurantes inscritos',
+                'number' => $RestaurantesCount,
+                'icon' => 'fas fa-glass-martini',
             ]) ?>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-            <?= \hail812\adminlte\widgets\SmallBox::widget([
-                'title' => '150',
-                'text' => 'New Orders',
-                'icon' => 'fas fa-shopping-cart',
-            ]) ?>
-        </div>
-    </div>
+
+
 </div>
