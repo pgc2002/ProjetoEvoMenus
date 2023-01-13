@@ -2,6 +2,8 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Horariofuncionamento;
+use yii\data\ActiveDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\rest\ActiveController;
 use yii\web\Response;
@@ -12,6 +14,17 @@ use yii\web\Response;
 class HorariofuncionamentoController extends ActiveController
 {
     public $modelClass = 'common\models\Horariofuncionamento';
+
+    public function actionAll(){
+        $query = Horariofuncionamento::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
+    }
 
     /*public function behaviors() {
         return [

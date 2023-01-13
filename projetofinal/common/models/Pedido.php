@@ -37,7 +37,7 @@ class Pedido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['valorTotal', 'estado', 'idRestaurante', 'idCliente'], 'required'],
+            [['idRestaurante', 'idCliente'], 'required'],
             [['valorTotal'], 'number'],
             [['idRestaurante', 'idCliente'], 'integer'],
             [['estado'], 'string', 'max' => 20],
