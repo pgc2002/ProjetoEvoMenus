@@ -52,12 +52,6 @@ return [
                     'extraPatterns' => [
                         'GET' => 'all',
                         'GET count' => 'count',
-                        'GET username' => 'username',
-                        'GET password' => 'password',
-                        'GET email' => 'email',
-                        'GET creationDate' => 'creationdate',
-                        'GET telemovel' => 'telemovel',
-                        'GET nif' => 'nif',
                     ],
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido',
@@ -84,6 +78,9 @@ return [
                         'GET menus/{idCategoria}' => 'menus',
                         'GET items/{idCategoria}' => 'items',
                     ],
+                    'tokens' =>[
+                        '{idCategoria}' => '<idCategoria:\\d+>',
+                    ]
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento',
                     'pluralize' => false,
@@ -148,7 +145,11 @@ return [
                     'extraPatterns' => [
                         'GET' => 'all',
                         'GET count' => 'count',
+                        'GET mesasdisponiveis/{idRestaurante}' => 'mesasdisponiveis',
                     ],
+                    'tokens' =>[
+                        '{idRestaurante}' => '<idRestaurante:\\d+>',
+                    ]
                 ],
             ],
         ],

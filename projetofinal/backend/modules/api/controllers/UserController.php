@@ -31,44 +31,6 @@ class UserController extends ActiveController
         return count($recs);
     }
 
-    public function actionUsername()
-    {
-        $recs = User::find()->select(['username'])->all();
-        return $recs;
-    }
-    public function actionPassword()
-    {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['password'])->all();
-        return $recs;
-    }
-    public function actionEmail()
-    {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['email'])->all();
-        return $recs;
-    }
-
-    public function actionCreationdate()
-    {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['creationdate'])->all();
-        return $recs;
-    }
-
-    public function actionTelemovel()
-    {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['telemovel'])->all();
-        return $recs;
-    }
-
-    public function actionNif()
-    {
-        $Usermodel = new $this->modelClass;
-        $recs = $Usermodel::find()->select(['nif'])->all();
-        return $recs;
-    }
 
     /*public function behaviors() {
         return [

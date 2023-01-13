@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Mesa;
 use common\models\Restaurante;
 use yii\data\ActiveDataProvider;
 use yii\filters\ContentNegotiator;
@@ -31,15 +32,16 @@ class RestauranteController extends ActiveController
         return count($recs);
     }
 
-    /*public function behaviors() {
-        return [
-            [
-                'class' => ContentNegotiator::className(),
-                'only' => ['index', 'view'],
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                ],
-            ],
-        ];
-    }*/
+    public function actionMesasdisponiveis($idRestaurante){
+        $mesas = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
+
+        $count = 0;
+
+        foreach($mesas as $mesa){
+            if ($mesa->estado == "Livre")
+                $count++;
+        }
+
+        return $count;
+    }
 }
