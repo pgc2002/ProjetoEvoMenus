@@ -7,6 +7,8 @@ use common\models\Pagamento;
 use common\models\Pedido;
 use common\models\Restaurante;
 use PhpMqtt\Client\MqttClient;
+use common\models\Item;
+use common\models\Menu;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
@@ -104,7 +106,7 @@ class PedidoController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionValorint($idPedido, $valor){
+    public function actionValor_int($idPedido, $valor){
         $pedido = Pedido::findOne($idPedido);
         $pedido->valorTotal = $valor;
         $pedido->save();
@@ -116,7 +118,7 @@ class PedidoController extends ActiveController
         $mqtt->disconnect();
     }
 
-    public function actionValorfloat($idPedido, $valor, $valor2){
+    public function actionValor_float($idPedido, $valor, $valor2){
         $pedido = Pedido::findOne($idPedido);
         $valorFinal = $valor.".".$valor2;
         $pedido->valorTotal = floatval($valorFinal);
@@ -129,22 +131,46 @@ class PedidoController extends ActiveController
         $mqtt->disconnect();
     }
 
-    /*public function actionConteudo($idPedido){
+    public function actionCriar($valorTotal, $estado, $idCliente, $idRestaurante){
+        $pedido = new Pedido();
+        $pedido->valorTotal = $valorTotal;
+        $pedido->estado = $estado;
+        $pedido->idCliente = $idCliente;
+        $pedido->idRestaurante = $idRestaurante;
+        $pedido->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "POST de um pedido", 0);
+        $mqtt->disconnect();
+    }
+
+    public function actionInserir_item($idPedido, $idItem){
         $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $item = Item::find()->where(['id' => $idItem])->one();
 
-        $menus = $pedido->getMenus()->all();
+        $pedido->link('items', $item);
 
-        $items = $pedido->getItems()->all();
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "POST de um item ".$idItem." no pedido ".$idPedido, 0);
+        $mqtt->disconnect();
+    }
 
-        $array= ["menus", $menus, "items", $items];
-        //array_push($array, $menus);
+    public function actionInserir_menu($idPedido, $idMenu){
+        $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $menu = Menu::find()->where(['id' => $idMenu])->one();
 
-        $dataProvider = new ArrayDataProvider([
-            'allModels' => $array,
-        ]);
+        $pedido->link('menus', $menu);
 
-        return $dataProvider;
-    }*/
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "POST de um menu ".$idMenu." no pedido ".$idPedido, 0);
+        $mqtt->disconnect();
+    }
 
     /*public function behaviors() {
         return [

@@ -47,6 +47,20 @@ class PagamentoController extends ActiveController
         return $query;
     }
 
+    public function actionCriar($idPedido, $valor, $metodo){
+        $pagamento = new Pagamento();
+        $pagamento->idPedido = $idPedido;
+        $pagamento->valor = $valor;
+        $pagamento->metodo = $metodo;
+        $pagamento->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "POST de um pagamento", 0);
+        $mqtt->disconnect();
+    }
+
     /*public function behaviors() {
         return [
             [

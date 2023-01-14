@@ -23,7 +23,8 @@ class RestauranteController extends ActiveController
 {
     public $modelClass = 'common\models\Restaurante';
 
-    public function actionAll(){
+    public function actionAll()
+    {
         $query = Restaurante::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -40,19 +41,21 @@ class RestauranteController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionOne($id){
+    public function actionOne($id)
+    {
         $query = Restaurante::findOne($id);
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return $query;
     }
 
-    public function actionCount(){
+    public function actionCount()
+    {
         $recs = Restaurante::find()->all();
 
         $connection = new Connection();
@@ -64,25 +67,27 @@ class RestauranteController extends ActiveController
         return count($recs);
     }
 
-    public function actionMorada($id){
+    public function actionMorada($id)
+    {
         $restaurante = Restaurante::findOne($id);
         $morada = Morada::findOne($restaurante->idMorada);
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET das morada do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET das morada do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return $morada;
     }
 
-    public function actionMoradas(){
+    public function actionMoradas()
+    {
         $moradas = [];
         $Restaurantes = Restaurante::find()->all();
 
-        foreach($Restaurantes as $restaurante) {
-            $morada = Morada::findOne($restaurante->idMorada) ;
+        foreach ($Restaurantes as $restaurante) {
+            $morada = Morada::findOne($restaurante->idMorada);
             array_push($moradas, $morada);
         }
 
@@ -100,7 +105,8 @@ class RestauranteController extends ActiveController
         return $provider;
     }
 
-    public function actionMesas($id){
+    public function actionMesas($id)
+    {
         $query = Mesa::find()->where(['idRestaurante' => $id]);
 
         $dataProvider = new ActiveDataProvider([
@@ -111,18 +117,19 @@ class RestauranteController extends ActiveController
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET das mesas do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET das mesas do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return $dataProvider;
     }
 
-    public function actionNum_mesas_disponiveis($id){
+    public function actionNum_mesas_disponiveis($id)
+    {
         $mesas = Mesa::find()->where(['idRestaurante' => $id])->all();
 
         $count = 0;
 
-        foreach($mesas as $mesa){
+        foreach ($mesas as $mesa) {
             if ($mesa->estado == "Livre")
                 $count++;
         }
@@ -130,19 +137,20 @@ class RestauranteController extends ActiveController
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do número de mesas disponiveis do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do número de mesas disponiveis do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return $count;
     }
 
-    public function actionNum_mesas($id){
+    public function actionNum_mesas($id)
+    {
         $query = Mesa::find()->where(['idRestaurante' => $id])->all();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do número de mesas do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do número de mesas do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return count($query);
@@ -156,7 +164,7 @@ class RestauranteController extends ActiveController
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do horário do restaurante ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do horário do restaurante " . $id, 0);
         $mqtt->disconnect();
 
         return $horario;

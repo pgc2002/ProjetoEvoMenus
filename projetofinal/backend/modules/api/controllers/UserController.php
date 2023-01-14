@@ -8,6 +8,7 @@ use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use \PhpMqtt\Client\MqttClient;
+use common\models\Morada;
 
 /**
  * Default controller for the `api` module
@@ -83,6 +84,66 @@ class UserController extends ActiveController
         return count($recs);
     }
 
+    public function actionCriar($username, $nome, $password, $email, $telemovel, $nif, $pais, $cidade, $rua, $codpost){
+        $morada = new Morada();
+        $morada->pais = $pais;
+        $morada->cidade = $cidade;
+        $morada->rua = $rua;
+        $morada->codpost = $codpost;
+        $morada->save(false);
+        $user = new User();
+        $user->username = $username;
+        $user->nome = $nome;
+        $user->setPassword($password);
+        $user->email = $email;
+        $user->telemovel = $telemovel;
+        $user->nif = $nif;
+        $user->tipo = "Cliente";
+        $user->idMorada = $morada->id;
+        $user->status = 10;
+        $user->generateAuthKey();
+        $user->save(false);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "POST de um user", 0);
+        $mqtt->disconnect();
+    }
+
+    public function actionAlterarmorada($idUser, $pais, $cidade, $rua, $codpost){
+        $user = User::find()->where(['id' => $idUser])->one();
+        $morada = Morada::find()->where(['id' => $user->idMorada])->one();
+        $morada->pais = $pais;
+        $morada->cidade = $cidade;
+        $morada->rua = $rua;
+        $morada->codpost = $codpost;
+        $morada->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "PUT de uma morada", 0);
+        $mqtt->disconnect();
+    }
+
+    public function actionAlterarperfil($idUser, $username, $nome, $password, $email, $telemovel, $nif){
+        $user = User::find()->where(['id' => $idUser])->one();
+        $user->username = $username;
+        $user->nome = $nome;
+        $user->setPassword($password);
+        $user->email = $email;
+        $user->telemovel = $telemovel;
+        $user->nif = $nif;
+        $user->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "PUT de um user", 0);
+        $mqtt->disconnect();
+    }
+
     /*public function behaviors() {
         return [
             [
@@ -94,5 +155,4 @@ class UserController extends ActiveController
             ],
         ];
     }*/
-
 }

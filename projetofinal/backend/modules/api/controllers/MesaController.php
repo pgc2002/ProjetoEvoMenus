@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use yii\data\ArrayDataProvider;
 
 /**
  * Default controller for the `api` module
@@ -35,28 +36,16 @@ class MesaController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionOne($idMesa){
-        $query = Mesa::findOne($idMesa);
+    public function actionOne($id){
+        $query = Mesa::findOne($id);
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET da mesa ".$idMesa, 0);
+        $mqtt->publish($connection->topic, "GET da mesa ".$id, 0);
         $mqtt->disconnect();
 
         return $query;
-    }
-
-    public function actionCount($idRestaurante){
-        $recs = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
-
-        $connection = new Connection();
-        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
-        $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do número de mesas", 0);
-        $mqtt->disconnect();
-
-        return count($recs);
     }
 
     /*public function behaviors() {
