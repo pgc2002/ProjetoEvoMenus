@@ -2,8 +2,11 @@
 
 namespace backend\modules\api\controllers;
 
+use backend\modules\api\Connection;
 use common\models\Pagamento;
 use common\models\Pedido;
+use common\models\Restaurante;
+use PhpMqtt\Client\MqttClient;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
@@ -25,7 +28,25 @@ class PedidoController extends ActiveController
             'pagination' => false
         ]);
 
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET de todos os pedidos", 0);
+        $mqtt->disconnect();
+
         return $dataProvider;
+    }
+
+    public function actionOne($idPedido){
+        $query = Pedido::findOne($idPedido);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
+
+        return $query;
     }
 
     public function actionMenus($idPedido){
@@ -36,6 +57,12 @@ class PedidoController extends ActiveController
             'allModels' => $menus,
             'pagination' => false
         ]);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET dos menus do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
 
         return $dataProvider;
     }
@@ -50,6 +77,12 @@ class PedidoController extends ActiveController
             'pagination' => false
         ]);
 
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET dos items do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
+
         return $dataProvider;
     }
 
@@ -62,6 +95,12 @@ class PedidoController extends ActiveController
             'pagination' => false
         ]);
 
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET dos pagamentos do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
+
         return $dataProvider;
     }
 
@@ -69,6 +108,12 @@ class PedidoController extends ActiveController
         $pedido = Pedido::findOne($idPedido);
         $pedido->valorTotal = $valor;
         $pedido->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "PUT do valor do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
     }
 
     public function actionValorfloat($idPedido, $valor, $valor2){
@@ -76,6 +121,12 @@ class PedidoController extends ActiveController
         $valorFinal = $valor.".".$valor2;
         $pedido->valorTotal = floatval($valorFinal);
         $pedido->save();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "PUT do valor do pedido ".$idPedido, 0);
+        $mqtt->disconnect();
     }
 
     /*public function actionConteudo($idPedido){
@@ -85,7 +136,7 @@ class PedidoController extends ActiveController
 
         $items = $pedido->getItems()->all();
 
-        $array= ["menus" => $menus, "items", $items];
+        $array= ["menus", $menus, "items", $items];
         //array_push($array, $menus);
 
         $dataProvider = new ArrayDataProvider([

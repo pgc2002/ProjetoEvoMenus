@@ -21,7 +21,8 @@
         "kartik-v/yii2-widget-timepicker": "dev-master",
         "yiisoft/yii2-bootstrap": "@dev",
         "hail812/yii2-adminlte3": "~1.1",
-        "mdmsoft/yii2-admin": "*"
+        "mdmsoft/yii2-admin": "*",
+        "php-mqtt/client": "^1.7"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
