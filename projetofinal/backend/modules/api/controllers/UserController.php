@@ -19,6 +19,7 @@ class UserController extends ActiveController
     public function actionAll(){
         $query = User::find();
 
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false
@@ -26,6 +27,22 @@ class UserController extends ActiveController
 
         return $dataProvider;
     }
+
+    public function actionMoradauser($idUtilizador){
+        $User = User::findOne($idUtilizador);
+        $Morada = $User->getMorada()->all();
+
+        return $Morada;
+
+    }
+
+    public function actionPedidosuser($idUtilizador){
+        $User = User::findOne($idUtilizador);
+        $Pedidos = $User->getPedidos()->all();
+
+        return $Pedidos;
+    }
+
 
     public function actionCount(){
         $recs = User::find()->all();

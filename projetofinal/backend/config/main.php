@@ -101,9 +101,11 @@ return [
                         'GET menus/{idCategoria}' => 'menus',
                         'GET items/{idCategoria}' => 'items',
                     ],
+
                     'tokens' =>[
                         '{idCategoria}' => '<idCategoria:\\d+>',
                     ]
+
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento',
                     'pluralize' => false,
@@ -175,6 +177,8 @@ return [
                         'GET' => 'all',
                         'GET count' => 'count',
                         'GET mesas/{idRestaurante}' => 'count',
+                        'GET morada' => 'moradasrestaurantes',
+                        'GET mesa' => 'mesasrestaurantes',
                         'GET mesasdisponiveis/{idRestaurante}' => 'mesasdisponiveis',
                     ],
                     'tokens' =>[
@@ -190,6 +194,6 @@ return [
                 ],
             ],
         ],*/
-],
+    ],
     'params' => $params,
 ];
