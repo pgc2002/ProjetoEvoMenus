@@ -52,7 +52,22 @@ return [
                     'extraPatterns' => [
                         'GET' => 'all',
                         'GET count' => 'count',
+                        'PUT alterarperfil/{idUser, username, nome, password, email, telemovel, nif}' => 'alterarperfil',
+                        'PUT alterarmorada/{idUser, pais, cidade, rua, codpost}' => 'alterarmorada',
+                        'POST criar/{username, nome, password, email, telemovel, nif, pais, cidade, rua, codpost}' => 'criar',
                     ],
+                    'tokens' =>[
+                        '{idUser}' => '<telemovel:\\d+>',
+                        '{nome}' => '<nome:\\s+>',
+                        '{password}' => '<password:\\s+>',
+                        '{email}' => '<email:\\s+>',
+                        '{telemovel}' => '<telemovel:\\d+>',
+                        '{nif}' => '<nif:\\d+>',
+                        '{pais}' => '<pais:\\d+>',
+                        '{cidade}' => '<cidade:\\d+>',
+                        '{rua}' => '<rua:\\d+>',
+                        '{codpost}' => '<codpost:\\d+>',
+                    ]
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido',
                     'pluralize' => false,
@@ -61,14 +76,22 @@ return [
                         'GET menus/{idPedido}' => 'menus',
                         'GET items/{idPedido}' => 'items',
                         'GET pagamentos/{idPedido}' => 'pagamentos',
-                        //'GET conteudo/{idPedido}' => 'conteudo',
                         'PUT {idPedido}/valor/{valor}' => 'valorint',
                         'PUT {idPedido}/valor/{valor}.{valor2}' => 'valorfloat',
+                        'POST criar/{valor, estado, idCliente, idRestaurante}' => 'criar',
+                        'POST inseriritem/{idPedido, idItem}' => 'inseriritem',
+                        'POST inserirmenu/{idPedido, idMenu}' => 'inserirmenu',
                     ],
                     'tokens' =>[
                         '{idPedido}' => '<idPedido:\\d+>',
-                        '{valor}' => '<valor:\\d+>', //'<valor:\\[0-9]*\.[0-9]+', //'<valor:\\d+>', '<valor:\\[+-]?([0-9]*[.])?[0-9]+>',
+                        '{valor}' => '<valor:\\d+>',
                         '{valor2}' => '<valor2:\\d+>',
+                        '{estado}' => '<estado:\\s+>',
+                        '{metodo}' => '<metodo:\\s+>',
+                        '{idCliente}' => '<idCliente:\\d+>',
+                        '{idRestaurante}' => '<idRestaurante:\\d+>',
+                        '{idItem}' => '<idItem:\\d+>',
+                        '{idMenu}' => '<idMenu:\\d+>',
                     ]
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/categoria',
@@ -116,7 +139,7 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'all',
-                        'GET count/{idRestaurante}' => 'count',
+                        'GET mesasassociadas/{idRestaurante}' => 'mesasassociadas',
                     ],
                     'tokens' =>[
                         '{idRestaurante}' => '<idRestaurante:\\d+>',
@@ -132,7 +155,13 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'all',
+                        'POST criar/{idPedido, valor, metodo}' => 'criar',
                     ],
+                    'tokens' =>[
+                        '{idPedido}' => '<idPedido:\\d+>',
+                        '{valor}' => '<valor:\\d+>',
+                        '{metodo}' => '<metodo:\\s+>',
+                    ]
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pais',
                     'pluralize' => false,
@@ -145,6 +174,7 @@ return [
                     'extraPatterns' => [
                         'GET' => 'all',
                         'GET count' => 'count',
+                        'GET mesas/{idRestaurante}' => 'count',
                         'GET mesasdisponiveis/{idRestaurante}' => 'mesasdisponiveis',
                     ],
                     'tokens' =>[

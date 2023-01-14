@@ -4,6 +4,8 @@ namespace backend\modules\api\controllers;
 
 use common\models\Pagamento;
 use common\models\Pedido;
+use common\models\Item;
+use common\models\Menu;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\ContentNegotiator;
@@ -78,32 +80,26 @@ class PedidoController extends ActiveController
         $pedido->save();
     }
 
-    /*public function actionConteudo($idPedido){
+    public function actionCriar($valorTotal, $estado, $idCliente, $idRestaurante){
+        $pedido = new Pedido();
+        $pedido->valorTotal = $valorTotal;
+        $pedido->estado = $estado;
+        $pedido->idCliente = $idCliente;
+        $pedido->idRestaurante = $idRestaurante;
+        $pedido->save();
+    }
+
+    public function actionInseriritem($idPedido, $idItem){
         $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $item = Item::find()->where(['id' => $idItem])->one();
 
-        $menus = $pedido->getMenus()->all();
+        $pedido->link('items', $item);
+    }
 
-        $items = $pedido->getItems()->all();
+    public function actionInserirmenu($idPedido, $idMenu){
+        $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $menu = Menu::find()->where(['id' => $idMenu])->one();
 
-        $array= ["menus" => $menus, "items", $items];
-        //array_push($array, $menus);
-
-        $dataProvider = new ArrayDataProvider([
-            'allModels' => $array,
-        ]);
-
-        return $dataProvider;
-    }*/
-
-    /*public function behaviors() {
-        return [
-            [
-                'class' => ContentNegotiator::className(),
-                'only' => ['index', 'view'],
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                ],
-            ],
-        ];
-    }*/
+        $pedido->link('menus', $menu);
+    }
 }

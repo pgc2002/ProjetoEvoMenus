@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\ContentNegotiator;
 use yii\rest\ActiveController;
 use yii\web\Response;
+use yii\data\ArrayDataProvider;
 
 /**
  * Default controller for the `api` module
@@ -26,10 +27,15 @@ class MesaController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionCount($idRestaurante){
-        $recs = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
+    public function actionMesasassociadas($idRestaurante){
+        $mesas = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
 
-        return count($recs);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $mesas,
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
     }
 
     /*public function behaviors() {

@@ -44,4 +44,10 @@ class RestauranteController extends ActiveController
 
         return $count;
     }
+
+    public function actionMesas($idRestaurante){
+        $recs = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
+
+        return count($recs);
+    }
 }

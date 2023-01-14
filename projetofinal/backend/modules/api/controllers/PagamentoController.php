@@ -26,15 +26,11 @@ class PagamentoController extends ActiveController
         return $dataProvider;
     }
 
-    /*public function behaviors() {
-        return [
-            [
-                'class' => ContentNegotiator::className(),
-                'only' => ['index', 'view'],
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON,
-                ],
-            ],
-        ];
-    }*/
+    public function actionCriar($idPedido, $valor, $metodo){
+        $pagamento = new Pagamento();
+        $pagamento->idPedido = $idPedido;
+        $pagamento->valor = $valor;
+        $pagamento->metodo = $metodo;
+        $pagamento->save();
+    }
 }
