@@ -3,11 +3,14 @@
 namespace backend\modules\api\controllers;
 
 use common\models\Mesa;
+
 use common\models\Morada;
 use common\models\Restaurante;
 use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+
+
 use yii\filters\ContentNegotiator;
 use yii\rest\ActiveController;
 use yii\web\Response;
@@ -75,4 +78,18 @@ class RestauranteController extends ActiveController
             ],
         ];
     }*/
+
+    public function actionMesasdisponiveis($idRestaurante){
+        $mesas = Mesa::find()->where(['idRestaurante' => $idRestaurante])->all();
+
+        $count = 0;
+
+        foreach($mesas as $mesa){
+            if ($mesa->estado == "Livre")
+                $count++;
+        }
+
+        return $count;
+    }
+
 }

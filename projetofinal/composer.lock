@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27503bd6ec11b0bc8c6d5d404fba1dca",
+    "content-hash": "1f982385a5a84421dcca4ece00a560c0",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -2259,12 +2259,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "66c9455ea1356818301e564dd7302139f175910d"
+                "reference": "9c5b0f5819947fa7e2ce70849ab645869c7e1a3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/66c9455ea1356818301e564dd7302139f175910d",
-                "reference": "66c9455ea1356818301e564dd7302139f175910d",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/9c5b0f5819947fa7e2ce70849ab645869c7e1a3d",
+                "reference": "9c5b0f5819947fa7e2ce70849ab645869c7e1a3d",
                 "shasum": ""
             },
             "require": {
@@ -2346,7 +2346,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-08T04:43:05+00:00"
+            "time": "2023-01-12T07:30:32+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap4",
@@ -6848,5 +6848,5 @@
         "php": "8.1.*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

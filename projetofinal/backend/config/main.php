@@ -66,6 +66,9 @@ return [
                     'tokens' =>[
                         '{idUtilizador}' => '<idUtilizador:\\d+>',
                     ]
+
+
+
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/pedido',
                     'pluralize' => false,
@@ -91,6 +94,11 @@ return [
                         'GET menus/{idCategoria}' => 'menus',
                         'GET items/{idCategoria}' => 'items',
                     ],
+
+                    'tokens' =>[
+                        '{idCategoria}' => '<idCategoria:\\d+>',
+                    ]
+
                 ],
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/horariofuncionamento',
                     'pluralize' => false,
@@ -157,8 +165,7 @@ return [
                         'GET count' => 'count',
                         'GET morada' => 'moradasrestaurantes',
                         'GET mesa' => 'mesasrestaurantes',
-
-
+                        'GET mesasdisponiveis/{idRestaurante}' => 'mesasdisponiveis',
                     ],
                     'tokens' =>[
                         '{idRestaurante}' => '<idRestaurante:\\d+>',
