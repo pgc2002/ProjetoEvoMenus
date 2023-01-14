@@ -27,6 +27,10 @@ use yii\bootstrap4\NavBar;
         <li class="nav-item d-none d-sm-inline-block">
             <a href="<?=\yii\helpers\Url::home()."restaurante/index"?>" class="nav-link">Restaurantes</a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="<?=\yii\helpers\Url::home()."tarefas/index"?>" class="nav-link">Tarefas</a>
+        </li>
+
     </ul>
 
     <ul class="navbar-nav ml-auto">

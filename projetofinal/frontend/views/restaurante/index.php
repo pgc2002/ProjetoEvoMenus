@@ -18,27 +18,46 @@ $this->title = 'Restaurantes';
 
     <?php /*echo $this->render('_search', ['model' => $searchModel]);*/ ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'layout' => '{items}{pager}',
-        'filterModel' => $searchModel,
-        'columns' => [
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{detalhes}',
-                'buttons' => [
-                    'detalhes' => function($url, $model, $key) {
-                        return Html::a('Ver Detalhes','view?id='.$model->id, ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
-                    }
-                ]
+    <?php
+    if (Yii::$app->user->can('crudFuncionarios') || Yii::$app->user->can('visualizarMesas')) {
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'layout' => '{items}{pager}',
+            'filterModel' => $searchModel,
+            'columns' => [
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{detalhes}',
+                    'buttons' => [
+                        'detalhes' => function ($url, $model, $key) {
+                            return Html::a('Ver Detalhes', 'view?id=' . $model->id, ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                        }
+                    ]
+                ],
+                'nome',
+                'lotacaoMaxima',
+                'email',
+                'telemovel',
+                'moradaFormatada',
             ],
-            'nome',
-            'lotacaoMaxima',
-            'email',
-            'telemovel',
-            'moradaFormatada',
-        ],
-    ]); ?>
+        ]);
+    }else{
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'layout' => '{items}{pager}',
+            'filterModel' => $searchModel,
+            'columns' => [
+                'nome',
+                'lotacaoMaxima',
+                'email',
+                'telemovel',
+                'moradaFormatada',
+            ],
+        ]);
+    }
+    ?>
+
+
 
 
 </div>

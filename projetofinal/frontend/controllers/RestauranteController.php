@@ -39,7 +39,7 @@ class RestauranteController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('visualizarMenus') || Yii::$app->user->can('crudMenus')) {
+
             $searchModel = new RestauranteSearch();
             $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -47,7 +47,7 @@ class RestauranteController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-        }
+        
     }
 
     /**
@@ -58,11 +58,9 @@ class RestauranteController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('visualizarMenus') || Yii::$app->user->can('crudMenus')) {
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**

@@ -82,6 +82,9 @@ class UserController extends Controller
             $user = new User();
             $morada = new Morada();
 
+
+
+
             if ($this->request->isPost) {
                 if ($user->load($this->request->post()) && $morada->load($this->request->post())) {
                     $this->password = Yii::$app->request->post('password');
