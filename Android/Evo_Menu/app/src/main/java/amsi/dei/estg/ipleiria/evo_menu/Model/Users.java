@@ -7,19 +7,19 @@ public class Users implements Serializable
 {
     private int id, id_restaurante, id_mesa, id_morada;
     private String username, auth_key, pass_hash, email, verify_token, telemovel, nif, tipo, nome;
-    private short status; /*se der merda mudar para int, apagar antes de enviar!!!!!*/
+    private short status;
     private Long data_criacao, data_update;
 
 
-    public Users(int id, String username, String auth_key, String pass_hash, String email, String telemovel, String nif, String nome, int id_morada) {
+    public Users(int id, String username, String auth_key, String pass_hash, String email, String telemovel, String nif, String nome, int id_morada, long data_criacao, long data_update) {
         this.id = id;
         this.username = username;
         this.auth_key = auth_key;
         this.pass_hash = pass_hash;
         this.email = email;
         this.status = 10;
-        this.data_criacao = (System.currentTimeMillis());
-        this.data_update = (System.currentTimeMillis());
+        this.data_criacao = data_criacao;
+        this.data_update = data_update;
         this.verify_token = null;
         this.telemovel = telemovel;
         this.nif = nif;

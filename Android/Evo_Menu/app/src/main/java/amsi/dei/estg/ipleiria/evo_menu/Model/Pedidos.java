@@ -8,12 +8,14 @@ public class Pedidos implements Serializable
     private double valor_total;
     private String estado;
     private int id_cliente;
+    private int id_restaurante;
 
-    public Pedidos(int id, double valor_total, String estado, int id_cliente) {
+    public Pedidos(int id, double valor_total, String estado, int id_cliente, int id_restaurante) {
         this.id = id;
         this.valor_total = valor_total;
         this.estado = estado;
         this.id_cliente = id_cliente;
+        this.id_restaurante = id_restaurante;
     }
 
 
@@ -32,6 +34,10 @@ public class Pedidos implements Serializable
     public int getId_cliente() {return id_cliente; }
 
     public void setId_cliente(int id_cliente) {this.id_cliente = id_cliente; }
+
+    public int getId_restaurante() {return id_restaurante; }
+
+    public void setId_restaurante(int id_restaurante) {this.id_restaurante = id_restaurante; }
 
     @Override
     public String toString() {
