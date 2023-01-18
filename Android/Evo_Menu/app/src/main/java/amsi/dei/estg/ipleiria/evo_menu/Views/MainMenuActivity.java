@@ -22,11 +22,16 @@ import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String DADOS_USER = "DADOS_USER";
+
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
     private String email;
     private static final String MAIL = "email" ;
+
+
+
 
 
 
@@ -49,16 +54,18 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        carregarLivrosFicheiro();
+
         carregarCabecalho();
 
         carregarFragmentoInicial();
+
 
     }
 
     private void carregarFragmentoInicial()
     {
-        Fragment fragment = new PaginaInicialFragment();
-        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+
     }
 
     private void carregarCabecalho()
@@ -83,6 +90,10 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         tvMail.setText(email);
     }
 
+    private void carregarLivrosFicheiro() {
+    }
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
@@ -91,9 +102,9 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         switch(opcao)
         {
             case R.id.navRestaurantes:
-                /*Intent intent = new Intent(this, DetalhesEstaticoActivity.class);
+                /*Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);*/
-                fragment = new ListaRestaurantesFragment();
+                fragment = new GrelhaRestaurantesFragment();
                 break;
 
             case R.id.navFavoritos:

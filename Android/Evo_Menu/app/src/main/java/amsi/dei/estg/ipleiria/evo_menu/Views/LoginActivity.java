@@ -1,7 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -50,20 +49,20 @@ public class LoginActivity extends AppCompatActivity
         String pass = etPass.getText().toString();
 
         //Validaçao mail
-        if(!isMailValido(mail)){
+        /*if(!isMailValido(mail)){
             //Strings escritas no string.xml
             etUsername.setError(getString(R.string.textErrorMail));
             return;
-        }
+        }*/
 
-        if(!isPassValida(pass)){
+        /*if(!isPassValida(pass)){
             etPass.setError(getString(R.string.textErrorPass));
             return;
-        }
+        }*/
         //Ligação entre atividades!! Envia tambem o email para o proximo.
-        Intent intentMail = new Intent(this, MainMenuActivity.class);
-        intentMail.putExtra("Mail", mail);
-        startActivity(intentMail);
+        Intent intentMainMenu = new Intent(this, MainMenuActivity.class);
+        intentMainMenu.putExtra("Mail", mail);
+        startActivity(intentMainMenu);
 
     }
     private void RegistarUser(View view){
@@ -74,6 +73,8 @@ public class LoginActivity extends AppCompatActivity
         if(pass == null)
             return false;
         return pass.length() >=4;
+
+
     }
 
     private boolean isMailValido(String mail) {
@@ -82,5 +83,6 @@ public class LoginActivity extends AppCompatActivity
         boolean valido = Patterns.EMAIL_ADDRESS.matcher(mail).matches();
         return valido;
     }
+
 
 }
