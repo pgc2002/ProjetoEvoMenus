@@ -1,22 +1,20 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
 
-public class Menu implements Serializable
+public class Item implements Serializable
 {
     private int id;
     private int idCategoria;
     private String nome;
     private String fotografia;
-    private double desconto;
+    private double preco;
 
-    public Menu(int id, String nome, String fotografia, double desconto, int idCategoria) {
+    public Item(int id, String nome, String fotografia, double preco, int idCategoria) {
         this.id = id;
         this.nome = nome;
         this.fotografia = fotografia;
-        this.desconto = desconto;
+        this.preco = preco;
         this.idCategoria = idCategoria;
     }
 
@@ -36,20 +34,12 @@ public class Menu implements Serializable
         this.nome = nome;
     }
 
-    public double getDesconto() {
-        return desconto;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setDesconto(double desconto) {
-        this.desconto = desconto;
-    }
-
-    public int getIdCategoria() {
-        return idCategoria;
-    }
-
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
     public String getFotografia() {
@@ -58,5 +48,13 @@ public class Menu implements Serializable
 
     public void setFotografia(String fotografia) {
         this.fotografia = fotografia;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }
