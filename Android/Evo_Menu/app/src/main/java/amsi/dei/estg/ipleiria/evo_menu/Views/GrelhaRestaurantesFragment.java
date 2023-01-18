@@ -1,15 +1,22 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
-public class ListaRestaurantesFavFragment extends Fragment {
+public class GrelhaRestaurantesFragment extends Fragment {
+
+    Button btnHit;
+    TextView txtJson;
+    ProgressDialog pd;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +27,7 @@ public class ListaRestaurantesFavFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ListaRestaurantesFavFragment() {
+    public GrelhaRestaurantesFragment() {
         // Required empty public constructor
     }
 
@@ -30,11 +37,11 @@ public class ListaRestaurantesFavFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListaRestaurantesFavFragment.
+     * @return A new instance of fragment ListaRestaurantesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListaRestaurantesFavFragment newInstance(String param1, String param2) {
-        ListaRestaurantesFavFragment fragment = new ListaRestaurantesFavFragment();
+    public static GrelhaRestaurantesFragment newInstance(String param1, String param2) {
+        GrelhaRestaurantesFragment fragment = new GrelhaRestaurantesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -45,16 +52,19 @@ public class ListaRestaurantesFavFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.item_lista_fav_restaurante, container, false);
+        return inflater.inflate(R.layout.fragment_grelha_restaurantes, container, false);
     }
 }
+
