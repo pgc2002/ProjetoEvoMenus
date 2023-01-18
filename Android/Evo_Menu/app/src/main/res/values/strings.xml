@@ -18,14 +18,12 @@
     <string name="Nif">NIF</string>
     <string name="Telemovel">Telemovel</string>
     <string name="remover" />
-<<<<<<< HEAD
     <string name="etRegistarPais">País</string>
     <string name="etRegistarCidade">Cidade</string>
     <string name="etRegistarRua">Rua</string>
     <string name="etRegistarCodPostal">Código Postal</string>
     <string name="txtMorada">Morada</string>
-=======
+    <string name="no_internet">Sem acesso à internet</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
->>>>>>> 6fd1ec91d7e44896b985ce7307a2570de524ea98
 </resources>

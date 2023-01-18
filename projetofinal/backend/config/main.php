@@ -53,6 +53,7 @@ return [
                         'GET' => 'all',
                         'GET {id}' => 'one',
                         'GET count' => 'count',
+                        'GET validar/{id, password}' => 'validar',
                         'GET {id}/morada' => 'morada',
                         'GET {id}/pedidos' => 'pedidos',
                         'PUT alterarperfil/{idUser, username, nome, password, email, telemovel, nif}' => 'alterarperfil',

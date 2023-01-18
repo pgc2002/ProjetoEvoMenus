@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use \PhpMqtt\Client\MqttClient;
 use common\models\Morada;
+use Yii;
 
 /**
  * Default controller for the `api` module
@@ -32,6 +33,20 @@ class UserController extends ActiveController
         $mqtt->disconnect();
 
         return $dataProvider;
+    }
+
+    public function actionValidar($id, $password){
+        $user = User::find()->where(['id' => $id])->one();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$id, 0);
+        $mqtt->disconnect();
+
+        $pass = $password;
+
+        return $user->validatePassword($pass);
     }
 
     public function actionOne($id){
