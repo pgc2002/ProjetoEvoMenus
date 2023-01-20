@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.evo_menu.Adaptores;
+package amsi.dei.estg.ipleiria.evo_menu.Adaptadores;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,27 +7,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
+
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
-public class ListaRestaurantesAdaptor extends BaseAdapter
-{
+public class ListaRestaurantesAdaptador extends BaseAdapter {
+
     private ArrayList<Restaurante> listaRestaurantes;
     private Context contexto;
     private LayoutInflater inflater;
 
-    public ListaRestaurantesAdaptor(Context context, ArrayList<Restaurante> lista)
+    public ListaRestaurantesAdaptador(Context context, ArrayList<Restaurante> lista)
     {
         this.contexto = context;
         this.listaRestaurantes = lista;
-
     }
 
     @Override
-    public int getCount() { return listaRestaurantes.size();}
+    public int getCount()
+    {
+        return listaRestaurantes.size();
+    }
 
     @Override
     public Object getItem(int position)
@@ -50,7 +52,6 @@ public class ListaRestaurantesAdaptor extends BaseAdapter
             convertView = inflater.inflate(R.layout.item_lista_restaurante, null);
 
         //Preenchimento do view
-
         ViewHolderLista viewHolder = (ViewHolderLista) convertView.getTag();
         if (viewHolder == null) {
             viewHolder = new ViewHolderLista(convertView);
@@ -59,20 +60,19 @@ public class ListaRestaurantesAdaptor extends BaseAdapter
         viewHolder.update(listaRestaurantes.get(position));
         return convertView;
     }
-    private class ViewHolderLista
-    {
-        private TextView tvNome;
 
-        public ViewHolderLista(View view)
-        {
-            tvNome = view.findViewById(R.id.tvNomeRestaurante);
+    private class ViewHolderLista {
+        private TextView tvNomeRestaurante;
+        //private ImageView ivRestauranteBackground;
 
+        public ViewHolderLista(View view) {
+            tvNomeRestaurante = view.findViewById(R.id.tvNomeRestaurante);
+            //ivRestauranteBackground = view.findViewById(R.id.ivRestauranteBackground);
         }
 
-        public void update(Restaurante livro)
-        {
-            tvNome.setText(livro.getNome());
+        public void update(Restaurante restaurante) {
+            tvNomeRestaurante.setText(restaurante.getNome());
+            //Glide.with(contexto).load(restaurante.getCapa()).placeholder(R.drawable.logoipl).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivCapa);
         }
-
     }
 }

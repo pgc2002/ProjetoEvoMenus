@@ -16,7 +16,7 @@
         android:src="@drawable/add_icon" />
 
     <ListView
-        android:id="@+id/lvListaLivro"
+        android:id="@+id/lvListaRestaurantes"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

@@ -1,15 +1,36 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
+import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaRestaurantesAdaptador;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
-public class ListaRestaurantesFragment extends Fragment {
+public class ListaRestaurantesFragment extends Fragment implements RestaurantesListener {
+
+    public static final int CODE_REQUEST_ADICIONAR = 1;
+    private static final int CODE_REQUEST_EDITAR = 2;
+
+    private ListView lvRestaurantes;
+
+    private Button fabActionButton;
+
+    private ListaRestaurantesAdaptador adaptador;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,37 +45,45 @@ public class ListaRestaurantesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListaRestaurantesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListaRestaurantesFragment newInstance(String param1, String param2) {
-        ListaRestaurantesFragment fragment = new ListaRestaurantesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lista_restaurantes, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_restaurantes, container, false);
+
+        setHasOptionsMenu(true);
+
+        lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
+
+        adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
+
+        lvRestaurantes.setAdapter(adaptador);
+
+        lvRestaurantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                Log.d("coisas", "aconteceram");
+                /*Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
+                intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
+                startActivityForResult(intent, CODE_REQUEST_EDITAR);
+                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
+                        Toast.LENGTH_SHORT).show();*/
+                //Chamar atividade detalhada
+
+
+            }
+        });
+
+        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
+        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+
+        return view;
+    }
+
+    @Override
+    public void onRefreshListaRestaurantes(ArrayList<Restaurante> listaRestaurantes) {
+        if(listaRestaurantes != null)
+        {
+            lvRestaurantes.setAdapter(new ListaRestaurantesAdaptador(getContext(), listaRestaurantes));
+        }
     }
 }

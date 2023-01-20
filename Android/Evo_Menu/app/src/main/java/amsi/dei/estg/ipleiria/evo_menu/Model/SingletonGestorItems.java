@@ -85,7 +85,7 @@ public class SingletonGestorItems {
                 //Ativar o listener
                 if(itemListener !=null)
                 {
-                    itemsListener.onRefreshListaCategorias(items);
+                    itemsListener.onRefreshListaItems(items);
                 }
 
             }

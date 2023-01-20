@@ -16,6 +16,8 @@ import java.util.ArrayList;
 //Class unica, nao se repete mas pode ser acedida.
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorarioListener;
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorariosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorarioListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorariosListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -28,8 +30,8 @@ public class SingletonGestorHorarios
     private static SingletonGestorHorarios instancia = null;
     private ArrayList<HorarioFuncionamento> horarios;
     private static RequestQueue volleyQueue = null;
-    //private HorariosListener horariosListener;
-    //private HorarioListener horarioListener;
+    private HorariosListener horariosListener;
+    private HorarioListener horarioListener;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorHorarios getInstance(Context contexto) {
@@ -97,11 +99,10 @@ public class SingletonGestorHorarios
                 horarios = HorariosJsonParser.parserJsonHorarios(response);
                 adicionarHorariosBD(horarios);
                 //Ativar o listener
-                /*if(horarioListener!=null)
+                if(horarioListener!=null)
                 {
                     horariosListener.onRefreshListaHorarios(horarios);
-                }*/
-
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -117,13 +118,13 @@ public class SingletonGestorHorarios
 
 
 
-    /*public void setHorariosListener(HorariosListener horariosListener) {
+    public void setHorariosListener(HorariosListener horariosListener) {
         this.horarioListener = horarioListener;
     }
 
     public void setHorarioListeneer(HorarioListener horarioListener) {
         this.horarioListener = horarioListener;
-    }*/
+    }
 
 
 

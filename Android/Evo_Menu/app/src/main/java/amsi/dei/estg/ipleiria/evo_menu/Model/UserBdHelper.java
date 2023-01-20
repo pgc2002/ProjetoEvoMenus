@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Users;
-
 public class UserBdHelper extends SQLiteOpenHelper {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "user";
@@ -27,8 +25,6 @@ public class UserBdHelper extends SQLiteOpenHelper {
     private final static String DATA_UPDATE = "data_update";
     private final static String TIPO = "tipo";
     private final static String ID_MESA = "id_mesa";
-
-
 
     private SQLiteDatabase db;
 
@@ -66,7 +62,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
     }
 
     //Metodos crud
-    public Users adicionarUserBD(Users user)
+    public User adicionarUserBD(User user)
     {
         ContentValues valores = new ContentValues();
         valores.put(ID, user.getId());
@@ -91,7 +87,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
         return null;
 
     }
-    public boolean editarUserBD(Users user)
+    public boolean editarUserBD(User user)
     {
         ContentValues valores = new ContentValues();
         valores.put(ID, user.getId());
@@ -117,15 +113,15 @@ public class UserBdHelper extends SQLiteOpenHelper {
         return nreg > 0;
     }
 
-    public ArrayList<Users> getAllUsersBD()
+    public ArrayList<User> getAllUsersBD()
     {
-        ArrayList<Users> listaUsers = new ArrayList<>();
+        ArrayList<User> listaUsers = new ArrayList<>();
         Cursor cursor = this.db.query(TABLE_NAME, new String[]{ID, USERNAME, AUTH_KEY, PASS_HASH, EMAIL, TELEMOVEL, NIF, NOME, ID_MORADA, DATA_CRIACAO, DATA_UPDATE, TIPO}, null, null, null, null, null);
         if(cursor.moveToFirst())
         {
             do
             {
-                Users aux = new Users(cursor.getInt(0),
+                User aux = new User(cursor.getInt(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),

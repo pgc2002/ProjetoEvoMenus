@@ -24,11 +24,11 @@ public class RestauranteJsonParser
                 int id = jsonRestaurante.getInt("id");
                 String nome = jsonRestaurante.getString("nome");
                 String email = jsonRestaurante.getString("email");
-                int lotacao_max = jsonRestaurante.getInt("lotacao_max");
+                int lotacao_max = jsonRestaurante.getInt("lotacaoMaxima");
                 String telemovel = jsonRestaurante.getString("telemovel");
-                int id_ementa = jsonRestaurante.getInt("id_ementa");
-                int id_horario = jsonRestaurante.getInt("id_horario");
-                Restaurante restaurante = new Restaurante(id, nome, email, lotacao_max, telemovel, id_ementa, id_horario);
+                int id_horario = jsonRestaurante.getInt("idHorario");
+                int id_morada = jsonRestaurante.getInt("idMorada");
+                Restaurante restaurante = new Restaurante(id, nome, email, lotacao_max, telemovel, id_horario, id_morada);
                 lista.add(restaurante);
             }
 
@@ -50,12 +50,12 @@ public class RestauranteJsonParser
             int id = jsonRestaurante.getInt("id");
             String nome = jsonRestaurante.getString("nome");
             String email = jsonRestaurante.getString("email");
-            int lotacao_max = jsonRestaurante.getInt("lotacao_max");
+            int lotacao_max = jsonRestaurante.getInt("lotacaoMaxima");
             String telemovel = jsonRestaurante.getString("telemovel");
-            int id_ementa = jsonRestaurante.getInt("id_ementa");
-            int id_horario = jsonRestaurante.getInt("id_horario");
+            int id_horario = jsonRestaurante.getInt("idHorario");
+            int id_morada = jsonRestaurante.getInt("idMorada");
 
-            restaurante = new Restaurante(id, nome, email, lotacao_max, telemovel, id_ementa, id_horario);
+            restaurante = new Restaurante(id, nome, email, lotacao_max, telemovel, id_horario, id_morada);
 
         } catch (JSONException e) {
             e.printStackTrace();

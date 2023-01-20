@@ -21,7 +21,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;
 
 public class SingletonGestorRestaurantes
 {
-        private final static String mUrlAPIrestaurantes = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
+        private final static String mUrlAPIrestaurantes = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
         private RestauranteDBHelper restaurantesDB = null;
         private static SingletonGestorRestaurantes instancia = null;
         private ArrayList<Restaurante> restaurantes;
@@ -81,9 +81,6 @@ public class SingletonGestorRestaurantes
             restaurantesDB.adicionarRestauranteBD(restaurante);
         }
 
-
-
-
         public void getAllRestaurantesAPI(final Context contexto)
         {
             if(!RestauranteJsonParser.isConnectionInternet(contexto))
@@ -113,10 +110,6 @@ public class SingletonGestorRestaurantes
             volleyQueue.add(req);
         }
 
-
-
-
-
         public void setRestaurantesListener(RestaurantesListener restaurantesListener) {
             this.restaurantesListener = restaurantesListener;
         }
@@ -124,7 +117,4 @@ public class SingletonGestorRestaurantes
         public void setRestauranteListener(RestauranteListener restauranteListener) {
             this.restauranteListener = restauranteListener;
         }
-
-
-
 };

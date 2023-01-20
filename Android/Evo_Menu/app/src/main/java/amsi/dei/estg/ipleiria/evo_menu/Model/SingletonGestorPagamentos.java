@@ -19,30 +19,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentoListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PagamentoJsonParser;
 
-public class SingletonGestorPagamento {
+public class SingletonGestorPagamentos {
     private final static String mUrlAPIpagamento = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/pagamento";
     private PagamentoBdHelper pagamentoBD = null;
-    private static SingletonGestorPagamento instancia = null;
+    private static SingletonGestorPagamentos instancia = null;
     private ArrayList<Pagamento> pagamentos;
     private static RequestQueue volleyQueue = null;
-    /*private LivrosListener livrosListener;
-    private LivroListener livroListener;
-    private LoginListener loginListener;*/
+    private PagamentosListener pagamentosListener;
+    private PagamentoListener pagamentoListener;
 
 
     //Verificar se ja existe ou nao
-    public static synchronized SingletonGestorPagamento getInstance(Context contexto) {
+    public static synchronized SingletonGestorPagamentos getInstance(Context contexto) {
         if (instancia == null) {
-            instancia = new SingletonGestorPagamento(contexto);
+            instancia = new SingletonGestorPagamentos(contexto);
             volleyQueue = Volley.newRequestQueue(contexto);
         }
         return instancia;
     }
 
-    private SingletonGestorPagamento(Context contexto) {
+    private SingletonGestorPagamentos(Context contexto) {
         pagamentos = new ArrayList<>();
         pagamentoBD = new PagamentoBdHelper(contexto);
     }
@@ -83,12 +84,12 @@ public class SingletonGestorPagamento {
         pagamentoBD.adicionarPagamentoBD(pagamento);
     }
 
-    public void removerPagamentoBD(long id) {
+    /*public void removerPagamentoBD(long id) {
         Pagamento pagamento = getPagamento(id);
         if (pagamento != null) {
             pagamentoBD.removerPagamentoBD(pagamento.getId());
-            /*if(livrosBD.removerLivroBD(livro.getId()))
-                livros.remove(livro);*/
+            /f(livrosBD.removerLivroBD(livro.getId()))
+                livros.remove(livro);
         }
 
     }
@@ -96,17 +97,15 @@ public class SingletonGestorPagamento {
     public void editarPagamentoBD(Pagamento dadosPagamento) {
         Pagamento pagamento = getPagamento(dadosPagamento.getId());
         if (pagamento != null) {
-            /*(livrosBD.editarLivroBD(dadosLivro)) {
+            (livrosBD.editarLivroBD(dadosLivro)) {
                 livro.setTitulo(dadosLivro.getTitulo());
                 livro.setAutor(dadosLivro.getAutor());
                 livro.setAno(dadosLivro.getAno());
                 livro.setSerie(dadosLivro.getSerie());
-                livro.setCapa(dadosLivro.getCapa());*/
+                livro.setCapa(dadosLivro.getCapa());
             pagamentoBD.editarPagamentoBD(dadosPagamento);
-
         }
-    }
-
+    }*/
 
     //pedidos a api
     public void adicionarPagamentoAPI(final Pagamento pagamento, final Context contexto, String token)
@@ -121,9 +120,9 @@ public class SingletonGestorPagamento {
             public void onResponse(String response) {
                 adicionarPagamentoBD(PagamentoJsonParser.parserJsonPagamento(response));
                 //ativar o listener...
-                /*if(livroListener != null)
+                /*if(pagamentoListener != null)
                 {
-                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
+                    pagamentoListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
                 }*/
 
             }
@@ -150,8 +149,6 @@ public class SingletonGestorPagamento {
             };
         };
         volleyQueue.add(request);
-
-
     }
 
     public void getAllPagamentosAPI(final Context contexto)
@@ -167,10 +164,10 @@ public class SingletonGestorPagamento {
                 pagamentos = PagamentoJsonParser.parserJsonPagamentos(response);
                 adicionarPagamentosBD(pagamentos);
                 //Ativar o listener
-                /*if(livroListener!=null)
+                if(pagamentoListener!=null)
                 {
-                    livrosListener.onRefreshListaLivros(livros);
-                }*/
+                    pagamentosListener.onRefreshListaPagamentos(pagamentos);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -182,7 +179,7 @@ public class SingletonGestorPagamento {
         volleyQueue.add(req);
     }
 
-    public void removerPagamentoAPI(final Pagamento pagamento, final Context contexto)
+    /*public void removerPagamentoAPI(final Pagamento pagamento, final Context contexto)
     {
         if(!PagamentoJsonParser.isConnectionInternet(contexto))
         {
@@ -195,10 +192,10 @@ public class SingletonGestorPagamento {
             public void onResponse(String response) {
                 removerPagamentoBD(pagamento.getId());
                 //ativar listener
-                /*if(livroListener != null)
+                if(pagamentoListener != null)
                 {
-                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_APAGAR);
-                }*/
+                    pagamentoListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_APAGAR);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -208,9 +205,9 @@ public class SingletonGestorPagamento {
             }
         });
         volleyQueue.add(req);
-    }
+    }*/
 
-    public void editarPagamentoAPI(final Pagamento pagamento, Context contexto, final String token)
+    /*public void editarPagamentoAPI(final Pagamento pagamento, Context contexto, final String token)
     {
         if(!PagamentoJsonParser.isConnectionInternet(contexto))
         {
@@ -222,10 +219,10 @@ public class SingletonGestorPagamento {
             public void onResponse(String response) {
                 editarPagamentoBD(pagamento);
                 //ativar o listener...
-                /*if(livroListener != null)
+                if(pagamentoListener != null)
                 {
-                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
-                }*/
+                    pagamentoListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -251,21 +248,13 @@ public class SingletonGestorPagamento {
             };
         };
         volleyQueue.add(request);
+    }*/
+
+    public void setPagamentosListener(PagamentosListener pagamentosListener) {
+        this.pagamentosListener = pagamentosListener;
     }
 
-    /*
-    public void setLivrosListener(LivrosListener livrosListener) {
-        this.livrosListener = livrosListener;
+    public void setPagamentoListener(PagamentoListener pagamentoListener) {
+        this.pagamentoListener = pagamentoListener;
     }
-
-    public void setLivroListener(LivroListener livroListener) {
-        this.livroListener = livroListener;
-    }
-    */
-
-    /*
-    public void setLoginListener(LoginListener loginListener) {
-        this.loginListener = loginListener;
-    }
-    */
 }

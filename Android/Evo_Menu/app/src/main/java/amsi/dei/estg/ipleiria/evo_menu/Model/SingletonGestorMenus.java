@@ -83,7 +83,7 @@ public class SingletonGestorMenus {
                 //Ativar o listener
                 if(menuListener !=null)
                 {
-                    menusListener.onRefreshListaCategorias(menus);
+                    menusListener.onRefreshListaMenus(menus);
                 }
 
             }

@@ -5,11 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98c117ee-f599-431e-9083-78b95230a9b3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/EditarPerfilActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/ListaRestaurantesFavFragment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/LoginActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/MainMenuActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/RegistarActivity.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Adaptadores/ListaRestaurantesAdaptador.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/PagamentoListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/PagamentosListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/PedidoListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/PedidosListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/UserListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/UsersListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Adaptores/ListaRestaurantesAdaptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Adaptores/ListaRestaurantesAdaptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/ItemsListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/ItemsListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/MenusListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/MenusListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/RestaurantesListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Listeners/RestaurantesListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/PedidoBdHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/PedidoBdHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/Pedidos.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/Restaurante.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/Restaurante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/RestauranteDBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/RestauranteDBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorHorarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorHorarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorMenus.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorMenus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorMesas.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorMesas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorPagamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorPagamentos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorPedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorPedidos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorRestaurantes.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorRestaurantes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/SingletonGestorUsers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/UserBdHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/UserBdHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Model/Users.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Utils/PedidoJsonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Utils/PedidoJsonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Utils/UserJsonParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Utils/UserJsonParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/DetalhesRestauranteActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/DetalhesRestauranteActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/ListaRestaurantesFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/ListaRestaurantesFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/MainMenuActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/java/amsi/dei/estg/ipleiria/evo_menu/Views/MainMenuActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/activity_detalhes_restaurante.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/activity_detalhes_restaurante.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_lista_restaurantes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_lista_restaurantes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_lista_restaurantes_fav.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_lista_restaurantes_fav.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_listas.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/fragment_listas.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/item_lista_restaurante.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Evo_Menu/app/src/main/res/layout/item_lista_restaurante.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,13 +59,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
-    <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/wamp64/www/ProjetoEvoMenus/Android/Evo_Menu"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

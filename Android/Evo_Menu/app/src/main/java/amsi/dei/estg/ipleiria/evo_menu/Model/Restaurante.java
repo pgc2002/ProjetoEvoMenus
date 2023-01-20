@@ -5,19 +5,18 @@ import java.io.Serializable;
 public class Restaurante implements Serializable
 {
     //public static int autoincremento = 0;
-    private int id, lotacao_max, id_ementa, id_horario, id_morada;
+    private int id, lotacao_max, id_horario, id_morada;
     private String nome, email, telemovel;
 
-    public Restaurante(int id, String nome, String email, int lotacao_max, String telemovel, int id_ementa, int id_horario, int id_morada)
+    public Restaurante(int id, String nome, String email, int lotacao_max, String telemovel, int id_horario, int id_morada)
     {
         this.id=id;
         this.nome=nome;
         this.email=email;
         this.lotacao_max=lotacao_max;
         this.telemovel=telemovel;
-        this.id_ementa=id_ementa;
         this.id_horario=id_horario;
-        this.id_morada=id_horario;
+        this.id_morada=id_morada;
     }
 
     public int getId() {return id; }
@@ -39,10 +38,6 @@ public class Restaurante implements Serializable
     public String getTelemovel() {return telemovel; }
 
     public void setTelemovel(String telemovel) {this.telemovel = telemovel; }
-
-    public int getId_ementa() {return id_ementa; }
-
-    public void setId_ementa(int id_ementa) {this.id_ementa = id_ementa; }
 
     public int getId_horario() {return id_horario; }
 

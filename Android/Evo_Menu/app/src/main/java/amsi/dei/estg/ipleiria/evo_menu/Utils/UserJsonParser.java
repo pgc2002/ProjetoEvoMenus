@@ -10,12 +10,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Users;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
 public class UserJsonParser {
-    public static ArrayList<Users> parserJsonUsers(JSONArray resposta)
+    public static ArrayList<User> parserJsonUsers(JSONArray resposta)
     {
-        ArrayList<Users> lista = new ArrayList<>();
+        ArrayList<User> lista = new ArrayList<>();
         try {
             for(int i = 0; i < resposta.length(); i++)
             {
@@ -36,7 +36,7 @@ public class UserJsonParser {
                 int idMorada = jsonUser.getInt("idMorada");
                 int idMesa = jsonUser.getInt("idMesa");
 
-                Users user = new Users(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
+                User user = new User(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
                 lista.add(user);
             }
 
@@ -51,9 +51,9 @@ public class UserJsonParser {
 
     //POR FAZER
 
-    public static Users parserJsonUser(String resposta)
+    public static User parserJsonUser(String resposta)
     {
-        Users user = null;
+        User user = null;
         try {
             JSONObject jsonUser = new JSONObject(resposta);
             int id = jsonUser.getInt("id");
@@ -74,7 +74,7 @@ public class UserJsonParser {
             int ano = jsonUser.getInt("ano");
             String capa = jsonUser.getString("capa");
 
-            user = new Users(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
+            user = new User(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
         } catch (JSONException e) {
             e.printStackTrace();
         }

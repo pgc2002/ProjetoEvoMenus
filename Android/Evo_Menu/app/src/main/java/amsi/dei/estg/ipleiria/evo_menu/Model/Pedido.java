@@ -2,7 +2,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import java.io.Serializable;
 
-public class Pedidos implements Serializable
+public class Pedido implements Serializable
 {
     private int id;
     private double valor_total;
@@ -10,7 +10,7 @@ public class Pedidos implements Serializable
     private int id_cliente;
     private int id_restaurante;
 
-    public Pedidos(int id, double valor_total, String estado, int id_cliente, int id_restaurante) {
+    public Pedido(int id, double valor_total, String estado, int id_cliente, int id_restaurante) {
         this.id = id;
         this.valor_total = valor_total;
         this.estado = estado;

@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,7 +15,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,61 +23,61 @@ import java.util.Map;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivrosListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UserListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 //import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
 
-public class SingletonGestorUser {
+public class SingletonGestorUsers {
     private final static String mUrlAPIuser = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/user";
     private UserBdHelper usersBD = null;
-    private static SingletonGestorUser instancia = null;
-    private ArrayList<Users> users;
+    private static SingletonGestorUsers instancia = null;
+    private ArrayList<User> users;
     private static RequestQueue volleyQueue = null;
-    /*private LivrosListener livrosListener;
-    private LivroListener livroListener;
-    private LoginListener loginListener;*/
+    private UsersListener usersListener;
+    private UserListener userListener;
 
     //Verificar se ja existe ou nao
-    public static synchronized SingletonGestorUser getInstance(Context contexto) {
+    public static synchronized SingletonGestorUsers getInstance(Context contexto) {
         if (instancia == null) {
-            instancia = new SingletonGestorUser(contexto);
+            instancia = new SingletonGestorUsers(contexto);
             volleyQueue = Volley.newRequestQueue(contexto);
         }
         return instancia;
     }
 
-    private SingletonGestorUser(Context contexto) {
+    private SingletonGestorUsers(Context contexto) {
         users = new ArrayList<>();
         usersBD = new UserBdHelper(contexto);
     }
 
-    public ArrayList<Users> getUsersBD() {
+    public ArrayList<User> getUsersBD() {
         return users = usersBD.getAllUsersBD();
     }
 
     //Buscar os users do ficheiro criado para a lista
-    public void setUsers(ArrayList<Users> users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-    public Users getUser(long id) {
-        for (Users user : users) {
+    public User getUser(long id) {
+        for (User user : users) {
             return user;
         }
         return null;
     }
 
-    //adicionarlivrosapi
-    public void adicionarLivrosBD(ArrayList<Users> users) {
+    public void adicionarUsersBD(ArrayList<User> users) {
         usersBD.removerAllUsersBD();
-        for (Users user : users) {
+        for (User user : users) {
             adicionarUserBD(user);
         }
     }
 
     //CRUD
-    public void adicionarUserBD(Users user) {
+    public void adicionarUserBD(User user) {
         /*Livro livrobd = livrosBD.adicionarLivroBD(livro);
 
         if(livrobd!=null)
@@ -91,7 +89,7 @@ public class SingletonGestorUser {
     }
 
     public void removerUserBD(long id) {
-        Users user = getUser(id);
+        User user = getUser(id);
         if (user != null) {
             usersBD.removerUserBD(user.getId());
             /*if(livrosBD.removerLivroBD(livro.getId()))
@@ -100,8 +98,8 @@ public class SingletonGestorUser {
 
     }
 
-    public void editarUserBD(Users dadosUser) {
-        Users user = getUser(dadosUser.getId());
+    public void editarUserBD(User dadosUser) {
+        User user = getUser(dadosUser.getId());
         if (user != null) {
             /*(livrosBD.editarLivroBD(dadosLivro)) {
                 livro.setTitulo(dadosLivro.getTitulo());
@@ -114,9 +112,8 @@ public class SingletonGestorUser {
         }
     }
 
-
     //pedidos a api
-    public void adicionarUserAPI(final Users user, final Context contexto, String token)
+    public void adicionarUserAPI(final User user, final Context contexto, String token)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -132,7 +129,6 @@ public class SingletonGestorUser {
                 {
                     livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
                 }*/
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -183,12 +179,12 @@ public class SingletonGestorUser {
             @Override
             public void onResponse(JSONArray response) {
                 users = UserJsonParser.parserJsonUsers(response);
-                adicionarLivrosBD(users);
+                adicionarUsersBD(users);
                 //Ativar o listener
-                /*if(livroListener!=null)
+                if(userListener!=null)
                 {
-                    livrosListener.onRefreshListaLivros(livros);
-                }*/
+                    usersListener.onRefreshListaUsers(users);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -200,7 +196,7 @@ public class SingletonGestorUser {
         volleyQueue.add(req);
     }
 
-    public void removerUserAPI(final Users user, final Context contexto)
+    public void removerUserAPI(final User user, final Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -228,7 +224,7 @@ public class SingletonGestorUser {
         volleyQueue.add(req);
     }
 
-    public void editarLivroAPI(final Users user, Context contexto, final String token)
+    public void editarUserAPI(final User user, Context contexto, final String token)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -282,19 +278,11 @@ public class SingletonGestorUser {
         volleyQueue.add(request);
     }
 
-    /*
-    public void setLivrosListener(LivrosListener livrosListener) {
-        this.livrosListener = livrosListener;
+    public void setUsersListener(UsersListener usersListener) {
+        this.usersListener = usersListener;
     }
 
-    public void setLivroListener(LivroListener livroListener) {
-        this.livroListener = livroListener;
+    public void setUserListener(UserListener userListener) {
+        this.userListener = userListener;
     }
-    */
-
-    /*
-    public void setLoginListener(LoginListener loginListener) {
-        this.loginListener = loginListener;
-    }
-    */
 }

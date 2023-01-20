@@ -63,10 +63,10 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
         valores.put(ID, restaurante.getId());
         valores.put(NOME, restaurante.getNome());
         valores.put(EMAIL, restaurante.getEmail());
-        valores.put(LOTACAOMAX, restaurante.getLotacaoMaxima());
+        valores.put(LOTACAOMAX, restaurante.getLotacao_max());
         valores.put(TELEMOVEL, restaurante.getTelemovel());
-        valores.put(IDHORARIO, restaurante.getIdHorario());
-        valores.put(IDMORADA, restaurante.getIdMorada());
+        valores.put(IDHORARIO, restaurante.getId_horario());
+        valores.put(IDMORADA, restaurante.getId_morada());
 
         int id = (int) this.db.insert(TABLE_NAME, null, valores);
 
@@ -84,10 +84,10 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
         valores.put(ID, restaurante.getId());
         valores.put(NOME, restaurante.getNome());
         valores.put(EMAIL, restaurante.getEmail());
-        valores.put(LOTACAOMAX, restaurante.getLotacaoMaxima());
+        valores.put(LOTACAOMAX, restaurante.getLotacao_max());
         valores.put(TELEMOVEL, restaurante.getTelemovel());
-        valores.put(IDHORARIO, restaurante.getIdHorario());
-        valores.put(IDMORADA, restaurante.getIdMorada());
+        valores.put(IDHORARIO, restaurante.getId_horario());
+        valores.put(IDMORADA, restaurante.getId_morada());
 
         int nreg = this.db.update(TABLE_NAME, valores, ID + " = ?" , new String []{"" + restaurante.getId()});
 

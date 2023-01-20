@@ -16,6 +16,8 @@ import java.util.ArrayList;
 //Class unica, nao se repete mas pode ser acedida.
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesaListener;
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesasListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesaListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesasListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -30,8 +32,8 @@ public class SingletonGestorMesas
     private static SingletonGestorMesas instancia = null;
     private ArrayList<Mesa> mesas;
     private static RequestQueue volleyQueue = null;
-    //private MesasListener mesasListener;
-    //private MesaListener mesaListener;
+    private MesasListener mesasListener;
+    private MesaListener mesaListener;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorMesas getInstance(Context contexto) {
@@ -82,9 +84,6 @@ public class SingletonGestorMesas
         mesasDB.adicionarMesasDB(mesa);
     }
 
-
-
-
     public void getAllRestaurantesAPI(final Context contexto)
     {
         if(!RestauranteJsonParser.isConnectionInternet(contexto))
@@ -98,11 +97,10 @@ public class SingletonGestorMesas
                 mesas = MesasJsonParser.parserJsonMesa(response);
                 adicionarMesasDB(mesas);
                 //Ativar o listener
-                /*if(mesaListener!=null)
+                if(mesaListener!=null)
                 {
                     mesasListener.onRefreshListaMesas(mesas);
-                }*/
-
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -115,14 +113,11 @@ public class SingletonGestorMesas
     }
 
 
-
-
-
-    /*public void setMesasDB(MesasListener mesasListener) {
+    public void setMesasDB(MesasListener mesasListener) {
         this.mesasListener = mesasListener;
     }
 
     public void setMesaDB(MesaListener mesaListener) {
         this.mesaListener = mesaListener;
-    }*/
+    }
 }

@@ -6,6 +6,6 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 
 public interface RestaurantesListener
 {
-    void onRefreshListaRestaurantes(ArrayList<Restaurante> listaLivros);
+    void onRefreshListaRestaurantes(ArrayList<Restaurante> listaRestaurantes);
 
 }

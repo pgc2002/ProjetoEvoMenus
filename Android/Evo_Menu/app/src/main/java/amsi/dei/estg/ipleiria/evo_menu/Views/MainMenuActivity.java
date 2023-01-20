@@ -104,7 +104,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             case R.id.navRestaurantes:
                 /*Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);*/
-                fragment = new GrelhaRestaurantesFragment();
+                fragment = new ListaRestaurantesFragment();
                 break;
 
             case R.id.navFavoritos:
