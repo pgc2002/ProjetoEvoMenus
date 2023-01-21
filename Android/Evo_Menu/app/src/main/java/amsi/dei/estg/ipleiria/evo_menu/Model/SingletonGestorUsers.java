@@ -18,20 +18,15 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-//Class unica, nao se repete mas pode ser acedida.
-/*import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivroListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivrosListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
-//import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
-
 public class SingletonGestorUsers {
-    private final static String mUrlAPIuser = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/user";
+    private final static String mUrlAPIuser = new UrlApi().getUrl() + "user";
     private UserBdHelper usersBD = null;
     private static SingletonGestorUsers instancia = null;
     private ArrayList<User> users;
@@ -249,41 +244,7 @@ public class SingletonGestorUsers {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-        })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("idUser", "" + user.getId());
-                params.put("username", user.getUsername());
-                params.put("nome", user.getNome());
-                params.put("password", user.getPass());
-                params.put("email", user.getEmail());
-                params.put("telemovel", user.getTelemovel());
-                params.put("nif", user.getNif());
-
-                /*params.put("id", "" + user.getId());
-                params.put("username", user.getUsername());
-                params.put("auth_key", user.getAuth_key());
-                params.put("password_hash", user.getPass_hash());
-                params.put("email", user.getEmail());
-                params.put("status", "" + user.getStatus());
-                params.put("created_at", "" + user.getData_criacao());
-                params.put("updated_at", "" + user.getData_update());
-                params.put("telemovel", user.getTelemovel());
-                params.put("nif", user.getNif());
-                params.put("tipo", user.getTipo());
-                params.put("nome", user.getNome());
-                params.put("idRestaurante", "" + user.getId_restaurante());
-                params.put("idMorada", "" + user.getId_morada());
-                params.put("idMesa", "" + user.getId_mesa());*/
-
-                return params;
-
-            };
-        };
+        });
         volleyQueue.add(request);
     }
 

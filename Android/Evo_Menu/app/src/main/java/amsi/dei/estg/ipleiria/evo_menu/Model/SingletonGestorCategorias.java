@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.CategoriaListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.CategoriasListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.CategoriaJsonParser;
 
 public class SingletonGestorCategorias {
-    private final static String urlAPI = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/categoria";
+    private final static String urlAPI = new UrlApi().getUrl() + "categoria";
     private CategoriaDBHelper categoriasDB = null;
     private static SingletonGestorCategorias instancia = null;
 

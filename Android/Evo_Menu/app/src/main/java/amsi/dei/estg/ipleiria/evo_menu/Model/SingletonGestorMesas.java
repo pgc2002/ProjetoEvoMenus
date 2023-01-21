@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MesaListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MesasListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.MesasJsonParser;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;
 
 
 public class SingletonGestorMesas
 {
-    private final static String mUrlAPImesas = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/mesa"; //link da api
+    private final static String mUrlAPImesas = new UrlApi().getUrl() + "mesa"; //link da api
     private MesasDBHelper mesasDB = null;
     private static SingletonGestorMesas instancia = null;
     private ArrayList<Mesa> mesas;

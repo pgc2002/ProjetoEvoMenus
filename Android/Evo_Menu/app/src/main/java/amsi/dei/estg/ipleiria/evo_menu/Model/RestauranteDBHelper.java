@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class RestauranteDBHelper extends SQLiteOpenHelper
 {
-    private final static String DB_NAME = "db_evo_menus";
+    private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "restaurantes";
     private final static int DB_VERSION = 1;
     private final static String ID = "id";
@@ -25,7 +25,6 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
     private final static String IDMORADA = "idMorada";
 
     private SQLiteDatabase db;
-
 
     public RestauranteDBHelper(Context contexto)
     {
@@ -99,6 +98,19 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
         int nreg = this.db.delete(TABLE_NAME, ID + " = ?", new String[]{"" + id});
         return nreg > 0;
 
+    }
+
+    public Restaurante getRestauranteBD(int idRestaurante){
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DB_NAME + " WHERE id = '"+idRestaurante+"'", null);
+        Restaurante aux = new Restaurante(cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getInt(3),
+                cursor.getString(4),
+                cursor.getInt(5),
+                cursor.getInt(6));
+        return aux;
     }
 
     public ArrayList<Restaurante> getAllRestaurantesBD()

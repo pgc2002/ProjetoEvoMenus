@@ -21,11 +21,14 @@ import java.util.Map;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidoListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestauranteListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PedidoJsonParser;
 
 public class SingletonGestorPedidos {
-    private final static String mUrlAPIpedido = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/pedido";
+    private final static String mUrlAPIpedido = new UrlApi().getUrl() + "pedido";
     private PedidoBdHelper pedidoBD = null;
     private static SingletonGestorPedidos instancia = null;
     private ArrayList<Pedido> pedidos;
@@ -154,7 +157,7 @@ public class SingletonGestorPedidos {
 
     }
 
-    public void getAllPedidosAPI(final Context contexto)
+    public void getAllPedidosAPI(final Context contexto, int idUser)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -165,11 +168,19 @@ public class SingletonGestorPedidos {
             @Override
             public void onResponse(JSONArray response) {
                 pedidos = PedidoJsonParser.parserJsonPedidos(response);
-                adicionarPedidosBD(pedidos);
+                ArrayList<Pedido> pedidosFiltrados = new ArrayList<>();
+
+                for (Pedido pedido : pedidos) {
+                    if(pedido.getId_cliente() == idUser)
+                        pedidosFiltrados.add(pedido);
+                }
+
+                adicionarPedidosBD(pedidosFiltrados);
+
                 //Ativar o listener
                 if(pedidoListener!=null)
                 {
-                    pedidosListener.onRefreshListaPedidos(pedidos);
+                    pedidosListener.onRefreshListaPedidos(pedidosFiltrados);
                 }
             }
         }, new Response.ErrorListener() {
@@ -254,19 +265,11 @@ public class SingletonGestorPedidos {
         volleyQueue.add(request);
     }*/
 
-    /*
-    public void setLivrosListener(LivrosListener livrosListener) {
-        this.livrosListener = livrosListener;
+    public void setPedidosListener(PedidosListener pedidosListener) {
+        this.pedidosListener = pedidosListener;
     }
 
-    public void setLivroListener(LivroListener livroListener) {
-        this.livroListener = livroListener;
+    public void setPedidoListener(PedidoListener pedidoListener) {
+        this.pedidoListener = pedidoListener;
     }
-    */
-
-    /*
-    public void setLoginListener(LoginListener loginListener) {
-        this.loginListener = loginListener;
-    }
-    */
 }

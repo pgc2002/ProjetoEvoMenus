@@ -35,13 +35,13 @@ class UserController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionValidar($id, $password){
-        $user = User::find()->where(['id' => $id])->one();
+    public function actionValidar($idUser, $password){
+        $user = User::find()->where(['id' => $idUser])->one();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$id, 0);
+        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$idUser, 0);
         $mqtt->disconnect();
 
         $pass = $password;
@@ -49,39 +49,39 @@ class UserController extends ActiveController
         return $user->validatePassword($pass);
     }
 
-    public function actionOne($id){
-        $query = User::findOne($id);
+    public function actionOne($idUser){
+        $query = User::findOne($idUser);
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $query;
     }
 
-    public function actionMorada($id){
-        $user = User::findOne($id);
+    public function actionMorada($idUser){
+        $user = User::findOne($idUser);
         $morada = $user->getMorada()->one();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET da morada do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET da morada do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $morada;
     }
 
-    public function actionPedidos($id){
-        $User = User::findOne($id);
+    public function actionPedidos($idUser){
+        $User = User::findOne($idUser);
         $Pedidos = $User->getPedidos()->all();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET dos pedidos do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET dos pedidos do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $Pedidos;

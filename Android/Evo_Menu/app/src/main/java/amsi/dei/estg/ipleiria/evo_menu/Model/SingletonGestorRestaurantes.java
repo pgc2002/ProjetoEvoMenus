@@ -17,19 +17,18 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestauranteListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;
 
 public class SingletonGestorRestaurantes
 {
-        private final static String mUrlAPIrestaurantes = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
+        private final static String mUrlAPIrestaurantes =  new UrlApi().getUrl() + "restaurante"; //link da api
         private RestauranteDBHelper restaurantesDB = null;
         private static SingletonGestorRestaurantes instancia = null;
         private ArrayList<Restaurante> restaurantes;
         private static RequestQueue volleyQueue = null;
         private RestaurantesListener restaurantesListener;
         private RestauranteListener restauranteListener;
-
-
 
         //Verificar se ja existe ou nao
         public static synchronized SingletonGestorRestaurantes getInstance(Context contexto) {

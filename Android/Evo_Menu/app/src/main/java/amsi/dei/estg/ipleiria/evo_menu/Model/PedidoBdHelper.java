@@ -8,17 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-public class PedidoBdHelper extends SQLiteOpenHelper {
+public class PedidoBdHelper extends SQLiteOpenHelper
+{
     private final static String DB_NAME = "evo_menus";
-    private final static String TABLE_NAME = "user";
+    private final static String TABLE_NAME = "pedido";
     private final static int DB_VERSION = 1;
     private final static String ID = "id";
     private final static String VALOR_TOTAL = "valorTotal";
     private final static String ESTADO = "estado";
     private final static String ID_CLIENTE = "idCliente";
     private final static String ID_RESTAURANTE = "idRestaurante";
-
-
 
     private SQLiteDatabase db;
 

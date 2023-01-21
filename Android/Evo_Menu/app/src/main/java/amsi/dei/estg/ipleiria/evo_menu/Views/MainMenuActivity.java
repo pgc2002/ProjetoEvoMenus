@@ -3,6 +3,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,14 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorHorarios;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,14 +40,30 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     private String email;
     private static final String MAIL = "email" ;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle saveInstanceState)
     {
+        Runnable objRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    //SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext(), 0);
+                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+                    /*SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
+                    SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
+                    SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
+                    SingletonGestorHorarios.getInstance(getApplicationContext()).getAllHorariosAPI(getApplicationContext());
+                    SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
+                    SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());*/
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread objBgThread = new Thread(objRunnable);
+        objBgThread.start();
+
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_main_menu);
         navigationView = findViewById(R.id.navView);
@@ -58,8 +83,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarCabecalho();
 
         carregarFragmentoInicial();
-
-
     }
 
     private void carregarFragmentoInicial()
@@ -112,6 +135,10 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 /*Intent intent = new Intent(MainMenuActivity.this, VerPerfilActivity.class);
                 MainMenuActivity.this.startActivity(intent);*/
                 //setContentView(R.layout.activity_ver_perfil);
+                break;
+
+            case R.id.navHistoricoPedidos:
+                fragment = new HistoricoPedidosFragment();
                 break;
         }
         if(fragment != null)

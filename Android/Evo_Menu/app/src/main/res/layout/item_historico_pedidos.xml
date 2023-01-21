@@ -29,19 +29,32 @@
         android:layout_gravity="bottom"
         android:layout_marginStart="18dp"
         android:layout_marginBottom="18dp"
-        android:text="Placeholder"
+        android:text="Nome Restaurante"
         android:textColor="@color/black"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
-    <Button
-        android:id="@+id/btAdicionarFav"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/fav_icon_red"
+    <TextView
+        android:id="@+id/tvValorTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="48dp"
+        android:text="Valor Total"
+        android:textColor="@color/black"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <TextView
+        android:id="@+id/tvData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="70dp"
+        android:text="Data"
+        android:textColor="@color/black"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 

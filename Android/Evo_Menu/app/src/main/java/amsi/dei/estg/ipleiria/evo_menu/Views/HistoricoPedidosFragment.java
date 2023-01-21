@@ -1,6 +1,9 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,26 +12,23 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
-
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaRestaurantesAdaptador;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
+import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaPedidosAdaptador;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
-public class ListaRestaurantesFragment extends Fragment implements RestaurantesListener {
+public class HistoricoPedidosFragment extends Fragment implements PedidosListener {
 
     public static final int CODE_REQUEST_ADICIONAR = 1;
     private static final int CODE_REQUEST_EDITAR = 2;
 
-    private ListView lvRestaurantes;
+    private ListView lvPedidos;
 
-    private Button fabActionButton;
-
-    private ListaRestaurantesAdaptador adaptador;
+    private ListaPedidosAdaptador adaptador;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,24 +39,24 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
     private String mParam1;
     private String mParam2;
 
-    public ListaRestaurantesFragment() {
+    public HistoricoPedidosFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista_restaurantes, container, false);
+        View view = inflater.inflate(R.layout.fragment_historico_pedidos, container, false);
 
         setHasOptionsMenu(true);
 
-        lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
+        lvPedidos = view.findViewById(R.id.lvPedidos);
 
-        adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
+        adaptador = new ListaPedidosAdaptador(getContext(), SingletonGestorPedidos.getInstance(getContext()).getPedidosBD());
 
-        lvRestaurantes.setAdapter(adaptador);
+        lvPedidos.setAdapter(adaptador);
 
-        lvRestaurantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 Log.d("coisas", "aconteceram");
@@ -71,17 +71,17 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
             }
         });
 
-        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
-        SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB();
+        SingletonGestorPedidos.getInstance(getContext()).setPedidosListener(this);
+        SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext(), 20);
 
         return view;
     }
 
     @Override
-    public void onRefreshListaRestaurantes(ArrayList<Restaurante> listaRestaurantes) {
-        if(listaRestaurantes != null)
+    public void onRefreshListaPedidos(ArrayList<Pedido> listaPedidos) {
+        if(listaPedidos != null)
         {
-            lvRestaurantes.setAdapter(new ListaRestaurantesAdaptador(getContext(), listaRestaurantes));
+            lvPedidos.setAdapter(new ListaPedidosAdaptador(getContext(), listaPedidos));
         }
     }
 }
