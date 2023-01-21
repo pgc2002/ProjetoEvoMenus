@@ -10,12 +10,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Users;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
 public class UserJsonParser {
-    public static ArrayList<Users> parserJsonUsers(JSONArray resposta)
+    public static ArrayList<User> parserJsonUsers(JSONArray resposta)
     {
-        ArrayList<Users> lista = new ArrayList<>();
+        ArrayList<User> lista = new ArrayList<>();
         try {
             for(int i = 0; i < resposta.length(); i++)
             {
@@ -29,7 +29,7 @@ public class UserJsonParser {
                 String nome = jsonUser.getString("nome");
                 int idMorada = jsonUser.getInt("idMorada");
 
-                Users user = new Users(id, username, nome, password, email, telemovel, nif, idMorada);
+                User user = new User(id, username, nome, password, email, telemovel, nif, idMorada);
                 lista.add(user);
             }
 
@@ -44,9 +44,9 @@ public class UserJsonParser {
 
     //POR FAZER
 
-    public static Users parserJsonUser(String resposta)
+    public static User parserJsonUser(String resposta)
     {
-        Users user = null;
+        User user = null;
         try {
             JSONObject jsonUser = new JSONObject(resposta);
             int id = jsonUser.getInt("id");
@@ -58,7 +58,7 @@ public class UserJsonParser {
             String nome = jsonUser.getString("nome");
             int idMorada = jsonUser.getInt("idMorada");
 
-            user = new Users(id, username, nome, password, email, telemovel, nif, idMorada);
+            user = new User(id, username, nome, password, email, telemovel, nif, idMorada);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,23 +15,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.R;
-
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUser;
 
 public class LoginActivity extends AppCompatActivity
 {
     public static final String MAIL = "amsi.dei.estg.ipleiria.projetofinal.mail";
     private EditText etUsername, etPass;
     private Button btnLogin, btnRegistar;
-    SingletonGestorUser singletonGestorUser;
+    SingletonGestorUsers singletonGestorUser;
     int checkLogin;
     Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        singletonGestorUser = SingletonGestorUser.getInstance(this);
+        singletonGestorUser = SingletonGestorUsers.getInstance(this);
         checkLogin = 0;
         etUsername = findViewById(R.id.etUsernameLogin);
         etPass = findViewById(R.id.etPasswordLogin);
@@ -78,11 +76,11 @@ public class LoginActivity extends AppCompatActivity
         String pass = etPass.getText().toString();
         checkLogin++;
 
-        SingletonGestorUser.getInstance(this).validacaoPassAPI(username, pass, this);
+        SingletonGestorUsers.getInstance(this).validacaoPassAPI(username, pass, this);
         try {
             String validacao = "";
 
-            validacao = SingletonGestorUser.getInstance(this).getValidacao();
+            validacao = SingletonGestorUsers.getInstance(this).getValidacao();
             int length = validacao.length();
             if(validacao.length() != 0) {
                 String validacaoNew = validacao.substring(1, validacao.length() - 1);
@@ -97,12 +95,18 @@ public class LoginActivity extends AppCompatActivity
         }catch (Exception e){
             Log.d("testeValidacao", e.getMessage());
         }
+
+    }
+    private void RegistarUser(View view){
+        setContentView(R.layout.registar_activity);
     }
 
     private boolean isPassValida(String pass) {
         if(pass == null)
             return false;
         return pass.length() >=4;
+
+
     }
 
     private boolean isMailValido(String mail) {
@@ -111,4 +115,6 @@ public class LoginActivity extends AppCompatActivity
         boolean valido = Patterns.EMAIL_ADDRESS.matcher(mail).matches();
         return valido;
     }
+
+
 }

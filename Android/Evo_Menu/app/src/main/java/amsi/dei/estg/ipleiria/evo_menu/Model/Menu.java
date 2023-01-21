@@ -6,19 +6,19 @@ import java.io.Serializable;
 
 public class Menu implements Serializable
 {
-    private int id, id_categoria;
+    private int id;
+    private int idCategoria;
     private String nome;
-    private ImageView imagem;
+    private String fotografia;
     private double desconto;
 
-    public Menu(int id, String nome, ImageView imagem, double desconto, int id_categoria) {
+    public Menu(int id, String nome, String fotografia, double desconto, int idCategoria) {
         this.id = id;
         this.nome = nome;
-        this.imagem = imagem;
+        this.fotografia = fotografia;
         this.desconto = desconto;
-        this.id_categoria = id_categoria;
+        this.idCategoria = idCategoria;
     }
-
 
     public int getId() {
         return id;
@@ -36,14 +36,6 @@ public class Menu implements Serializable
         this.nome = nome;
     }
 
-    public ImageView getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(ImageView imagem) {
-        this.imagem = imagem;
-    }
-
     public double getDesconto() {
         return desconto;
     }
@@ -52,11 +44,19 @@ public class Menu implements Serializable
         this.desconto = desconto;
     }
 
-    public int getId_categoria() {
-        return id_categoria;
+    public int getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setId_categoria(int id_categoria) {
-        this.id_categoria = id_categoria;
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getFotografia() {
+        return fotografia;
+    }
+
+    public void setFotografia(String fotografia) {
+        this.fotografia = fotografia;
     }
 }

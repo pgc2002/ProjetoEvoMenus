@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,101 +27,85 @@ import java.util.Map;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivrosListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 //import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
 
-public class SingletonGestorUser {
+public class SingletonGestorUsers {
     private final static String ip = "192.168.1.87";
     private final static String mUrlAPIuser = "http://"+ ip +"/ProjetoEvoMenus/projetofinal/backend/web/api/user";
     private UserBdHelper usersBD = null;
-    private static SingletonGestorUser instancia = null;
-    private ArrayList<Users> users;
+    private static SingletonGestorUsers instancia = null;
+    private ArrayList<User> users;
     private static RequestQueue volleyQueue = null;
     private String validacao;
-    /*private LivrosListener livrosListener;
-    private LivroListener livroListener;
-    private LoginListener loginListener;*/
+    private UsersListener usersListener;
+    private UserListener userListener;
 
     //Verificar se ja existe ou nao
-    public static synchronized SingletonGestorUser getInstance(Context contexto) {
+    public static synchronized SingletonGestorUsers getInstance(Context contexto) {
         if (instancia == null) {
-            instancia = new SingletonGestorUser(contexto);
+            instancia = new SingletonGestorUsers(contexto);
             volleyQueue = Volley.newRequestQueue(contexto);
         }
         return instancia;
     }
 
-    private SingletonGestorUser(Context contexto) {
+    private SingletonGestorUsers(Context contexto) {
         users = new ArrayList<>();
         usersBD = new UserBdHelper(contexto);
         validacao = "";
     }
 
-    public ArrayList<Users> getUsersBD() {
+    public ArrayList<User> getUsersBD() {
         return users = usersBD.getAllUsersBD();
     }
 
     //Buscar os users do ficheiro criado para a lista
-    public void setUsers(ArrayList<Users> users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 
-    public Users getUser(long id) {
-        for (Users user : users) {
+    public User getUser(long id) {
+        for (User user : users) {
             return user;
         }
         return null;
     }
 
-    //adicionarlivrosapi
-    public void adicionarUsersBD(ArrayList<Users> users) {
+    public void adicionarUsersBD(ArrayList<User> users) {
         usersBD.removerAllUsersBD();
-        for (Users user : users) {
+        for (User user : users) {
             adicionarUserBD(user);
         }
     }
 
     //CRUD
-    public void adicionarUserBD(Users user) {
-        /*Livro livrobd = livrosBD.adicionarLivroBD(livro);
-
-        if(livrobd!=null)
-        {
-            livros.add(livrobd);
-        }*/
-        //Adicionar atravez da api
+    public void adicionarUserBD(User user) {
         usersBD.adicionarUserBD(user);
     }
 
     public void removerUserBD(long id) {
-        Users user = getUser(id);
+        User user = getUser(id);
         if (user != null) {
             usersBD.removerUserBD(user.getId());
-            /*if(livrosBD.removerLivroBD(livro.getId()))
-                livros.remove(livro);*/
         }
 
     }
 
-    public void editarUserBD(Users dadosUser) {
-        Users user = getUser(dadosUser.getId());
+    public void editarUserBD(User dadosUser) {
+        User user = getUser(dadosUser.getId());
         if (user != null) {
-            /*(livrosBD.editarLivroBD(dadosLivro)) {
-                livro.setTitulo(dadosLivro.getTitulo());
-                livro.setAutor(dadosLivro.getAutor());
-                livro.setAno(dadosLivro.getAno());
-                livro.setSerie(dadosLivro.getSerie());
-                livro.setCapa(dadosLivro.getCapa());*/
             usersBD.editarUserBD(dadosUser);
 
         }
     }
 
-
     //pedidos a api
-    public void adicionarUserAPI(final Users user, final String pais, final String cidade, final String rua, final String codpost,  final Context contexto)
+    public void adicionarUserAPI(final User user, final String pais, final String cidade, final String rua, final String codpost,  final Context contexto)
     {
         if (!UserJsonParser.isConnectionInternet(contexto)) {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
@@ -133,12 +115,6 @@ public class SingletonGestorUser {
             @Override
             public void onResponse(String response) {
                 adicionarUserBD(UserJsonParser.parserJsonUser(response));
-                //ativar o listener...
-        /*if(livroListener != null)
-        {
-            livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
-        }*/
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -163,10 +139,10 @@ public class SingletonGestorUser {
                 users = UserJsonParser.parserJsonUsers(response);
                 adicionarUsersBD(users);
                 //Ativar o listener
-                /*if(livroListener!=null)
+                if(userListener!=null)
                 {
-                    livrosListener.onRefreshListaLivros(livros);
-                }*/
+                    usersListener.onRefreshListaUsers(users);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -178,7 +154,7 @@ public class SingletonGestorUser {
         volleyQueue.add(req);
     }
 
-    public void removerUserAPI(final Users user, final Context contexto)
+    public void removerUserAPI(final User user, final Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -206,23 +182,26 @@ public class SingletonGestorUser {
         volleyQueue.add(req);
     }
 
-    public void editarUserAPI(final Users user, Context contexto)
+    public void editarUserAPI(final User user, Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + '/' + user.getId(), new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarperfil" +
+                "?idUser=" + user.getId() + "&username=" + user.getUsername() + "&nome=" + user.getNome() +
+                "&password=" + user.getPass() + "&email=" + user.getEmail() + "&telemovel=" + user.getTelemovel() +
+                "&nif=" + user.getNif()
+                , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                editarUserBD(user);
+                //editarUserBD(user);
                 //ativar o listener...
                 /*if(livroListener != null)
                 {
                     livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
                 }*/
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -230,12 +209,13 @@ public class SingletonGestorUser {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-        })
-        {
+        });
+        /*{
             @Nullable
             @Override
             protected Map<String, String> getParams()
             {
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", "" + user.getId());
                 params.put("username", user.getUsername());
@@ -244,10 +224,15 @@ public class SingletonGestorUser {
                 params.put("email", user.getEmail());
                 params.put("telemovel", user.getTelemovel());
                 params.put("nif", user.getNif());
+                params.put("tipo", user.getTipo());
+                params.put("nome", user.getNome());
+                params.put("idRestaurante", "" + user.getId_restaurante());
+                params.put("idMorada", "" + user.getId_morada());
+                params.put("idMesa", "" + user.getId_mesa());
                 return params;
 
             };
-        };
+        }*/
         volleyQueue.add(request);
     }
 
@@ -266,12 +251,37 @@ public class SingletonGestorUser {
                     e.printStackTrace();
                 }
 
-                //Ativar o listener
-                /*if(livroListener!=null)
-                {
-                    livrosListener.onRefreshListaLivros(livros);
-                }*/
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                    Log.d("testeValidacao", error.getMessage());
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void editarMoradaAPI(final Morada morada, Context contexto)
+    {
+        if(!UserJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+            return;
+        }
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarmorada"+
+        "?idUser=" + morada.getIdUser() + "&pais=" + morada.getPais() + "&cidade=" + morada.getCidade() + "&rua=" + morada.getRua() + "&codpost=" + morada.getCodpost()
+        , new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                //editarUserBD(morada);
+                //ativar o listener...
+                /*if(livroListener != null)
+                {
+                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
+                }*/
+        }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -290,16 +300,17 @@ public class SingletonGestorUser {
     /*
     public void setLivrosListener(LivrosListener livrosListener) {
         this.livrosListener = livrosListener;
+                return;
+            }
+        });
+        volleyQueue.add(request);
     }
 
-    public void setLivroListener(LivroListener livroListener) {
-        this.livroListener = livroListener;
+    public void setUsersListener(UsersListener usersListener) {
+        this.usersListener = usersListener;
     }
-    */
 
-    /*
-    public void setLoginListener(LoginListener loginListener) {
-        this.loginListener = loginListener;
-    }
-    */
+    public void setUserListener(UserListener userListener) {
+        this.userListener = userListener;
+    }*/
 }

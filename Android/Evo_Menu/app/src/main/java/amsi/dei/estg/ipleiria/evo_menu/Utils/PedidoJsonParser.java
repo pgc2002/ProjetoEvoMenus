@@ -10,12 +10,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Pedidos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
 
 public class PedidoJsonParser {
-    public static ArrayList<Pedidos> parserJsonPedidos(JSONArray resposta)
+    public static ArrayList<Pedido> parserJsonPedidos(JSONArray resposta)
     {
-        ArrayList<Pedidos> lista = new ArrayList<>();
+        ArrayList<Pedido> lista = new ArrayList<>();
         try {
             for(int i = 0; i < resposta.length(); i++)
             {
@@ -26,7 +26,7 @@ public class PedidoJsonParser {
                 int id_cliente = jsonPagamento.getInt("idCliente");
                 int id_restaurante = jsonPagamento.getInt("idRestaurante");
 
-                Pedidos pedido = new Pedidos(id, valorTotal, estado, id_cliente, id_restaurante);
+                Pedido pedido = new Pedido(id, valorTotal, estado, id_cliente, id_restaurante);
                 lista.add(pedido);
             }
 
@@ -41,9 +41,9 @@ public class PedidoJsonParser {
 
     //POR FAZER
 
-    public static Pedidos parserJsonPedido(String resposta)
+    public static Pedido parserJsonPedido(String resposta)
     {
-        Pedidos pedido = null;
+        Pedido pedido = null;
         try {
             JSONObject jsonPagamento = new JSONObject(resposta);
             int id = jsonPagamento.getInt("id");
@@ -52,7 +52,7 @@ public class PedidoJsonParser {
             int id_cliente = jsonPagamento.getInt("idCliente");
             int id_restaurante = jsonPagamento.getInt("idRestaurante");
 
-            pedido = new Pedidos(id, valorTotal, estado, id_cliente, id_restaurante);
+            pedido = new Pedido(id, valorTotal, estado, id_cliente, id_restaurante);
         } catch (JSONException e) {
             e.printStackTrace();
         }

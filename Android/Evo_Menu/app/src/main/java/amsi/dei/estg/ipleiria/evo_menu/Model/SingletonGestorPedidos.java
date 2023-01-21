@@ -19,60 +19,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidoListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PedidoJsonParser;
 
-public class SingletonGestorPedido {
+public class SingletonGestorPedidos {
     private final static String mUrlAPIpedido = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/pedido";
     private PedidoBdHelper pedidoBD = null;
-    private static SingletonGestorPedido instancia = null;
-    private ArrayList<Pedidos> pedidos;
+    private static SingletonGestorPedidos instancia = null;
+    private ArrayList<Pedido> pedidos;
     private static RequestQueue volleyQueue = null;
-    /*private LivrosListener livrosListener;
-    private LivroListener livroListener;
-    private LoginListener loginListener;*/
-
+    private PedidosListener pedidosListener;
+    private PedidoListener pedidoListener;
 
     //Verificar se ja existe ou nao
-    public static synchronized SingletonGestorPedido getInstance(Context contexto) {
+    public static synchronized SingletonGestorPedidos getInstance(Context contexto) {
         if (instancia == null) {
-            instancia = new SingletonGestorPedido(contexto);
+            instancia = new SingletonGestorPedidos(contexto);
             volleyQueue = Volley.newRequestQueue(contexto);
         }
         return instancia;
     }
 
-    private SingletonGestorPedido(Context contexto) {
+    private SingletonGestorPedidos(Context contexto) {
         pedidos = new ArrayList<>();
         pedidoBD = new PedidoBdHelper(contexto);
     }
 
-    public ArrayList<Pedidos> getPedidosBD() {
+    public ArrayList<Pedido> getPedidosBD() {
         return pedidos = pedidoBD.getAllPedidosBD();
     }
 
     //Buscar os users do ficheiro criado para a lista
-    public void setPagamentos(ArrayList<Pedidos> pedidos) {
+    public void setPedidos(ArrayList<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
 
-    public Pedidos getPedido(long id) {
-        for (Pedidos pedido : pedidos) {
+    public Pedido getPedido(long id) {
+        for (Pedido pedido : pedidos) {
             return pedido;
         }
         return null;
     }
 
     //adicionarlivrosapi
-    public void adicionarPedidosBD(ArrayList<Pedidos> pedidos) {
+    public void adicionarPedidosBD(ArrayList<Pedido> pedidos) {
         pedidoBD.removerAllPedidosBD();
-        for (Pedidos pedido : pedidos) {
+        for (Pedido pedido : pedidos) {
             adicionarPedidoBD(pedido);
         }
     }
 
     //CRUD
-    public void adicionarPedidoBD(Pedidos pedido) {
+    public void adicionarPedidoBD(Pedido pedido) {
         /*Livro livrobd = livrosBD.adicionarLivroBD(livro);
 
         if(livrobd!=null)
@@ -83,33 +83,32 @@ public class SingletonGestorPedido {
         pedidoBD.adicionarPedidoBD(pedido);
     }
 
-    public void removerPedidoBD(long id) {
-        Pedidos pedido = getPedido(id);
+    /*public void removerPedidoBD(long id) {
+        Pedido pedido = getPedido(id);
         if (pedido != null) {
             pedidoBD.removerPedidoBD(pedido.getId());
-            /*if(livrosBD.removerLivroBD(livro.getId()))
-                livros.remove(livro);*/
+            if(livrosBD.removerLivroBD(livro.getId()))
+                livros.remove(livro);
         }
 
     }
 
-    public void editarPedidoBD(Pedidos dadosPedido) {
-        Pedidos pedido = getPedido(dadosPedido.getId());
+    public void editarPedidoBD(Pedido dadosPedido) {
+        Pedido pedido = getPedido(dadosPedido.getId());
         if (pedido != null) {
-            /*(livrosBD.editarLivroBD(dadosLivro)) {
+            (livrosBD.editarLivroBD(dadosLivro)) {
                 livro.setTitulo(dadosLivro.getTitulo());
                 livro.setAutor(dadosLivro.getAutor());
                 livro.setAno(dadosLivro.getAno());
                 livro.setSerie(dadosLivro.getSerie());
-                livro.setCapa(dadosLivro.getCapa());*/
+                livro.setCapa(dadosLivro.getCapa());
             pedidoBD.editarPedidoBD(dadosPedido);
-
         }
-    }
+    }*/
 
 
     //pedidos a api
-    public void adicionarPedidoAPI(final Pedidos pedido, final Context contexto, String token)
+    public void adicionarPedidoAPI(final Pedido pedido, final Context contexto, String token)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -168,10 +167,10 @@ public class SingletonGestorPedido {
                 pedidos = PedidoJsonParser.parserJsonPedidos(response);
                 adicionarPedidosBD(pedidos);
                 //Ativar o listener
-                /*if(livroListener!=null)
+                if(pedidoListener!=null)
                 {
-                    livrosListener.onRefreshListaLivros(livros);
-                }*/
+                    pedidosListener.onRefreshListaPedidos(pedidos);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -183,7 +182,7 @@ public class SingletonGestorPedido {
         volleyQueue.add(req);
     }
 
-    public void removerPedidoAPI(final Pedidos pedido, final Context contexto)
+    /*public void removerPedidoAPI(final Pedido pedido, final Context contexto)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -196,10 +195,10 @@ public class SingletonGestorPedido {
             public void onResponse(String response) {
                 removerPedidoBD(pedido.getId());
                 //ativar listener
-                /*if(livroListener != null)
+                if(livroListener != null)
                 {
                     livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_APAGAR);
-                }*/
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -211,7 +210,7 @@ public class SingletonGestorPedido {
         volleyQueue.add(req);
     }
 
-    public void editarPedidoAPI(final Pedidos pedido, Context contexto, final String token)
+    public void editarPedidoAPI(final Pedido pedido, Context contexto, final String token)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -223,10 +222,10 @@ public class SingletonGestorPedido {
             public void onResponse(String response) {
                 editarPedidoBD(pedido);
                 //ativar o listener...
-                /*if(livroListener != null)
+                if(livroListener != null)
                 {
                     livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
-                }*/
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -253,7 +252,7 @@ public class SingletonGestorPedido {
             };
         };
         volleyQueue.add(request);
-    }
+    }*/
 
     /*
     public void setLivrosListener(LivrosListener livrosListener) {

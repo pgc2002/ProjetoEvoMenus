@@ -1,45 +1,33 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Users implements Serializable
+public class User implements Serializable
 {
     private int id, id_restaurante, id_mesa, id_morada;
     private String username, pass, email, telemovel, nif, tipo, nome;
-    private short status;
 
+    public User(int id, String username, String nome, String pass, String email, String telemovel, String nif){
+        this.id = id;
+        this.username = username;
+        this.pass = pass;
+        this.nome = nome;
+        this.email = email;
+        this.telemovel = telemovel;
+        this.nif = nif;
+    }
 
-    public Users(int id, String username, String nome, String pass, String email, String telemovel, String nif, int id_morada) {
+    public User(int id, String username, String pass_hash, String email, String telemovel, String nif, String nome, int id_morada) {
         this.id = id;
         this.username = username;
         this.pass = pass;
         this.email = email;
-        this.status = 10;
         this.telemovel = telemovel;
         this.nif = nif;
         this.tipo = "Cliente";
         this.nome = nome;
-        this.id_restaurante = -1;
-        this.id_morada = -1;
-        this.id_mesa = -1;
+        this.id_morada = id_morada;
     }
-
-    public Users(int id, String username, String nome, String pass, String email, String telemovel, String nif) {
-        this.id = id;
-        this.username = username;
-        this.pass = pass;
-        this.email = email;
-        this.status = 10;
-        this.telemovel = telemovel;
-        this.nif = nif;
-        this.tipo = "Cliente";
-        this.nome = nome;
-        this.id_restaurante = -1;
-        this.id_morada = -1;
-        this.id_mesa = -1;
-    }
-
 
     public int getId() {return id; }
 
@@ -56,10 +44,6 @@ public class Users implements Serializable
     public String getEmail() {return email; }
 
     public void setEmail(String email) {this.email = email; }
-
-    public short getStatus() {return status; }
-
-    public void setStatus(short status) {this.status = status; }
 
     public String getTelemovel() {return telemovel; }
 

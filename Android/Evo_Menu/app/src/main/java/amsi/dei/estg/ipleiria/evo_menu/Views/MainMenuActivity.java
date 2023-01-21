@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,11 +23,16 @@ import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String DADOS_USER = "DADOS_USER";
+
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
     private String email;
     private static final String MAIL = "email" ;
+
+
+
 
 
 
@@ -52,6 +58,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarCabecalho();
 
         carregarFragmentoInicial();
+
 
     }
 
@@ -91,7 +98,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         switch(opcao)
         {
             case R.id.navRestaurantes:
-                /*Intent intent = new Intent(this, DetalhesEstaticoActivity.class);
+                /*Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);*/
                 fragment = new ListaRestaurantesFragment();
                 break;
@@ -100,8 +107,11 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 fragment = new ListaRestaurantesFavFragment();
                 break;
 
-            case R.id.navEditarPerfil:
-                setContentView(R.layout.perfil_useredit_activity);
+            case R.id.navVerPerfil:
+                fragment = new VerPerfilFragment();
+                /*Intent intent = new Intent(MainMenuActivity.this, VerPerfilActivity.class);
+                MainMenuActivity.this.startActivity(intent);*/
+                //setContentView(R.layout.activity_ver_perfil);
                 break;
         }
         if(fragment != null)

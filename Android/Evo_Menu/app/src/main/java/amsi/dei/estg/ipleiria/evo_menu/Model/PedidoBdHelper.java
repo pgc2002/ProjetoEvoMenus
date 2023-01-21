@@ -49,7 +49,7 @@ public class PedidoBdHelper extends SQLiteOpenHelper {
     }
 
     //Metodos crud
-    public Pedidos adicionarPedidoBD(Pedidos pedido)
+    public Pedido adicionarPedidoBD(Pedido pedido)
     {
         ContentValues valores = new ContentValues();
         valores.put(ID, pedido.getId());
@@ -68,7 +68,7 @@ public class PedidoBdHelper extends SQLiteOpenHelper {
         return null;
 
     }
-    public boolean editarPedidoBD(Pedidos pedido)
+    public boolean editarPedidoBD(Pedido pedido)
     {
         ContentValues valores = new ContentValues();
         valores.put(ID, pedido.getId());
@@ -88,15 +88,15 @@ public class PedidoBdHelper extends SQLiteOpenHelper {
         return nreg > 0;
     }
 
-    public ArrayList<Pedidos> getAllPedidosBD()
+    public ArrayList<Pedido> getAllPedidosBD()
     {
-        ArrayList<Pedidos> listaPedidos = new ArrayList<>();
+        ArrayList<Pedido> listaPedidos = new ArrayList<>();
         Cursor cursor = this.db.query(TABLE_NAME, new String[]{ID, VALOR_TOTAL, ESTADO, ID_CLIENTE, ID_RESTAURANTE}, null, null, null, null, null);
         if(cursor.moveToFirst())
         {
             do
             {
-                Pedidos aux = new Pedidos(cursor.getInt(0),
+                Pedido aux = new Pedido(cursor.getInt(0),
                         cursor.getDouble(1),
                         cursor.getString(2),
                         cursor.getInt(3),
