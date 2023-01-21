@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 public class MesasDBHelper extends SQLiteOpenHelper
 {
-    private final static String DB_NAME = "db_evo_menus";
+    private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "mesas";
     private final static int DB_VERSION = 1;
     private final static String ID = "id";

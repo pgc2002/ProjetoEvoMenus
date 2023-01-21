@@ -17,7 +17,9 @@
         android:id="@+id/ivRestauranteBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:id="@+id/tvNomeRestaurante"
@@ -28,7 +30,9 @@
         android:layout_marginStart="18dp"
         android:layout_marginBottom="18dp"
         android:text="Placeholder"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <Button
         android:id="@+id/btAdicionarFav"
@@ -37,7 +41,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/fav_icon_red" />
+        android:background="@drawable/fav_icon_red"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
 
 </androidx.cardview.widget.CardView>

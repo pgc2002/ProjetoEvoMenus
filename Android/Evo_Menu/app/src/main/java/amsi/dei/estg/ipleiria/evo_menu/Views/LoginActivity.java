@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class LoginActivity extends AppCompatActivity
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity
         etPass = findViewById(R.id.etPasswordLogin);
         btnLogin = findViewById(R.id.btLogin);
         btnRegistar = findViewById(R.id.btRegistar);
+        SingletonGestorUsers.getInstance(this).getAllUsersAPI(this);
         //bt click event
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,7 @@ public class LoginActivity extends AppCompatActivity
                 if (checkLogin == 1)
                     btnLogin.performClick();
 
-                handler.postDelayed(this, 500); //1000ms = 1seconds * 60
+                handler.postDelayed(this, 1000); //1000ms = 1seconds * 60
             }
         }, 1);
 
@@ -87,9 +89,13 @@ public class LoginActivity extends AppCompatActivity
                 String[] parts = validacaoNew.split("----");
                 int val = Integer.parseInt(parts[0]);
                 if(val == 1){
-                    Intent intentIdUser = new Intent(this, MainMenuActivity.class);
-                    intentIdUser.putExtra("id", parts[1]);
-                    startActivity(intentIdUser);
+                    Intent intentUser = new Intent(this, MainMenuActivity.class);
+                    intentUser.putExtra("id", parts[1]);
+                    intentUser.putExtra("pass", pass);
+                    SingletonGestorUsers.getInstance(this).getUserAPI(this, Integer.parseInt(parts[1]), pass);
+                    User user = SingletonGestorUsers.getInstance(this).getUserLogado();
+                    Log.d("wdaaw", user.getUsername());
+                    startActivity(intentUser);
                 }
             }
         }catch (Exception e){

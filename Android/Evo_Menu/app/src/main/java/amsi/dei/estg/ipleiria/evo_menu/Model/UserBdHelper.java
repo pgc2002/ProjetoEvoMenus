@@ -14,13 +14,12 @@ public class UserBdHelper extends SQLiteOpenHelper {
     private final static int DB_VERSION = 1;
     private final static String ID = "id";
     private final static String USERNAME = "username";
-    private final static String PASS = "pass_hash";
+    private final static String PASS = "pass";
     private final static String EMAIL = "email";
     private final static String TELEMOVEL = "telemovel";
     private final static String NIF = "nif";
     private final static String NOME = "nome";
     private final static String ID_MORADA = "id_morada";
-    private final static String TIPO = "tipo";
     private final static String ID_MESA = "id_mesa";
 
     private SQLiteDatabase db;
@@ -43,7 +42,6 @@ public class UserBdHelper extends SQLiteOpenHelper {
                 + TELEMOVEL + " TEXT NOT NULL, "
                 + NIF + " TEXT NOT NULL, "
                 + ID_MORADA + " INTEGER NOT NULL, "
-                + TIPO + " TEXT NOT NULL, "
                 + ID_MESA + " INTEGER);";
         db.execSQL(sqltable);
     }
@@ -61,22 +59,20 @@ public class UserBdHelper extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put(ID, user.getId());
         valores.put(USERNAME, user.getUsername());
+        valores.put(NOME, user.getNome());
         valores.put(PASS, user.getPass());
         valores.put(TELEMOVEL, user.getTelemovel());
         valores.put(NIF, user.getNif());
-        valores.put(NOME, user.getNome());
         valores.put(ID_MORADA, user.getId_morada());
-        valores.put(TIPO, user.getTipo());
-
-        int id = (int) this.db.insert(TABLE_NAME, null, valores);
+        this.db.insert(TABLE_NAME, null, valores);
+        /*int id = (int) this.db.insert(TABLE_NAME, null, valores);
 
         if(id > -1)
         {
             user.setId(id);
             return user;
-        }
+        }*/
         return null;
-
     }
     public boolean editarUserBD(User user)
     {

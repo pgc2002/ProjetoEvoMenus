@@ -21,7 +21,9 @@ import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;
 
 public class SingletonGestorRestaurantes
 {
-        private final static String mUrlAPIrestaurantes = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
+        private final static String ip = "192.168.1.87";
+        private final static String mUrlAPIrestaurantes = "http://"+ ip +"/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante";
+        //private final static String mUrlAPIrestaurantes = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
         private RestauranteDBHelper restaurantesDB = null;
         private static SingletonGestorRestaurantes instancia = null;
         private ArrayList<Restaurante> restaurantes;

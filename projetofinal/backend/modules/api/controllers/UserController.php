@@ -51,39 +51,39 @@ class UserController extends ActiveController
         return $string;
     }
 
-    public function actionOne($id){
-        $query = User::findOne($id);
+    public function actionOne($idUser){
+        $query = User::findOne($idUser);
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $query;
     }
 
-    public function actionMorada($id){
-        $user = User::findOne($id);
+    public function actionMorada($idUser){
+        $user = User::findOne($idUser);
         $morada = $user->getMorada()->one();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET da morada do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET da morada do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $morada;
     }
 
-    public function actionPedidos($id){
-        $User = User::findOne($id);
+    public function actionPedidos($idUser){
+        $User = User::findOne($idUser);
         $Pedidos = $User->getPedidos()->all();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "GET dos pedidos do user ".$id, 0);
+        $mqtt->publish($connection->topic, "GET dos pedidos do user ".$idUser, 0);
         $mqtt->disconnect();
 
         return $Pedidos;
@@ -126,6 +126,8 @@ class UserController extends ActiveController
         $mqtt->connect();
         $mqtt->publish($connection->topic, "POST de um user", 0);
         $mqtt->disconnect();
+        
+        return $user;
     }
 
     public function actionAlterarmorada($idUser, $pais, $cidade, $rua, $codpost){

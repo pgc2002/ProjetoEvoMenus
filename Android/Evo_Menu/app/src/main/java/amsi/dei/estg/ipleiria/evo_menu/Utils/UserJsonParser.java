@@ -44,7 +44,7 @@ public class UserJsonParser {
 
     //POR FAZER
 
-    public static User parserJsonUser(String resposta)
+    public static User parserJsonUser(String resposta, String pass)
     {
         User user = null;
         try {
@@ -58,12 +58,31 @@ public class UserJsonParser {
             String nome = jsonUser.getString("nome");
             int idMorada = jsonUser.getInt("idMorada");
 
-            user = new User(id, username, nome, password, email, telemovel, nif, idMorada);
+            user = new User(id, username, nome, pass, email, telemovel, nif, idMorada);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return user;
+    }
 
+    public static User parserJsonUserObjeto(JSONObject jsonUser, String pass)
+    {
+        User user = null;
+        try {
+            int id = jsonUser.getInt("id");
+            String username = jsonUser.getString("username");
+            String password = jsonUser.getString("password_hash");
+            String email = jsonUser.getString("email");
+            String telemovel = jsonUser.getString("telemovel");
+            String nif = jsonUser.getString("nif");
+            String nome = jsonUser.getString("nome");
+            int idMorada = jsonUser.getInt("idMorada");
+
+            user = new User(id, username, nome, pass, email, telemovel, nif, idMorada);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     public static String parserJsonValidacao (String resposta) throws JSONException {

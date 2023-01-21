@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable
 {
     private int id, id_restaurante, id_mesa, id_morada;
-    private String username, pass, email, telemovel, nif, tipo, nome;
+    private String username, pass, email, telemovel, nif, nome;
 
     public User(int id, String username, String nome, String pass, String email, String telemovel, String nif){
         this.id = id;
@@ -17,14 +17,13 @@ public class User implements Serializable
         this.nif = nif;
     }
 
-    public User(int id, String username, String pass_hash, String email, String telemovel, String nif, String nome, int id_morada) {
+    public User(int id, String username, String nome , String pass, String email, String telemovel, String nif, int id_morada) {
         this.id = id;
         this.username = username;
         this.pass = pass;
         this.email = email;
         this.telemovel = telemovel;
         this.nif = nif;
-        this.tipo = "Cliente";
         this.nome = nome;
         this.id_morada = id_morada;
     }
@@ -52,10 +51,6 @@ public class User implements Serializable
     public String getNif() {return nif; }
 
     public void setNif(String nif) {this.nif = nif; }
-
-    public String getTipo() {return tipo; }
-
-    public void setTipo(String tipo) {this.tipo = tipo; }
 
     public String getNome() {return nome; }
 

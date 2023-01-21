@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class RestauranteDBHelper extends SQLiteOpenHelper
 {
-    private final static String DB_NAME = "db_evo_menus";
+    private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "restaurantes";
     private final static int DB_VERSION = 1;
     private final static String ID = "id";

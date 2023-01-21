@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +87,18 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             //a ver mais tarde, defvalue em vez de s1
             email = sharedPreferences.getString(MAIL, "Email não definido");
         }
+
+        Bundle extras = getIntent().getExtras();
+
+        SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
+
+        User user = SingletonGestorUsers.getInstance(this).getUserLogado();
+
+        Log.d("userLogado", user.getNome());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MAIL, user.getNome());
+        editor.apply();
 
         View headerView = navigationView.getHeaderView(0);
         TextView tvMail = headerView.findViewById(R.id.tvHeaderMail);

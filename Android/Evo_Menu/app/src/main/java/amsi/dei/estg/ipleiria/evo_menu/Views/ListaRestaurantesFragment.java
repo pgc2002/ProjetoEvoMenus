@@ -52,6 +52,8 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
 
+        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
+        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
         adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
 
         lvRestaurantes.setAdapter(adaptador);
@@ -71,8 +73,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
             }
         });
 
-        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
-        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+
 
         return view;
     }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class HorarioDBHelper extends SQLiteOpenHelper
 {
-    private final static String DB_NAME = "db_evo_menus";
+    private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "horarios";
     private final static int DB_VERSION = 1;
     private final static String ID = "id";
