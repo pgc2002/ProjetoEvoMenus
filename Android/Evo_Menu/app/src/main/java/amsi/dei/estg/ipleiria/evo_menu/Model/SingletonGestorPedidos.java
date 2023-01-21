@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentoListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentosListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidoListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidoListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PedidoJsonParser;
 

@@ -5,10 +5,28 @@ import java.io.Serializable;
 public class User implements Serializable
 {
     private int id, id_restaurante, id_mesa, id_morada;
-    private String username, auth_key, pass_hash, email, verify_token, telemovel, nif, tipo, nome;
+    private String username;
+    private String auth_key;
+    private String pass_hash;
+    private String email;
+    private String verify_token;
+    private String telemovel;
+    private String nif;
+    private String tipo;
+    private String nome;
+    private String pass;
     private short status;
     private Long data_criacao, data_update;
 
+    public User(int id, String username, String pass, String nome, String email, String telemovel, String nif){
+        this.id = id;
+        this.username = username;
+        this.pass = pass;
+        this.nome = nome;
+        this.email = email;
+        this.telemovel = telemovel;
+        this.nif = nif;
+    }
 
     public User(int id, String username, String auth_key, String pass_hash, String email, String telemovel, String nif, String nome, int id_morada, long data_criacao, long data_update) {
         this.id = id;
@@ -93,4 +111,12 @@ public class User implements Serializable
     public int getId_mesa() {return id_mesa; }
 
     public void setId_mesa(int id_mesa) {this.id_mesa = id_mesa; }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
 }

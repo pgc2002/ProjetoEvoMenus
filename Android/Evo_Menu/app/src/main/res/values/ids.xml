@@ -8,7 +8,7 @@
     <item name="etRegistarPassword" type="id" />
     <item name="etRegistarUsername" type="id" />
     <item name="imageView" type="id" />
-    <item name="btEditarPerfil" type="id" />
+    <item name="btConcluirEdicao" type="id" />
     <item name="tvNif" type="id" />
     <item name="textView" type="id" />
     <item name="tvTelemovel" type="id" />

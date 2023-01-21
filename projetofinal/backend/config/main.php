@@ -61,7 +61,7 @@ return [
                         'POST criar/{username, nome, password, email, telemovel, nif, pais, cidade, rua, codpost}' => 'criar',
                     ],
                     'tokens' =>[
-                        '{idUser}' => '<telemovel:\\d+>',
+                        '{idUser}' => '<idUser:\\d+>',
                         '{nome}' => '<nome:\\s+>',
                         '{password}' => '<password:\\s+>',
                         '{email}' => '<email:\\s+>',

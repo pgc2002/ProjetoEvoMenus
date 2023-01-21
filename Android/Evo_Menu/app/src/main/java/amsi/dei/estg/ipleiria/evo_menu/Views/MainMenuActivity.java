@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -54,8 +55,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        carregarLivrosFicheiro();
-
         carregarCabecalho();
 
         carregarFragmentoInicial();
@@ -65,7 +64,8 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     private void carregarFragmentoInicial()
     {
-
+        Fragment fragment = new PaginaInicialFragment();
+        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     private void carregarCabecalho()
@@ -90,10 +90,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         tvMail.setText(email);
     }
 
-    private void carregarLivrosFicheiro() {
-    }
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
@@ -111,8 +107,11 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 fragment = new ListaRestaurantesFavFragment();
                 break;
 
-            case R.id.navEditarPerfil:
-                setContentView(R.layout.perfil_useredit_activity);
+            case R.id.navVerPerfil:
+                fragment = new VerPerfilFragment();
+                /*Intent intent = new Intent(MainMenuActivity.this, VerPerfilActivity.class);
+                MainMenuActivity.this.startActivity(intent);*/
+                //setContentView(R.layout.activity_ver_perfil);
                 break;
         }
         if(fragment != null)

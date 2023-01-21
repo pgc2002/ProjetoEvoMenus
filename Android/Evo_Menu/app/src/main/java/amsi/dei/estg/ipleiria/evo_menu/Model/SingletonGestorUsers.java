@@ -23,15 +23,15 @@ import java.util.Map;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivrosListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.UserListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.UsersListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 //import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
 
 public class SingletonGestorUsers {
-    private final static String mUrlAPIuser = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/user";
+    private final static String mUrlAPIuser = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/user";
     private UserBdHelper usersBD = null;
     private static SingletonGestorUsers instancia = null;
     private ArrayList<User> users;
@@ -113,7 +113,7 @@ public class SingletonGestorUsers {
     }
 
     //pedidos a api
-    public void adicionarUserAPI(final User user, final Context contexto, String token)
+    public void adicionarUserAPI(final User user, final Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -164,8 +164,6 @@ public class SingletonGestorUsers {
             };
         };
         volleyQueue.add(request);
-
-
     }
 
     public void getAllUsersAPI(final Context contexto)
@@ -224,23 +222,26 @@ public class SingletonGestorUsers {
         volleyQueue.add(req);
     }
 
-    public void editarUserAPI(final User user, Context contexto, final String token)
+    public void editarUserAPI(final User user, Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + '/' + user.getId(), new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarperfil" +
+                "?idUser=" + user.getId() + "&username=" + user.getUsername() + "&nome=" + user.getNome() +
+                "&password=" + user.getPass() + "&email=" + user.getEmail() + "&telemovel=" + user.getTelemovel() +
+                "&nif=" + user.getNif()
+                , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                editarUserBD(user);
+                //editarUserBD(user);
                 //ativar o listener...
                 /*if(livroListener != null)
                 {
                     livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
                 }*/
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -255,7 +256,15 @@ public class SingletonGestorUsers {
             protected Map<String, String> getParams()
             {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", "" + user.getId());
+                params.put("idUser", "" + user.getId());
+                params.put("username", user.getUsername());
+                params.put("nome", user.getNome());
+                params.put("password", user.getPass());
+                params.put("email", user.getEmail());
+                params.put("telemovel", user.getTelemovel());
+                params.put("nif", user.getNif());
+
+                /*params.put("id", "" + user.getId());
                 params.put("username", user.getUsername());
                 params.put("auth_key", user.getAuth_key());
                 params.put("password_hash", user.getPass_hash());
@@ -269,12 +278,42 @@ public class SingletonGestorUsers {
                 params.put("nome", user.getNome());
                 params.put("idRestaurante", "" + user.getId_restaurante());
                 params.put("idMorada", "" + user.getId_morada());
-                params.put("idMesa", "" + user.getId_mesa());
+                params.put("idMesa", "" + user.getId_mesa());*/
 
                 return params;
 
             };
         };
+        volleyQueue.add(request);
+    }
+
+    public void editarMoradaAPI(final Morada morada, Context contexto)
+    {
+        if(!UserJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+            return;
+        }
+        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarmorada"+
+        "?idUser=" + morada.getIdUser() + "&pais=" + morada.getPais() + "&cidade=" + morada.getCidade() + "&rua=" + morada.getRua() + "&codpost=" + morada.getCodpost()
+        , new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response) {
+                //editarUserBD(morada);
+                //ativar o listener...
+                /*if(livroListener != null)
+                {
+                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
+                }*/
+        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
         volleyQueue.add(request);
     }
 

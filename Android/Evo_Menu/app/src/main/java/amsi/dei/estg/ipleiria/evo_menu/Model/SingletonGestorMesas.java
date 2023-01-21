@@ -16,10 +16,8 @@ import java.util.ArrayList;
 //Class unica, nao se repete mas pode ser acedida.
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesaListener;
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesasListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesaListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.MesasListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MesaListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MesasListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.MesasJsonParser;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;

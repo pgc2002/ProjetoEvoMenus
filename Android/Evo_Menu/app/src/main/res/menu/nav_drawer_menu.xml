@@ -6,8 +6,8 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navEditarPerfil"
-            android:title="Editar Perfil">
+            android:id="@+id/navVerPerfil"
+            android:title="Ver Perfil">
 
         </item>
         <item

@@ -3,11 +3,20 @@ package amsi.dei.estg.ipleiria.evo_menu.Model;
 import java.io.Serializable;
 
 public class Morada implements Serializable {
-    private int id;
+    private int id, idUser;
     private String pais, cidade, rua, codpost;
 
     public Morada(int id, String pais, String cidade, String rua, String codpost) {
         this.id = id;
+        this.pais = pais;
+        this.cidade = cidade;
+        this.rua = rua;
+        this.codpost = codpost;
+    }
+
+    public Morada(int id, int idUser, String pais, String cidade, String rua, String codpost) {
+        this.id = id;
+        this.idUser = idUser;
         this.pais = pais;
         this.cidade = cidade;
         this.rua = rua;
@@ -28,6 +37,8 @@ public class Morada implements Serializable {
 
     public String getCodpost() {return codpost;}
     public void setCodpost(String codpost) {this.codpost = codpost;}
+
+    public int getIdUser() {return idUser;}
 
     @Override
     public String toString() {
