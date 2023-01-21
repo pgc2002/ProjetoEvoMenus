@@ -14,6 +14,7 @@
     <string name="etRegistarEmail">Email</string>
     <string name="etRegistarPass">Password</string>
     <string name="etRegistarUsername">Username</string>
+    <string name="etRegistarNome">Nome Completo</string>
     <string name="btEditarPerfil">Concluir edição</string>
     <string name="Nif">NIF</string>
     <string name="Telemovel">Telemovel</string>

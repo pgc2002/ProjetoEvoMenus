@@ -3,26 +3,37 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import amsi.dei.estg.ipleiria.evo_menu.R;
+
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUser;
 
 public class LoginActivity extends AppCompatActivity
 {
     public static final String MAIL = "amsi.dei.estg.ipleiria.projetofinal.mail";
     private EditText etUsername, etPass;
     private Button btnLogin, btnRegistar;
-
+    SingletonGestorUser singletonGestorUser;
+    int checkLogin;
+    Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-
+        singletonGestorUser = SingletonGestorUser.getInstance(this);
+        checkLogin = 0;
         etUsername = findViewById(R.id.etUsernameLogin);
         etPass = findViewById(R.id.etPasswordLogin);
         btnLogin = findViewById(R.id.btLogin);
@@ -32,42 +43,60 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                validarLogin(view);
+                try {
+                    validarLogin(view);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("myTag", e.getMessage());
+                }
             }
         });
         btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                RegistarUser(view);
+                Intent intent = new Intent(LoginActivity.this,RegistarActivity.class);
+                startActivity(intent);
             }
         });
-        ;
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (checkLogin == 1)
+                    btnLogin.performClick();
+
+                handler.postDelayed(this, 500); //1000ms = 1seconds * 60
+            }
+        }, 1);
+
     }
 
-    private void validarLogin(View view) {
-        String mail = etUsername.getText().toString();
+    private void validarLogin(View view) throws JSONException {
+        String username = etUsername.getText().toString();
         String pass = etPass.getText().toString();
+        checkLogin++;
 
-        //Validaçao mail
-        if(!isMailValido(mail)){
-            //Strings escritas no string.xml
-            etUsername.setError(getString(R.string.textErrorMail));
-            return;
+        SingletonGestorUser.getInstance(this).validacaoPassAPI(username, pass, this);
+        try {
+            String validacao = "";
+
+            validacao = SingletonGestorUser.getInstance(this).getValidacao();
+            int length = validacao.length();
+            if(validacao.length() != 0) {
+                String validacaoNew = validacao.substring(1, validacao.length() - 1);
+                String[] parts = validacaoNew.split("----");
+                int val = Integer.parseInt(parts[0]);
+                if(val == 1){
+                    Intent intentIdUser = new Intent(this, MainMenuActivity.class);
+                    intentIdUser.putExtra("id", parts[1]);
+                    startActivity(intentIdUser);
+                }
+            }
+        }catch (Exception e){
+            Log.d("testeValidacao", e.getMessage());
         }
-
-        if(!isPassValida(pass)){
-            etPass.setError(getString(R.string.textErrorPass));
-            return;
-        }
-        //Ligação entre atividades!! Envia tambem o email para o proximo.
-        Intent intentMail = new Intent(this, MainMenuActivity.class);
-        intentMail.putExtra("Mail", mail);
-        startActivity(intentMail);
-
-    }
-    private void RegistarUser(View view){
-        setContentView(R.layout.registar_activity);
     }
 
     private boolean isPassValida(String pass) {
@@ -82,5 +111,4 @@ public class LoginActivity extends AppCompatActivity
         boolean valido = Patterns.EMAIL_ADDRESS.matcher(mail).matches();
         return valido;
     }
-
 }

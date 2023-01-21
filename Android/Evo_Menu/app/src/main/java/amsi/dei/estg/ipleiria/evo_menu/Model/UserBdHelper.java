@@ -16,15 +16,12 @@ public class UserBdHelper extends SQLiteOpenHelper {
     private final static int DB_VERSION = 1;
     private final static String ID = "id";
     private final static String USERNAME = "username";
-    private final static String AUTH_KEY = "auth_key";
-    private final static String PASS_HASH = "pass_hash";
+    private final static String PASS = "pass_hash";
     private final static String EMAIL = "email";
     private final static String TELEMOVEL = "telemovel";
     private final static String NIF = "nif";
     private final static String NOME = "nome";
     private final static String ID_MORADA = "id_morada";
-    private final static String DATA_CRIACAO = "data_criacao";
-    private final static String DATA_UPDATE = "data_update";
     private final static String TIPO = "tipo";
     private final static String ID_MESA = "id_mesa";
 
@@ -45,14 +42,11 @@ public class UserBdHelper extends SQLiteOpenHelper {
                 + "( "
                 + ID + " INTEGER PRIMARY KEY, "
                 + USERNAME + " TEXT NOT NULL, "
-                + AUTH_KEY + " TEXT NOT NULL, "
-                + PASS_HASH + " TEXT NOT NULL, "
+                + NOME + " TEXT NOT NULL, "
+                + PASS + " TEXT NOT NULL, "
                 + TELEMOVEL + " TEXT NOT NULL, "
                 + NIF + " TEXT NOT NULL, "
-                + NOME + " TEXT NOT NULL, "
                 + ID_MORADA + " INTEGER NOT NULL, "
-                + DATA_CRIACAO + " INTEGER NOT NULL, "
-                + DATA_UPDATE + " INTEGER NOT NULL, "
                 + TIPO + " TEXT NOT NULL, "
                 + ID_MESA + " INTEGER);";
         db.execSQL(sqltable);
@@ -71,14 +65,11 @@ public class UserBdHelper extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put(ID, user.getId());
         valores.put(USERNAME, user.getUsername());
-        valores.put(AUTH_KEY, user.getAuth_key());
-        valores.put(PASS_HASH, user.getPass_hash());
+        valores.put(PASS, user.getPass());
         valores.put(TELEMOVEL, user.getTelemovel());
         valores.put(NIF, user.getNif());
         valores.put(NOME, user.getNome());
         valores.put(ID_MORADA, user.getId_morada());
-        valores.put(DATA_CRIACAO, user.getData_criacao());
-        valores.put(DATA_UPDATE, user.getData_update());
         valores.put(TIPO, user.getTipo());
 
         int id = (int) this.db.insert(TABLE_NAME, null, valores);
@@ -96,15 +87,11 @@ public class UserBdHelper extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put(ID, user.getId());
         valores.put(USERNAME, user.getUsername());
-        valores.put(AUTH_KEY, user.getAuth_key());
-        valores.put(PASS_HASH, user.getPass_hash());
+        valores.put(PASS, user.getPass());
         valores.put(TELEMOVEL, user.getTelemovel());
         valores.put(NIF, user.getNif());
         valores.put(NOME, user.getNome());
         valores.put(ID_MORADA, user.getId_morada());
-        valores.put(DATA_CRIACAO, user.getData_criacao());
-        valores.put(DATA_UPDATE, user.getData_update());
-        valores.put(TIPO, user.getTipo());
 
         int nreg = this.db.update(TABLE_NAME, valores, ID + " = ?" , new String []{"" + user.getId()});
 
@@ -120,7 +107,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
     public ArrayList<Users> getAllUsersBD()
     {
         ArrayList<Users> listaUsers = new ArrayList<>();
-        Cursor cursor = this.db.query(TABLE_NAME, new String[]{ID, USERNAME, AUTH_KEY, PASS_HASH, EMAIL, TELEMOVEL, NIF, NOME, ID_MORADA, DATA_CRIACAO, DATA_UPDATE, TIPO}, null, null, null, null, null);
+        Cursor cursor = this.db.query(TABLE_NAME, new String[]{ID, USERNAME, NOME, PASS, EMAIL, TELEMOVEL, NIF, ID_MORADA}, null, null, null, null, null);
         if(cursor.moveToFirst())
         {
             do
@@ -132,10 +119,8 @@ public class UserBdHelper extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getInt(8),
-                        cursor.getLong(9),
-                        cursor.getLong(10));
+                        cursor.getInt(7)
+                );
                 listaUsers.add(aux);
             }while(cursor.moveToNext());
         }

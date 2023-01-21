@@ -22,21 +22,14 @@ public class UserJsonParser {
                 JSONObject jsonUser = (JSONObject) resposta.get(i);
                 int id = jsonUser.getInt("id");
                 String username = jsonUser.getString("username");
-                String auth_key = jsonUser.getString("auth_key");
-                String password_hash = jsonUser.getString("password_hash");
+                String password = jsonUser.getString("password_hash");
                 String email = jsonUser.getString("email");
-                String status = jsonUser.getString("status");
-                long created_at = jsonUser.getLong("created_at");
-                long updated_at = jsonUser.getLong("updated_at");
                 String telemovel = jsonUser.getString("telemovel");
                 String nif = jsonUser.getString("nif");
-                String tipo = jsonUser.getString("tipo");
                 String nome = jsonUser.getString("nome");
-                int idRestaurante = jsonUser.getInt("idRestaurante");
                 int idMorada = jsonUser.getInt("idMorada");
-                int idMesa = jsonUser.getInt("idMesa");
 
-                Users user = new Users(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
+                Users user = new Users(id, username, nome, password, email, telemovel, nif, idMorada);
                 lista.add(user);
             }
 
@@ -58,28 +51,23 @@ public class UserJsonParser {
             JSONObject jsonUser = new JSONObject(resposta);
             int id = jsonUser.getInt("id");
             String username = jsonUser.getString("username");
-            String auth_key = jsonUser.getString("auth_key");
-            String password_hash = jsonUser.getString("password_hash");
+            String password = jsonUser.getString("password_hash");
             String email = jsonUser.getString("email");
-            String status = jsonUser.getString("status");
-            long created_at = jsonUser.getLong("created_at");
-            long updated_at = jsonUser.getLong("updated_at");
             String telemovel = jsonUser.getString("telemovel");
             String nif = jsonUser.getString("nif");
-            String tipo = jsonUser.getString("tipo");
             String nome = jsonUser.getString("nome");
-            int idRestaurante = jsonUser.getInt("idRestaurante");
             int idMorada = jsonUser.getInt("idMorada");
-            int idMesa = jsonUser.getInt("idMesa");
-            int ano = jsonUser.getInt("ano");
-            String capa = jsonUser.getString("capa");
 
-            user = new Users(id, username, auth_key, password_hash, email, telemovel, nif, nome, idMorada, created_at, updated_at);
+            user = new Users(id, username, nome, password, email, telemovel, nif, idMorada);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return user;
 
+    }
+
+    public static String parserJsonValidacao (String resposta) throws JSONException {
+        return resposta;
     }
 
     public static String parserJsonLogin(String resposta)

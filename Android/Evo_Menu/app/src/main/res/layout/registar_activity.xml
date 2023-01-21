@@ -25,6 +25,18 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
+    <EditText
+        android:id="@+id/etRegistarNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/etRegistarNome"
+        android:inputType="textPersonName" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,7 +106,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/etRegistarPais"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <Space
         android:layout_width="match_parent"
@@ -106,7 +118,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/etRegistarCidade"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <Space
         android:layout_width="match_parent"
@@ -118,7 +130,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/etRegistarRua"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <Space
         android:layout_width="match_parent"
@@ -130,7 +142,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/etRegistarCodPostal"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btRegistarNovo"
@@ -146,5 +158,6 @@
         android:id="@+id/btCancelarRegisto"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="@string/btCancelarRegisto" />
 </LinearLayout>
