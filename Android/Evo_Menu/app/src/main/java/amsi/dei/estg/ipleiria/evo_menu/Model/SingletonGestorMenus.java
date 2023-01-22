@@ -14,8 +14,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MenuListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.MenusListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.MenuListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.MenusListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.MenuJsonParser;

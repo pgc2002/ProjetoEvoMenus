@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaRestaurantesAdaptador;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -52,7 +53,9 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
 
-        adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
+        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+        ArrayList<Restaurante> restaurantes = SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes();
+        adaptador = new ListaRestaurantesAdaptador(getContext(), restaurantes);
 
         lvRestaurantes.setAdapter(adaptador);
 
@@ -60,10 +63,10 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 Log.d("coisas", "aconteceram");
-                /*Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
+                Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
                 intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
                 startActivityForResult(intent, CODE_REQUEST_EDITAR);
-                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
+                /*Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
                         Toast.LENGTH_SHORT).show();*/
                 //Chamar atividade detalhada
 
@@ -72,7 +75,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
         });
 
         SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
-        SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB();
+        //SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB();
 
         return view;
     }

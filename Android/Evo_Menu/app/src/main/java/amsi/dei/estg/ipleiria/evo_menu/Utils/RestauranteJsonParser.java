@@ -11,9 +11,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
 public class RestauranteJsonParser
 {
+    public static Restaurante parserJsonRestaurante(JSONObject resposta)
+    {
+        Restaurante restaurante = null;
+        try {
+            int id = resposta.getInt("id");
+            String nome = resposta.getString("nome");
+            String email = resposta.getString("email");
+            int lotacaoMaxima = resposta.getInt("lotacaoMaxima");
+            String telemovel = resposta.getString("telemovel");
+            int idHorario = resposta.getInt("idHorario");
+            int idMorada = resposta.getInt("idMorada");
+
+            restaurante = new Restaurante(id, nome, email, lotacaoMaxima, telemovel, idHorario, idMorada);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return restaurante;
+    }
+
     public static ArrayList<Restaurante> parserJsonRestaurante(JSONArray resposta)
     {
         ArrayList<Restaurante> lista = new ArrayList<>();

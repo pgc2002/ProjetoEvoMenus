@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,6 +29,9 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
+
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,18 +47,18 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle saveInstanceState)
     {
-        Runnable objRunnable = new Runnable() {
+        /*Runnable objRunnable = new Runnable() {
             @Override
             public void run() {
                 try{
-                    //SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext(), 0);
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext(), SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado().getId());
                     SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                    /*SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
+                    SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
                     SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
                     SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
                     SingletonGestorHorarios.getInstance(getApplicationContext()).getAllHorariosAPI(getApplicationContext());
                     SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
-                    SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());*/
+                    SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -62,7 +66,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         };
 
         Thread objBgThread = new Thread(objRunnable);
-        objBgThread.start();
+        objBgThread.start();*/
 
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_main_menu);
@@ -108,6 +112,18 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             email = sharedPreferences.getString(MAIL, "Email não definido");
         }
 
+        Bundle extras = getIntent().getExtras();
+
+        //SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
+
+        /*User user = SingletonGestorUsers.getInstance(this).getUserLogado();
+
+        Log.d("userLogado", user.getNome());*/
+
+        /*SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MAIL, user.getNome());
+        editor.apply();*/
+
         View headerView = navigationView.getHeaderView(0);
         TextView tvMail = headerView.findViewById(R.id.tvHeaderMail);
         tvMail.setText(email);
@@ -151,4 +167,3 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 }
-

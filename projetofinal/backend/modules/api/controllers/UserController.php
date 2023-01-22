@@ -35,18 +35,21 @@ class UserController extends ActiveController
         return $dataProvider;
     }
 
-    public function actionValidar($idUser, $password){
-        $user = User::find()->where(['id' => $idUser])->one();
+
+    public function actionValidar($username, $password){
+        $user = User::find()->where(['username' => $username])->one();
 
         $connection = new Connection();
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
-        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$idUser, 0);
+        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$username, 0);
         $mqtt->disconnect();
 
         $pass = $password;
 
-        return $user->validatePassword($pass);
+        $string = $user->validatePassword($pass)."----".$user->id;
+
+        return $string;
     }
 
     public function actionOne($idUser){
@@ -124,6 +127,8 @@ class UserController extends ActiveController
         $mqtt->connect();
         $mqtt->publish($connection->topic, "POST de um user", 0);
         $mqtt->disconnect();
+        
+        return $user;
     }
 
     public function actionAlterarmorada($idUser, $pais, $cidade, $rua, $codpost){

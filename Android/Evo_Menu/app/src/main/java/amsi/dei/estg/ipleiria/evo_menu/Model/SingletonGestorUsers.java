@@ -1,26 +1,26 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UserListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
@@ -31,8 +31,10 @@ public class SingletonGestorUsers {
     private static SingletonGestorUsers instancia = null;
     private ArrayList<User> users;
     private static RequestQueue volleyQueue = null;
+    private String validacao;
     private UsersListener usersListener;
     private UserListener userListener;
+    private User user;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorUsers getInstance(Context contexto) {
@@ -46,6 +48,7 @@ public class SingletonGestorUsers {
     private SingletonGestorUsers(Context contexto) {
         users = new ArrayList<>();
         usersBD = new UserBdHelper(contexto);
+        validacao = "";
     }
 
     public ArrayList<User> getUsersBD() {
@@ -59,7 +62,16 @@ public class SingletonGestorUsers {
 
     public User getUser(long id) {
         for (User user : users) {
-            return user;
+            if(user.getId() == id)
+                return user;
+        }
+        return null;
+    }
+
+    public User getUser(String username) {
+        for (User user : users) {
+            if(user.getUsername() == username)
+                return user;
         }
         return null;
     }
@@ -73,13 +85,6 @@ public class SingletonGestorUsers {
 
     //CRUD
     public void adicionarUserBD(User user) {
-        /*Livro livrobd = livrosBD.adicionarLivroBD(livro);
-
-        if(livrobd!=null)
-        {
-            livros.add(livrobd);
-        }*/
-        //Adicionar atravez da api
         usersBD.adicionarUserBD(user);
     }
 
@@ -87,8 +92,6 @@ public class SingletonGestorUsers {
         User user = getUser(id);
         if (user != null) {
             usersBD.removerUserBD(user.getId());
-            /*if(livrosBD.removerLivroBD(livro.getId()))
-                livros.remove(livro);*/
         }
 
     }
@@ -96,34 +99,23 @@ public class SingletonGestorUsers {
     public void editarUserBD(User dadosUser) {
         User user = getUser(dadosUser.getId());
         if (user != null) {
-            /*(livrosBD.editarLivroBD(dadosLivro)) {
-                livro.setTitulo(dadosLivro.getTitulo());
-                livro.setAutor(dadosLivro.getAutor());
-                livro.setAno(dadosLivro.getAno());
-                livro.setSerie(dadosLivro.getSerie());
-                livro.setCapa(dadosLivro.getCapa());*/
             usersBD.editarUserBD(dadosUser);
 
         }
     }
 
     //pedidos a api
-    public void adicionarUserAPI(final User user, final Context contexto)
+    public void adicionarUserAPI(final User user, final String pais, final String cidade, final String rua, final String codpost,  final Context contexto)
     {
-        if(!UserJsonParser.isConnectionInternet(contexto))
-        {
+        if (!UserJsonParser.isConnectionInternet(contexto)) {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIuser, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIuser + "/criar?username=" + user.getUsername() + "&nome=" + user.getNome() + "&password=" + user.getPass() + "&email=" + user.getEmail() + "&telemovel=" + user.getTelemovel() + "&nif=" + user.getNif() + "&pais=" + pais + "&cidade=" + cidade + "&rua=" + rua + "&codpost=" + codpost, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adicionarUserBD(UserJsonParser.parserJsonUser(response));
-                //ativar o listener...
-                /*if(livroListener != null)
-                {
-                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
-                }*/
+                Log.d("respostaAPI", response);
+                adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -131,33 +123,7 @@ public class SingletonGestorUsers {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-        })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", "" + user.getId());
-                params.put("username", user.getUsername());
-                params.put("auth_key", user.getAuth_key());
-                params.put("password_hash", user.getPass_hash());
-                params.put("email", user.getEmail());
-                params.put("status", "" + user.getStatus());
-                params.put("created_at", "" + user.getData_criacao());
-                params.put("updated_at", "" + user.getData_update());
-                params.put("telemovel", user.getTelemovel());
-                params.put("nif", user.getNif());
-                params.put("tipo", user.getTipo());
-                params.put("nome", user.getNome());
-                params.put("idRestaurante", "" + user.getId_restaurante());
-                params.put("idMorada", "" + user.getId_morada());
-                params.put("idMesa", "" + user.getId_mesa());
-                //params.put("capa", livro.getCapa() == null? DetalhesLivroActivity.IMG_DEFAULT : livro.getCapa());
-
-                return params;
-            };
-        };
+        });
         volleyQueue.add(request);
     }
 
@@ -174,10 +140,10 @@ public class SingletonGestorUsers {
                 users = UserJsonParser.parserJsonUsers(response);
                 adicionarUsersBD(users);
                 //Ativar o listener
-                if(userListener!=null)
+                /*if(userListener!=null)
                 {
                     usersListener.onRefreshListaUsers(users);
-                }
+                }*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -188,6 +154,58 @@ public class SingletonGestorUsers {
         });
         volleyQueue.add(req);
     }
+
+    public void getUserAPI(final Context contexto, final int id, final String pass)
+    {
+        if(!UserJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/" + id,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                user = UserJsonParser.parserJsonUserObjeto(response, pass);
+                Log.d("wadhi", user.getUsername());
+                adicionarUserBD(user);
+                //Ativar o listener
+                /*if(userListener!=null)
+                {
+                    usersListener.onRefreshListaUsers(users);
+                }*/
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    /*if(!UserJsonParser.isConnectionInternet(contexto))
+    {
+        Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        return;
+    }
+    StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser  + "/validar?username="+ username +"&password="+pass, new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            try {
+                validacao = UserJsonParser.parserJsonValidacao(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d("testeValidacao", error.getMessage());
+            return;
+        }
+    });
+        volleyQueue.add(req);*/
 
     public void removerUserAPI(final User user, final Context contexto)
     {
@@ -248,6 +266,32 @@ public class SingletonGestorUsers {
         volleyQueue.add(request);
     }
 
+    public void validacaoPassAPI(final String username, final String pass, Context contexto){
+        if(!UserJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser  + "/validar?username="+ username +"&password="+pass, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    validacao = UserJsonParser.parserJsonValidacao(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                    Log.d("testeValidacao", error.getMessage());
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
     public void editarMoradaAPI(final Morada morada, Context contexto)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
@@ -255,7 +299,7 @@ public class SingletonGestorUsers {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarmorada"+
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIuser + "/alterarmorada"+
         "?idUser=" + morada.getIdUser() + "&pais=" + morada.getPais() + "&cidade=" + morada.getCidade() + "&rua=" + morada.getRua() + "&codpost=" + morada.getCodpost()
         , new Response.Listener<String>()
         {
@@ -272,17 +316,18 @@ public class SingletonGestorUsers {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("testeValidacao", error.getMessage());
                 return;
             }
         });
-        volleyQueue.add(request);
+        volleyQueue.add(req);
     }
 
-    public void setUsersListener(UsersListener usersListener) {
-        this.usersListener = usersListener;
+    public String getValidacao(){
+        return validacao;
     }
 
-    public void setUserListener(UserListener userListener) {
-        this.userListener = userListener;
+    public User getUserLogado(){
+        return user;
     }
 }

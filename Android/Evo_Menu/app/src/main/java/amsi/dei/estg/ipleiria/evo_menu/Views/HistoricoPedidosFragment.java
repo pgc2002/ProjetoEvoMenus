@@ -9,16 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaPedidosAdaptador;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class HistoricoPedidosFragment extends Fragment implements PedidosListener {
@@ -52,7 +52,11 @@ public class HistoricoPedidosFragment extends Fragment implements PedidosListene
 
         lvPedidos = view.findViewById(R.id.lvPedidos);
 
-        adaptador = new ListaPedidosAdaptador(getContext(), SingletonGestorPedidos.getInstance(getContext()).getPedidosBD());
+        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+        //SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext(), SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId());
+        SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext());
+        ArrayList<Pedido> pedidos = SingletonGestorPedidos.getInstance(getContext()).getPedidos();
+        adaptador = new ListaPedidosAdaptador(getContext(), pedidos);
 
         lvPedidos.setAdapter(adaptador);
 
@@ -66,13 +70,11 @@ public class HistoricoPedidosFragment extends Fragment implements PedidosListene
                 Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
                         Toast.LENGTH_SHORT).show();*/
                 //Chamar atividade detalhada
-
-
             }
         });
 
         SingletonGestorPedidos.getInstance(getContext()).setPedidosListener(this);
-        SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext(), 20);
+        //SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext(), 20);
 
         return view;
     }

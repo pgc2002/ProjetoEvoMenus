@@ -42,8 +42,8 @@ public class EditarPerfilFragment extends Fragment
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User(20, etUsername.getText().toString(), etPassword.getText().toString(), etNome.getText().toString(), etEmail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
-                Morada morada = new Morada(1, 20, etPais.getText().toString(), etCidade.getText().toString(), etRua.getText().toString(), etCodPostal.getText().toString());
+                User user = new User(SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId(), etUsername.getText().toString(), etPassword.getText().toString(), etNome.getText().toString(), etEmail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
+                Morada morada = new Morada(SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId_morada(), SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId(), etPais.getText().toString(), etCidade.getText().toString(), etRua.getText().toString(), etCodPostal.getText().toString());
 
                 SingletonGestorUsers.getInstance(getContext()).editarUserAPI(user, getContext());
                 SingletonGestorUsers.getInstance(getContext()).editarMoradaAPI(morada, getContext());

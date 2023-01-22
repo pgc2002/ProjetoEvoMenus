@@ -13,6 +13,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.RestauranteDBHelper;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class ListaPedidosAdaptador extends BaseAdapter {
@@ -23,7 +24,15 @@ public class ListaPedidosAdaptador extends BaseAdapter {
     public ListaPedidosAdaptador(Context context, ArrayList<Pedido> lista)
     {
         this.contexto = context;
-        this.listaPedidos = lista;
+
+        ArrayList<Pedido> listaFiltrada = new ArrayList<>();
+
+        for (Pedido pedido: lista) {
+            if(SingletonGestorUsers.getInstance(contexto).getUserLogado().getId() == pedido.getId_cliente())
+                listaFiltrada.add(pedido);
+        }
+
+        this.listaPedidos = listaFiltrada;
     }
 
     @Override
@@ -50,7 +59,7 @@ public class ListaPedidosAdaptador extends BaseAdapter {
             inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //preenche cada quadrado
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.item_lista_restaurante, null);
+            convertView = inflater.inflate(R.layout.item_historico_pedidos, null);
 
         //Preenchimento do view
         ListaPedidosAdaptador.ViewHolderLista viewHolder = (ListaPedidosAdaptador.ViewHolderLista) convertView.getTag();
@@ -76,7 +85,7 @@ public class ListaPedidosAdaptador extends BaseAdapter {
         public void update(Pedido pedido) {
             Restaurante restaurante = SingletonGestorRestaurantes.getInstance(contexto).getRestaurante(pedido.getId_restaurante());
             tvNomeRestaurante.setText(restaurante.getNome());
-            tvValorTotal.setText(""+pedido.getValor_total());
+            tvValorTotal.setText(String.valueOf(pedido.getValor_total()));
             //tvData.setText();
 
             //Glide.with(contexto).load(restaurante.getCapa()).placeholder(R.drawable.logoipl).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivCapa);

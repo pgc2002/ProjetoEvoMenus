@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidoListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PedidosListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestauranteListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidoListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PedidoJsonParser;
@@ -32,6 +30,11 @@ public class SingletonGestorPedidos {
     private PedidoBdHelper pedidoBD = null;
     private static SingletonGestorPedidos instancia = null;
     private ArrayList<Pedido> pedidos;
+
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+
     private static RequestQueue volleyQueue = null;
     private PedidosListener pedidosListener;
     private PedidoListener pedidoListener;
@@ -157,7 +160,7 @@ public class SingletonGestorPedidos {
 
     }
 
-    public void getAllPedidosAPI(final Context contexto, int idUser)
+    public void getAllPedidosAPI(final Context contexto)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -168,19 +171,13 @@ public class SingletonGestorPedidos {
             @Override
             public void onResponse(JSONArray response) {
                 pedidos = PedidoJsonParser.parserJsonPedidos(response);
-                ArrayList<Pedido> pedidosFiltrados = new ArrayList<>();
 
-                for (Pedido pedido : pedidos) {
-                    if(pedido.getId_cliente() == idUser)
-                        pedidosFiltrados.add(pedido);
-                }
-
-                adicionarPedidosBD(pedidosFiltrados);
+                //adicionarPedidosBD(pedidos);
 
                 //Ativar o listener
                 if(pedidoListener!=null)
                 {
-                    pedidosListener.onRefreshListaPedidos(pedidosFiltrados);
+                    pedidosListener.onRefreshListaPedidos(pedidos);
                 }
             }
         }, new Response.ErrorListener() {
@@ -192,6 +189,41 @@ public class SingletonGestorPedidos {
         });
         volleyQueue.add(req);
     }
+
+    /*public void getAllPedidosAPI(final Context contexto, int idUser)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                ArrayList<Pedido> pedidosPorFiltrar = PedidoJsonParser.parserJsonPedidos(response);
+
+                for (Pedido pedido : pedidosPorFiltrar) {
+                    if(pedido.getId_cliente() == idUser)
+                        pedidos.add(pedido);
+                }
+
+                //adicionarPedidosBD(pedidosFiltrados);
+
+                //Ativar o listener
+                if(pedidoListener!=null)
+                {
+                    pedidosListener.onRefreshListaPedidos(pedidos);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }*/
 
     /*public void removerPedidoAPI(final Pedido pedido, final Context contexto)
     {
