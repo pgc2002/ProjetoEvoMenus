@@ -27,42 +27,45 @@
                     android:layout_height="219dp"
                     android:scaleType="fitCenter" />
 
-                <EditText
-                    android:id="@+id/etNomeRestaurante"
+                <TextView
+                    android:id="@+id/tvNomeRestaurante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:text="Nome Restaurante" />
 
-                <EditText
-                    android:id="@+id/etLotacaoMax"
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/tvLotacaoMax"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:text="Lotação Máxima" />
 
-                <EditText
-                    android:id="@+id/etEmail"
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:text="Email" />
 
-                <EditText
-                    android:id="@+id/etTelemovel"
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/tvTelemovel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="number" /><![CDATA[
-
-
-
-
-
-                />
-
-
-            ]]>
+                    android:text="Telémovel" />
             </LinearLayout>
         </ScrollView>
 
@@ -70,9 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:textAlignment="textEnd">
-
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/tvEstadoTitulo"
                 android:layout_width="match_parent"

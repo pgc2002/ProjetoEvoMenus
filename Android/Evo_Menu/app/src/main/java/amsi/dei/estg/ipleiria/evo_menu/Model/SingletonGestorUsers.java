@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,24 +18,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-//Class unica, nao se repete mas pode ser acedida.
-/*import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivroListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.LivrosListener;
-import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UserListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.MoradaJsonParser;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
-//import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
-
 public class SingletonGestorUsers {
-    private final static String ip = "192.168.1.87";
-    private final static String mUrlAPIuser = "http://"+ ip +"/ProjetoEvoMenus/projetofinal/backend/web/api/user";
+    private final static String mUrlAPIuser = new UrlApi().getUrl() + "user";
     private UserBdHelper usersBD = null;
     private static SingletonGestorUsers instancia = null;
     private ArrayList<User> users;
@@ -74,7 +64,16 @@ public class SingletonGestorUsers {
 
     public User getUser(long id) {
         for (User user : users) {
-            return user;
+            if(user.getId() == id)
+                return user;
+        }
+        return null;
+    }
+
+    public User getUser(String username) {
+        for (User user : users) {
+            if(user.getUsername() == username)
+                return user;
         }
         return null;
     }

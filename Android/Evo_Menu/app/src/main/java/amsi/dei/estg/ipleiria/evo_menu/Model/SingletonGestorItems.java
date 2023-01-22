@@ -14,13 +14,14 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.ItemListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.ItemsListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.ItemListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.ItemsListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.ItemJsonParser;
 
 public class SingletonGestorItems {
-    private final static String urlAPI = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/item";
+    private final static String urlAPI = new UrlApi().getUrl() + "item";
     private ItemDBHelper itemsDB = null;
     private static SingletonGestorItems instancia = null;
 

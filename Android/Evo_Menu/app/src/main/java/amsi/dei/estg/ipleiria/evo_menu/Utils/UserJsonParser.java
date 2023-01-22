@@ -42,7 +42,6 @@ public class UserJsonParser {
         return lista;
     }
 
-    //POR FAZER
 
     public static User parserJsonUser(String resposta, String pass)
     {
@@ -51,7 +50,6 @@ public class UserJsonParser {
             JSONObject jsonUser = new JSONObject(resposta);
             int id = jsonUser.getInt("id");
             String username = jsonUser.getString("username");
-            String password = jsonUser.getString("password_hash");
             String email = jsonUser.getString("email");
             String telemovel = jsonUser.getString("telemovel");
             String nif = jsonUser.getString("nif");
@@ -71,7 +69,6 @@ public class UserJsonParser {
         try {
             int id = jsonUser.getInt("id");
             String username = jsonUser.getString("username");
-            String password = jsonUser.getString("password_hash");
             String email = jsonUser.getString("email");
             String telemovel = jsonUser.getString("telemovel");
             String nif = jsonUser.getString("nif");
@@ -87,22 +84,6 @@ public class UserJsonParser {
 
     public static String parserJsonValidacao (String resposta) throws JSONException {
         return resposta;
-    }
-
-    public static String parserJsonLogin(String resposta)
-    {
-        String token = null;
-        try {
-            JSONObject jsonLogin = new JSONObject(resposta);
-            if(jsonLogin.getBoolean("success"))
-            {
-                token = jsonLogin.getString("token");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return token;
-
     }
 
     public static boolean isConnectionInternet(Context context)

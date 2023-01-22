@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity
                 if (checkLogin == 1)
                     btnLogin.performClick();
 
-                handler.postDelayed(this, 1000); //1000ms = 1seconds * 60
+                handler.postDelayed(this, 500); //1000ms = 1seconds * 60
             }
         }, 1);*/
     }
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity
         String username = etUsername.getText().toString();
         String pass = etPass.getText().toString();
         checkLogin++;
-
+        //User user = SingletonGestorUsers.getInstance(this).getUser(username);
         SingletonGestorUsers.getInstance(this).validacaoPassAPI(username, pass, this);
         try {
             String validacao = "";
@@ -90,13 +90,12 @@ public class LoginActivity extends AppCompatActivity
                     SingletonGestorUsers.getInstance(this).getUserAPI(this, Integer.parseInt(parts[1]), pass);
                     User user = SingletonGestorUsers.getInstance(this).getUserLogado();
                     Log.d("wdaaw", user.getUsername());
-                            startActivity(intentUser);
+                    startActivity(intentUser);
                 }
             }
         }catch (Exception e){
             Log.d("testeValidacao", e.getMessage());
         }
-
     }
     private void RegistarUser(View view){
         setContentView(R.layout.registar_activity);

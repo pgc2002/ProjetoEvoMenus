@@ -35,6 +35,7 @@ class UserController extends ActiveController
         return $dataProvider;
     }
 
+
     public function actionValidar($username, $password){
         $user = User::find()->where(['username' => $username])->one();
 

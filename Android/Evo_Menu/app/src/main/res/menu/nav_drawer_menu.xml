@@ -21,6 +21,9 @@
             android:title="Restaurantes">
 
         </item>
+        <item
+            android:id="@+id/navHistoricoPedidos"
+            android:title="Historico de Pedidos" />
 
     </group>
 

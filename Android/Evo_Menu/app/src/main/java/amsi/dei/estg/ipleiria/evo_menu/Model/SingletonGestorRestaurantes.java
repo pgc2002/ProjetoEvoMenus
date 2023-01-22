@@ -2,6 +2,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -9,30 +10,39 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 //Class unica, nao se repete mas pode ser acedida.
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestauranteListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.RestauranteJsonParser;
+import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 public class SingletonGestorRestaurantes
 {
-        private final static String ip = "192.168.1.87";
-        private final static String mUrlAPIrestaurantes = "http://"+ ip +"/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante";
-        //private final static String mUrlAPIrestaurantes = "http://192.168.1.65/ProjetoEvoMenus/projetofinal/backend/web/api/restaurante"; //link da api
+        private final static String mUrlAPIrestaurantes =  new UrlApi().getUrl() + "restaurante"; //link da api
         private RestauranteDBHelper restaurantesDB = null;
         private static SingletonGestorRestaurantes instancia = null;
+
         private ArrayList<Restaurante> restaurantes;
+
+        private Restaurante restaurante;
+
+        public Restaurante getRestaurante() {
+            return restaurante;
+        }
+
+
         private static RequestQueue volleyQueue = null;
         private RestaurantesListener restaurantesListener;
         private RestauranteListener restauranteListener;
-
-
 
         //Verificar se ja existe ou nao
         public static synchronized SingletonGestorRestaurantes getInstance(Context contexto) {
@@ -100,8 +110,8 @@ public class SingletonGestorRestaurantes
                 @Override
                 public void onResponse(JSONArray response) {
                     restaurantes = RestauranteJsonParser.parserJsonRestaurante(response);
-
                     //adicionarRestaurantesBD(restaurantes);
+
                     //Ativar o listener
                     if(restauranteListener!=null)
                     {
@@ -136,6 +146,27 @@ public class SingletonGestorRestaurantes
 
 
 
+        public void getRestauranteAPI(final Context contexto, final int id)
+        {
+            if(!UserJsonParser.isConnectionInternet(contexto))
+            {
+                Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + id,null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    restaurante = RestauranteJsonParser.parserJsonRestaurante(response);
+                    //adicionarUserBD(user);
+                }
+            } , new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            volleyQueue.add(req);
+        }
 
         public void setRestaurantesListener(RestaurantesListener restaurantesListener) {
             this.restaurantesListener = restaurantesListener;

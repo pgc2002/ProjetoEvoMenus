@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Adaptadores.ListaRestaurantesAdaptador;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestaurantesListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestaurantesListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -54,9 +54,10 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
 
-        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
         SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
         adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes());
+        /*ArrayList<Restaurante> restaurantes = SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes();
+        adaptador = new ListaRestaurantesAdaptador(getContext(), restaurantes);*/
 
         lvRestaurantes.setAdapter(adaptador);
 
@@ -73,13 +74,16 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
                 startActivityForResult(intent, CODE_REQUEST_EDITAR);
                 /**/
+                /*Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
+                        Toast.LENGTH_SHORT).show();*/
                 //Chamar atividade detalhada
 
 
             }
         });
 
-
+        SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
+        //SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB();
 
         return view;
     }

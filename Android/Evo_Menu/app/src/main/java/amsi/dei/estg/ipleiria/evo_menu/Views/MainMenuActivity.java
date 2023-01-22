@@ -3,6 +3,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,8 +21,17 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorHorarios;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
+
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,14 +44,30 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     private String email;
     private static final String MAIL = "email" ;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle saveInstanceState)
     {
+        /*Runnable objRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext(), SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado().getId());
+                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+                    SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
+                    SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
+                    SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
+                    SingletonGestorHorarios.getInstance(getApplicationContext()).getAllHorariosAPI(getApplicationContext());
+                    SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
+                    SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread objBgThread = new Thread(objRunnable);
+        objBgThread.start();*/
+
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_main_menu);
         navigationView = findViewById(R.id.navView);
@@ -61,8 +87,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarCabecalho();
 
         carregarFragmentoInicial();
-
-
     }
 
     private void carregarFragmentoInicial()
@@ -75,14 +99,29 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     {
 
         SharedPreferences sharedPreferences = getSharedPreferences("DADOS_USER", Context.MODE_PRIVATE);
+        if(email != null)
+        {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MAIL, email);
+            editor.apply();
+        }
+        else
+        {
+            //a ver mais tarde, defvalue em vez de s1
+            email = sharedPreferences.getString(MAIL, "Email não definido");
+        }
 
-        User user = SingletonGestorUsers.getInstance(this).getUserLogado();
+        Bundle extras = getIntent().getExtras();
 
-        Log.d("userLogado", user.getNome());
+        //SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        /*User user = SingletonGestorUsers.getInstance(this).getUserLogado();
+
+        Log.d("userLogado", user.getNome());*/
+
+        /*SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MAIL, user.getNome());
-        editor.apply();
+        editor.apply();*/
 
         View headerView = navigationView.getHeaderView(0);
         TextView tvMail = headerView.findViewById(R.id.tvHeaderMail);
@@ -112,6 +151,10 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 MainMenuActivity.this.startActivity(intent);*/
                 //setContentView(R.layout.activity_ver_perfil);
                 break;
+
+            case R.id.navHistoricoPedidos:
+                fragment = new HistoricoPedidosFragment();
+                break;
         }
         if(fragment != null)
         {
@@ -123,4 +166,3 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         return true;
     }
 }
-

@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.RestauranteListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -26,7 +27,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
 
     public static final int OP_CODE_APAGAR = 200;
 
-    private EditText etNome, etLotacao, etEmail, etTelemovel;
+    private TextView tvNome, tvLotacao, tvEmail, tvTelemovel;
     private ImageView ivCapaDetalhes;
     private FloatingActionButton fabGuardar;
     private Restaurante restaurante;
@@ -42,11 +43,11 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        etNome = findViewById(R.id.etNomeRestaurante);
-        etLotacao = findViewById(R.id.etLotacaoMax);
-        etEmail = findViewById(R.id.etEmail);
-        etTelemovel = findViewById(R.id.etTelemovel);
         ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);
+        tvNome = findViewById(R.id.tvNomeRestaurante);
+        tvLotacao = findViewById(R.id.tvLotacaoMax);
+        tvEmail = findViewById(R.id.tvEmail);
+        tvTelemovel = findViewById(R.id.tvTelemovel);
         //ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);//adiciona no layout
 
         Intent intent = getIntent();
@@ -84,11 +85,12 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
     private void mostrarDetalhes(Restaurante restaurante)
     {
         //meter dados nos campos...
+        //setTitle("Detalhes: " + restaurante.getNome());
         setTitle("Detalhes: " + restaurante.getNome());
-        etEmail.setText(restaurante.getEmail());
-        etLotacao.setText("" + restaurante.getLotacao_max());
-        etTelemovel.setText(restaurante.getTelemovel());
-        ivCapaDetalhes.setImageDrawable(getResources().getDrawable(R.drawable.placeholder));
+        tvNome.setText(restaurante.getNome());
+        tvEmail.setText(restaurante.getEmail());
+        tvLotacao.setText(String.valueOf(restaurante.getLotacao_max()));
+        tvTelemovel.setText(restaurante.getTelemovel());
     }
 
     @Override

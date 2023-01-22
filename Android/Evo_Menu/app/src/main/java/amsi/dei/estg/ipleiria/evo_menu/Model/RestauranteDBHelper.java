@@ -26,7 +26,6 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
 
     private SQLiteDatabase db;
 
-
     public RestauranteDBHelper(Context contexto)
     {
         super(contexto, DB_NAME, null, DB_VERSION);
@@ -99,6 +98,19 @@ public class RestauranteDBHelper extends SQLiteOpenHelper
         int nreg = this.db.delete(TABLE_NAME, ID + " = ?", new String[]{"" + id});
         return nreg > 0;
 
+    }
+
+    public Restaurante getRestauranteBD(int idRestaurante){
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DB_NAME + " WHERE id = '"+idRestaurante+"'", null);
+        Restaurante aux = new Restaurante(cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getInt(3),
+                cursor.getString(4),
+                cursor.getInt(5),
+                cursor.getInt(6));
+        return aux;
     }
 
     public ArrayList<Restaurante> getAllRestaurantesBD()

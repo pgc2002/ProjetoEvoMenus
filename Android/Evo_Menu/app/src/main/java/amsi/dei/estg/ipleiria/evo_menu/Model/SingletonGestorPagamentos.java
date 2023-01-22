@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PagamentoListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.PagamentosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentoListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.PagamentosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PagamentoJsonParser;
 
 public class SingletonGestorPagamentos {
-    private final static String mUrlAPIpagamento = "http://localhost/ProjetoEvoMenus/projetofinal/backend/web/api/pagamento";
+    private final static String mUrlAPIpagamento = new UrlApi().getUrl() + "pagamento";
     private PagamentoBdHelper pagamentoBD = null;
     private static SingletonGestorPagamentos instancia = null;
     private ArrayList<Pagamento> pagamentos;

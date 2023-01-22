@@ -16,8 +16,8 @@ import java.util.ArrayList;
 //Class unica, nao se repete mas pode ser acedida.
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorarioListener;
 //import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorariosListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.HorarioListener;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.HorariosListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorarioListener;
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.HorariosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.HorariosJsonParser;
 
