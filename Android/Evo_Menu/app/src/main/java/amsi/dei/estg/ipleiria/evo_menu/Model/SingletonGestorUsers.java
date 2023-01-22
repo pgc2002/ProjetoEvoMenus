@@ -30,6 +30,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Listeners.LoginListener;*/
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UserListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Listeners.UsersListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.Utils.MoradaJsonParser;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 //import amsi.dei.estg.ipleiria.evo_menu.Views.DetalhesLivroActivity;
@@ -45,6 +46,7 @@ public class SingletonGestorUsers {
     private UsersListener usersListener;
     private UserListener userListener;
     private User user;
+    private Morada morada = null;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorUsers getInstance(Context contexto) {
@@ -116,7 +118,7 @@ public class SingletonGestorUsers {
             @Override
             public void onResponse(String response) {
                 Log.d("respostaAPI", response);
-                adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
+                //adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -168,7 +170,7 @@ public class SingletonGestorUsers {
             public void onResponse(JSONObject response) {
                 user = UserJsonParser.parserJsonUserObjeto(response, pass);
                 Log.d("wadhi", user.getUsername());
-                adicionarUserBD(user);
+                //adicionarUserBD(user);
                 //Ativar o listener
                 /*if(userListener!=null)
                 {
@@ -322,6 +324,42 @@ public class SingletonGestorUsers {
             }
         });
         volleyQueue.add(req);
+    }
+
+    public void getMoradaAPI(final int idUser, Context contexto)
+    {
+
+        if(!UserJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+        }
+        else {
+            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser +"/"+ idUser + "/morada"
+                    , new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    //editarUserBD(morada);
+                    //ativar o listener...
+                /*if(livroListener != null)
+                {
+                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
+                }*/
+                    morada = MoradaJsonParser.parserJsonMorada(response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("testeValidacao", error.getMessage());
+                    return;
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+
+    public Morada getMorada(){
+        return morada;
     }
 
     public String getValidacao(){

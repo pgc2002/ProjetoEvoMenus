@@ -4,53 +4,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/ivCapaDetalhe"
+                    android:layout_width="match_parent"
+                    android:layout_height="219dp"
+                    android:scaleType="fitCenter" />
+
+                <EditText
+                    android:id="@+id/etNomeRestaurante"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etLotacaoMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etTelemovel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" /><![CDATA[
+
+
+
+
+
+                />
+
+
+            ]]>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:textAlignment="textEnd">
 
-            <ImageView
-                android:id="@+id/ivCapaDetalhe"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="fitCenter" />
-
-            <EditText
-                android:id="@+id/etNomeRestaurante"
+            <TextView
+                android:id="@+id/tvEstadoTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:text="Estado do Pedido"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/etLotacaoMax"
+            <TextView
+                android:id="@+id/tvEstado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/etEmail"
+            <Button
+                android:id="@+id/btFazerPedido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/etTelemovel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
-            />
+                android:text="Fazer Pedido" />
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

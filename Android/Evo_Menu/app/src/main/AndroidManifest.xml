@@ -50,6 +50,11 @@
         <activity
             android:name=".Views.EditarPerfilFragment"
             android:exported="true" />
+
+        <activity
+            android:name=".Views.DetalhesRestauranteActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -45,15 +46,25 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         etLotacao = findViewById(R.id.etLotacaoMax);
         etEmail = findViewById(R.id.etEmail);
         etTelemovel = findViewById(R.id.etTelemovel);
+        ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);
         //ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);//adiciona no layout
 
-        int id = (int)getIntent().getLongExtra(ID_RESTAURANTE, -1);
-        restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(id);
+        Intent intent = getIntent();
+
+        int id = (int)intent.getLongExtra(ID_RESTAURANTE, -1);
+        int idRestaurante = (int)intent.getIntExtra("idRestaurante", 0);
+        Log.d("idRestaurante", idRestaurante + "");
+        Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(idRestaurante);
+        //Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurantesDB().get(idRestaurante);
+
+
+        mostrarDetalhes(restaurante);
+        /*restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(id);
 
         if(restaurante != null)
         {
             mostrarDetalhes(restaurante);
-        }
+        }*/
         /*else
         {
             fabGuardar.setImageResource(R.drawable.add_icon);
@@ -77,6 +88,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         etEmail.setText(restaurante.getEmail());
         etLotacao.setText("" + restaurante.getLotacao_max());
         etTelemovel.setText(restaurante.getTelemovel());
+        ivCapaDetalhes.setImageDrawable(getResources().getDrawable(R.drawable.placeholder));
     }
 
     @Override

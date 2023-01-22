@@ -38,15 +38,32 @@ public class EditarPerfilFragment extends Fragment
         EditText etPais = view.findViewById(R.id.etPais);
         EditText etCidade = view.findViewById(R.id.etCidade);
 
+        User user = SingletonGestorUsers.getInstance(getContext()).getUserLogado();
+
+        etUsername.setText(user.getUsername());
+        etPassword.setText(user.getPass());
+        etNome.setText(user.getNome());
+        etEmail.setText(user.getEmail());
+        etTelemovel.setText(user.getTelemovel());
+        etNif.setText(user.getNif());
+
+        SingletonGestorUsers.getInstance(getContext()).getMoradaAPI(user.getId_morada(), getContext());
+        //Morada morada = SingletonGestorUsers.getInstance(getContext()).getMorada();
+
+        etPais.setText(user.getUsername());
+        etCidade.setText(user.getUsername());
+        etRua.setText(user.getUsername());
+        etCodPostal.setText(user.getUsername());
+
         Button btn = view.findViewById(R.id.btConcluirEdicao);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User(20, etUsername.getText().toString(), etPassword.getText().toString(), etNome.getText().toString(), etEmail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
-                Morada morada = new Morada(1, 20, etPais.getText().toString(), etCidade.getText().toString(), etRua.getText().toString(), etCodPostal.getText().toString());
+                User user = new User(SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId(), etUsername.getText().toString(), etPassword.getText().toString(), etNome.getText().toString(), etEmail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
+                //Morada morada = new Morada(SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId_morada(), SingletonGestorUsers.getInstance(getContext()).getUserLogado().getId(), etPais.getText().toString(), etCidade.getText().toString(), etRua.getText().toString(), etCodPostal.getText().toString());
 
                 SingletonGestorUsers.getInstance(getContext()).editarUserAPI(user, getContext());
-                SingletonGestorUsers.getInstance(getContext()).editarMoradaAPI(morada, getContext());
+                //SingletonGestorUsers.getInstance(getContext()).editarMoradaAPI(morada, getContext());
 
 
                 Fragment verPerfil = new VerPerfilFragment();

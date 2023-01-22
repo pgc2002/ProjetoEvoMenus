@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -52,15 +53,20 @@ public class SingletonGestorRestaurantes
         }
 
         //Buscar os livros do ficheiro criado para a lista
-        public void setLivros(ArrayList<Restaurante> lista) {
+        public void setRestaurantes(ArrayList<Restaurante> lista) {
             this.restaurantes = lista;
         }
 
         public Restaurante getRestaurante(int id) {
             for (Restaurante restaurante : restaurantes) {
-                return restaurante;
+                if(restaurante.getId() == id)
+                    return restaurante;
             }
             return null;
+        }
+
+        public ArrayList<Restaurante> getRestaurantes(){
+            return restaurantes;
         }
 
         //adicionarlivrosapi
@@ -94,7 +100,8 @@ public class SingletonGestorRestaurantes
                 @Override
                 public void onResponse(JSONArray response) {
                     restaurantes = RestauranteJsonParser.parserJsonRestaurante(response);
-                    adicionarRestaurantesBD(restaurantes);
+
+                    //adicionarRestaurantesBD(restaurantes);
                     //Ativar o listener
                     if(restauranteListener!=null)
                     {
@@ -111,6 +118,24 @@ public class SingletonGestorRestaurantes
             });
             volleyQueue.add(req);
         }
+
+        public Restaurante getRestauranteDB(int id){
+            Restaurante restaurante;
+
+            Cursor cursor = restaurantesDB.getReadableDatabase().rawQuery("select 1 from restaurantes WHERE id = "+id, null);
+
+            if (cursor.moveToFirst()) {
+                    // Assume every column is int
+                    restaurante = new Restaurante(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+                            cursor.getString(4), cursor.getInt(5), cursor.getInt(6));
+            }
+            else
+                restaurante=null;
+            return restaurante;
+        }
+
+
+
 
         public void setRestaurantesListener(RestaurantesListener restaurantesListener) {
             this.restaurantesListener = restaurantesListener;

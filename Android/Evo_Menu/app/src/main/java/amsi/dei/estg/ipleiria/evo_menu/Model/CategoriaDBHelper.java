@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class CategoriaDBHelper extends SQLiteOpenHelper {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "categoria";
-    private final static int DB_VERSION = 1;
+    private final static int DB_VERSION = 2;
     private final static String ID = "id";
     private final static String NOME = "nome";
     private final static String IDRESTAURANTE = "idRestaurante";

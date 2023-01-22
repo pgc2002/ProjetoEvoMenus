@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -54,7 +56,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
         SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
-        adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
+        adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes());
 
         lvRestaurantes.setAdapter(adaptador);
 
@@ -62,11 +64,15 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 Log.d("coisas", "aconteceram");
-                /*Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
+                Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
                 intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
+
+                intent.putExtra("idRestaurante", SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getId());
+                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getNome(),
+                        Toast.LENGTH_SHORT).show();
+
                 startActivityForResult(intent, CODE_REQUEST_EDITAR);
-                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
-                        Toast.LENGTH_SHORT).show();*/
+                /**/
                 //Chamar atividade detalhada
 
 

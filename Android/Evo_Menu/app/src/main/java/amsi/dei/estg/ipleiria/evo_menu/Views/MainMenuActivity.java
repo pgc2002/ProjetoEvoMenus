@@ -73,24 +73,8 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     private void carregarCabecalho()
     {
-        email = getIntent().getStringExtra(LoginActivity.MAIL);
 
         SharedPreferences sharedPreferences = getSharedPreferences("DADOS_USER", Context.MODE_PRIVATE);
-        if(email != null)
-        {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(MAIL, email);
-            editor.apply();
-        }
-        else
-        {
-            //a ver mais tarde, defvalue em vez de s1
-            email = sharedPreferences.getString(MAIL, "Email não definido");
-        }
-
-        Bundle extras = getIntent().getExtras();
-
-        SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
 
         User user = SingletonGestorUsers.getInstance(this).getUserLogado();
 

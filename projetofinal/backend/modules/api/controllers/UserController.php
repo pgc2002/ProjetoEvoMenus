@@ -44,9 +44,11 @@ class UserController extends ActiveController
         $mqtt->publish($connection->topic, "Desencriptar pass do user ".$username, 0);
         $mqtt->disconnect();
 
-        $pass = $password;
-
-        $string = $user->validatePassword($pass)."----".$user->id;
+        
+        if(Yii::$app->getSecurity()->validatePassword($password, $user->password_hash))
+            $string = "1----".$user->id;
+        else
+            $string = "0----".$user->id;
 
         return $string;
     }
