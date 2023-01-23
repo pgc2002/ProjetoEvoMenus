@@ -211,6 +211,85 @@ public class SingletonGestorPedidos {
         volleyQueue.add(request);
     }
 
+    /*public void getAllPedidosAPI(final Context contexto)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/user/"+SingletonGestorUsers.getInstance(contexto).getUserLogado().getId(), null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pedidos = PedidoJsonParser.parserJsonPedidos(response);
+
+                //adicionarPedidosBD(pedidos);
+
+                //Ativar o listener
+                if(pedidoListener!=null)
+                {
+                    pedidosListener.onRefreshListaPedidos(pedidos);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }*/
+
+
+    public void getAllItensPedidoAPI(final Context contexto, final int i)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/" + idPedido + "/items", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pedidos.get(i).setIdItensPedido(PedidoJsonParser.parserJsonItemIds(response));
+                Log.d("Itens do pedido "+ pedidos.get(i).getId(), PedidoJsonParser.parserJsonItemIds(response)+"");
+                //adicionarPedidosBD(pedidos);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void getAllMenusPedidoAPI(final Context contexto, final int i)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/" + idPedido + "/menus", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                pedidos.get(i).setIdItensPedido(PedidoJsonParser.parserJsonMenuIds(response));
+                Log.d("Itens do pedido "+ pedidos.get(i).getId(), PedidoJsonParser.parserJsonMenuIds(response)+"");
+                //adicionarPedidosBD(pedidos);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
     public void getAllPedidosAPI(final Context contexto)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
@@ -241,7 +320,7 @@ public class SingletonGestorPedidos {
         volleyQueue.add(req);
     }
 
-    /*public void getAllPedidosUserAPI(final Context contexto, int idUser)
+    /*public void getAllPedidosAPI(final Context contexto, int idUser)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
