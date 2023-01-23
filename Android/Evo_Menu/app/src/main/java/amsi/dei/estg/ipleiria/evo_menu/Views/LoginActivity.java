@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity
                         btnLogin.setBackgroundColor(getResources().getColor(R.color.butoes));
                         btnRegistar.setBackgroundColor(getResources().getColor(R.color.butoes));
                     }
-                }, 2000);
+                }, 500);
 
                 if(validarLogin()){
                     /*final int delay = 30000;
@@ -86,9 +86,8 @@ public class LoginActivity extends AppCompatActivity
                             }, delay);
                         }
                     }).start();*/
-                    
+
                     SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                    SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
 
                     try {
                         Thread.sleep(2000);

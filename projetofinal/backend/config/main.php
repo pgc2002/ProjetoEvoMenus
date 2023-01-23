@@ -84,6 +84,8 @@ return [
                         'GET {idPedido}' => 'one',
                         'GET {idPedido}/menus' => 'menus',
                         'GET {idPedido}/items' => 'items',
+                        'GET {idPedido}/countmenus' => 'countmenus',
+                        'GET {idPedido}/countitems' => 'countitems',
                         'GET {idPedido}/pagamentos' => 'pagamentos',
                         'GET {idPedido}/categorias' => 'categorias',
                         //'GET {idPedido}/conteudo' => 'conteudo',

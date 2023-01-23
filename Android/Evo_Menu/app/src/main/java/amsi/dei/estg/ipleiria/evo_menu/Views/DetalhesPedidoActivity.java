@@ -29,6 +29,12 @@ public class DetalhesPedidoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+        int idPedido = (int)intent.getIntExtra("idPedido", 0);
+
+        SingletonGestorPedidos.getInstance(this).getAllMenusPedidoAPI(this, idPedido);
+        SingletonGestorPedidos.getInstance(this).getAllItensPedidoAPI(this, idPedido);
+
         itens = new ArrayList<>();
         menus = new ArrayList<>();
 
@@ -38,7 +44,6 @@ public class DetalhesPedidoActivity extends AppCompatActivity {
 
     public void preencherLV() {
         Intent intent = getIntent();
-
         int idPedido = (int)intent.getIntExtra("idPedido", 0);
 
         //carregar menus e items a partir de ids guardados nos singletons

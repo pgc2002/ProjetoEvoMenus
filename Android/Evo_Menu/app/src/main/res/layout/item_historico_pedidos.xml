@@ -46,17 +46,5 @@
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
-    <TextView
-        android:id="@+id/tvData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="18dp"
-        android:layout_marginBottom="70dp"
-        android:text="Data"
-        android:textColor="@color/black"
-        android:focusable="false"
-        android:focusableInTouchMode="false"/>
-
 
 </androidx.cardview.widget.CardView>
