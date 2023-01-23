@@ -18,6 +18,16 @@ public class User implements Serializable
         this.nif = nif;
     }
 
+    public User(int id, String username, String nome, String email, String telemovel, String nif, int id_morada){
+        this.id = id;
+        this.username = username;
+        this.nome = nome;
+        this.email = email;
+        this.telemovel = telemovel;
+        this.nif = nif;
+        this.id_morada = id_morada;
+    }
+
     public User(int id, String username, String nome , String pass, String email, String telemovel, String nif, int id_morada) {
         this.id = id;
         this.username = username;

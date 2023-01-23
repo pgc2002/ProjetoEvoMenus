@@ -31,6 +31,13 @@ public class SingletonGestorUsers {
     private UserBdHelper usersBD = null;
     private static SingletonGestorUsers instancia = null;
     private ArrayList<User> users;
+
+    public String getLoginValido() {
+        return loginValido;
+    }
+
+    private String loginValido;
+
     private static RequestQueue volleyQueue = null;
     private String validacao;
     private UsersListener usersListener;
@@ -139,7 +146,7 @@ public class SingletonGestorUsers {
             @Override
             public void onResponse(JSONArray response) {
                 users = UserJsonParser.parserJsonUsers(response);
-                adicionarUsersBD(users);
+                //adicionarUsersBD(users);
                 //Ativar o listener
                 /*if(userListener!=null)
                 {
@@ -156,7 +163,7 @@ public class SingletonGestorUsers {
         volleyQueue.add(req);
     }
 
-    public void getUserAPI(final Context contexto, final int id, final String pass)
+    /*public void getUserAPI(final Context contexto, final int id, final String pass)
     {
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
@@ -173,7 +180,23 @@ public class SingletonGestorUsers {
                 /*if(userListener!=null)
                 {
                     usersListener.onRefreshListaUsers(users);
-                }*/
+                }
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        volleyQueue.add(req);
+    }*/
+
+    public void getUserLogadoAPI(final Context contexto, final String username, final String password)
+    {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/getuser?username=" + username,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                userLogado = UserJsonParser.parserJsonUserObjeto(response);
             }
         } , new Response.ErrorListener() {
             @Override
@@ -183,6 +206,7 @@ public class SingletonGestorUsers {
         });
         volleyQueue.add(req);
     }
+
 
     /*if(!UserJsonParser.isConnectionInternet(contexto))
     {
@@ -387,5 +411,40 @@ public class SingletonGestorUsers {
 
     public User getUserLogado(){
         return userLogado;
+    }
+
+    public void validarLogin(Context context, String username, String password) {
+        if (!UserJsonParser.isConnectionInternet(context)) {
+            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT);
+        } else {
+            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser + "/validarlogin?username="+username+"&password="+password
+                    , new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        String validacao = UserJsonParser.parserJsonValidacao(response);
+                        if(validacao != null)
+                            loginValido = validacao.substring(1, validacao.length() - 1);
+                        if(loginValido != null)
+                            Log.d("isLoginVazio", loginValido);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+
+            volleyQueue.add(req);
+        }
+    }
+
+    public void logout() {
+        userLogado = null;
+        loginValido = null;
     }
 }

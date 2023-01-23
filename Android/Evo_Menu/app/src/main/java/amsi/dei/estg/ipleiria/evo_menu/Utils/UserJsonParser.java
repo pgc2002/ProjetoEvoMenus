@@ -63,6 +63,25 @@ public class UserJsonParser {
         return user;
     }
 
+    public static User parserJsonUserObjeto(JSONObject jsonUser)
+    {
+        User user = null;
+        try {
+            int id = jsonUser.getInt("id");
+            String username = jsonUser.getString("username");
+            String email = jsonUser.getString("email");
+            String telemovel = jsonUser.getString("telemovel");
+            String nif = jsonUser.getString("nif");
+            String nome = jsonUser.getString("nome");
+            int idMorada = jsonUser.getInt("idMorada");
+
+            user = new User(id, username, nome, email, telemovel, nif, idMorada);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public static User parserJsonUserObjeto(JSONObject jsonUser, String pass)
     {
         User user = null;

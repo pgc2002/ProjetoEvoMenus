@@ -1,10 +1,10 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,12 +28,12 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String DADOS_USER = "DADOS_USER";
-
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private FragmentManager fragmentManager;
@@ -43,43 +43,34 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle saveInstanceState)
     {
-        /*Runnable objRunnable = new Runnable() {
-            @Override
+        super.onCreate(saveInstanceState);
+        //inicializarSingletons();
+
+        new Thread(new Runnable() {
             public void run() {
-                try{
-                    SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext(), SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado().getId());
-                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                    SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
-                    SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
-                    SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
-                    SingletonGestorHorarios.getInstance(getApplicationContext()).getAllHorariosAPI(getApplicationContext());
-                    SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
-                    SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                }catch (Exception e){
-                    e.printStackTrace();
+                try {
+                    inicializarSingletons();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
-        };
+        }).start();
 
-        Thread objBgThread = new Thread(objRunnable);
-        objBgThread.start();*/
 
         final Handler handler = new Handler();
-        final int delay = 240000;
+        final int delay = 300000;
 
-        super.onCreate(saveInstanceState);
-        inicializarSingletons();
         new Thread(new Runnable() {
             public void run() {
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        inicializarSingletons();
-                        Log.d("teste", "funciona");
+                        atualizarSingletons();
                         handler.postDelayed(this, delay);
                     }
                 }, delay);
             }
         }).start();
+
         setContentView(R.layout.activity_main_menu);
         navigationView = findViewById(R.id.navView);
         drawer = findViewById(R.id.drawerLayout);
@@ -100,8 +91,20 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarFragmentoInicial();
     }
 
-    private void inicializarSingletons() {
+    private void atualizarSingletons() {
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+        SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());
+        SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
+        SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
+        SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
+        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
+        SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
+        SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+    }
+
+    private void inicializarSingletons() throws InterruptedException {
+        //Thread.sleep(3000);
+        SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
         SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
         SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
@@ -112,15 +115,20 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     private void carregarFragmentoInicial()
     {
-        Fragment fragment = new PaginaInicialFragment();
+        //Fragment fragment = new PaginaInicialFragment();
+        /*try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }*/
+        Fragment fragment = new ListaRestaurantesFragment();
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
     private void carregarCabecalho()
     {
-
         SharedPreferences sharedPreferences = getSharedPreferences("DADOS_USER", Context.MODE_PRIVATE);
-        if(email != null)
+        /*if(email != null)
         {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(MAIL, email);
@@ -130,7 +138,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         {
             //a ver mais tarde, defvalue em vez de s1
             email = sharedPreferences.getString(MAIL, "Email não definido");
-        }
+        }*/
 
         //Bundle extras = getIntent().getExtras();
 
@@ -145,8 +153,8 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         editor.apply();*/
 
         View headerView = navigationView.getHeaderView(0);
-        TextView tvMail = headerView.findViewById(R.id.tvHeaderMail);
-        tvMail.setText(email);
+        TextView tvUsername = headerView.findViewById(R.id.tvHeaderUsername);
+        tvUsername.setText(SingletonGestorUsers.getInstance(this).getUserLogado().getUsername());
     }
 
     @Override
@@ -157,8 +165,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         switch(opcao)
         {
             case R.id.navRestaurantes:
-                /*Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);*/
                 fragment = new ListaRestaurantesFragment();
                 break;
 
@@ -168,20 +174,24 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.navVerPerfil:
                 fragment = new VerPerfilFragment();
-                /*Intent intent = new Intent(MainMenuActivity.this, VerPerfilActivity.class);
-                MainMenuActivity.this.startActivity(intent);*/
-                //setContentView(R.layout.activity_ver_perfil);
                 break;
 
             case R.id.navHistoricoPedidos:
                 fragment = new HistoricoPedidosFragment();
+                break;
+
+            case R.id.navLogout:
+                LoginActivity.login.finish();
+                SingletonGestorUsers.getInstance(getApplicationContext()).logout();
+                finish();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
         if(fragment != null)
         {
             fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
         }
-
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

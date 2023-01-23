@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,27 +9,35 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class LoginActivity extends AppCompatActivity
 {
+    public static Activity login;
+
     public static final String MAIL = "amsi.dei.estg.ipleiria.projetofinal.mail";
     private EditText etUsername, etPass;
     private Button btnLogin, btnRegistar;
     int checkLogin;
-    Handler handler = new Handler();
+
+    private Thread thread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        login = this;
         setContentView(R.layout.login_activity);
         checkLogin = 0;
         etUsername = findViewById(R.id.etUsernameLogin);
@@ -41,11 +50,53 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                try {
-                    validarLogin(view);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.d("myTag", e.getMessage());
+                if(etUsername.getText().length() < 1 || etPass.getText().length() < 1)
+                    return;
+
+                btnLogin.setClickable(false);
+                btnRegistar.setClickable(false);
+                btnLogin.setAlpha(.5f);
+                btnRegistar.setAlpha(.5f);
+                btnLogin.setBackgroundColor(getResources().getColor(R.color.butoesDesativados));
+                btnRegistar.setBackgroundColor(getResources().getColor(R.color.butoesDesativados));
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnLogin.setClickable(true);
+                        btnRegistar.setClickable(true);
+                        btnLogin.setAlpha(1);
+                        btnRegistar.setAlpha(1);
+                        btnLogin.setBackgroundColor(getResources().getColor(R.color.butoes));
+                        btnRegistar.setBackgroundColor(getResources().getColor(R.color.butoes));
+                    }
+                }, 2000);
+
+                if(validarLogin()){
+                    /*final int delay = 30000;
+                    new Thread(new Runnable() {
+                        public void run() {
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    //new Dados().inicializarSingletons(getApplicationContext());
+                                    inicializarSingletons();
+                                    Log.d("teste", "funciona");
+                                    handler.postDelayed(this, delay);
+                                }
+                            }, delay);
+                        }
+                    }).start();*/
+
+                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -57,60 +108,32 @@ public class LoginActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        /*handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                if (checkLogin == 1)
-                    btnLogin.performClick();
-
-                handler.postDelayed(this, 500); //1000ms = 1seconds * 60
-            }
-        }, 1);*/
     }
 
-    private void validarLogin(View view) throws JSONException {
+    private boolean validarLogin() {
         String username = etUsername.getText().toString();
-        String pass = etPass.getText().toString();
-        checkLogin++;
-        //User user = SingletonGestorUsers.getInstance(this).getUser(username);
-        SingletonGestorUsers.getInstance(this).validacaoPassAPI(username, pass, this);
-        try {
-            String validacao = "";
+        String password = etPass.getText().toString();
 
-            validacao = SingletonGestorUsers.getInstance(this).getValidacao();
-            if(validacao.length() != 0) {
-                String validacaoNew = validacao.substring(1, validacao.length() - 1);
-                Log.d("testes", validacao);
-                String[] parts = validacaoNew.split("----");
-                int val = Integer.parseInt(parts[0]);
-                if(val == 1){
-                    Intent intentUser = new Intent(this, MainMenuActivity.class);
-                    SingletonGestorUsers.getInstance(this).getUserAPI(this, Integer.parseInt(parts[1]), pass);
-                    User user = SingletonGestorUsers.getInstance(this).getUserLogado();
-                    Log.d("wdaaw", user.getUsername());
-                    startActivity(intentUser);
-                }
+        SingletonGestorUsers.getInstance(this).validarLogin(this, username, password);
+        String loginValido = SingletonGestorUsers.getInstance(this).getLoginValido();
+
+        if(loginValido != null){
+            Log.d("LoginTeste", loginValido);
+
+            if(loginValido.equals("true")){
+                SingletonGestorUsers.getInstance(this).getUserLogadoAPI(this, username, password);
+                return true;
+            }else{
+                return false;
             }
-        }catch (Exception e){
-            Log.d("testeValidacao", e.getMessage());
+        }else{
+            return false;
         }
     }
-    private void RegistarUser(View view){
-        setContentView(R.layout.registar_activity);
-    }
 
-    private boolean isPassValida(String pass) {
-        if(pass == null)
-            return false;
-        return pass.length() >=4;
-    }
-
-    private boolean isMailValido(String mail) {
-        if(mail == null || mail.isEmpty())
-            return false;
-        boolean valido = Patterns.EMAIL_ADDRESS.matcher(mail).matches();
-        return valido;
+    @Override
+    public void onDestroy() {
+        thread.interrupt();
+        super.onDestroy();
     }
 }

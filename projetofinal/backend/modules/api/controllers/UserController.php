@@ -45,13 +45,35 @@ class UserController extends ActiveController
         $mqtt->publish($connection->topic, "Desencriptar pass do user ".$username, 0);
         $mqtt->disconnect();
 
-        
+        if(!isset($user))
+            return "false";
+
         if(Yii::$app->getSecurity()->validatePassword($password, $user->password_hash))
             $string = "1----".$user->id;
         else
             $string = "0----".$user->id;
 
         return $string;
+    }
+
+    public function actionValidarlogin($username, $password){
+        $user = User::find()->where(['username' => $username])->one();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "Validar login na app mobile", 0);
+        $mqtt->disconnect();
+
+        if(!isset($user))
+            return "false";
+
+        if(Yii::$app->getSecurity()->validatePassword($password, $user->password_hash))
+            $valido = "true";
+        else
+            $valido = "false";
+
+        return $valido;
     }
 
     public function actionOne($idUser){
@@ -61,6 +83,18 @@ class UserController extends ActiveController
         $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
         $mqtt->connect();
         $mqtt->publish($connection->topic, "GET do user ".$idUser, 0);
+        $mqtt->disconnect();
+
+        return $query;
+    }
+
+    public function actionGetuser($username){
+        $query = User::find()->where(["username" => $username])->one();
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET do user ".$username, 0);
         $mqtt->disconnect();
 
         return $query;

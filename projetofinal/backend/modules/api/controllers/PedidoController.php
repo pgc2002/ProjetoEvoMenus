@@ -51,6 +51,23 @@ class PedidoController extends ActiveController
         return $query;
     }
 
+    public function actionPedidosuser($idUser){
+        $query = Pedido::find()->where(['idCliente' => $idUser]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false
+        ]);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET de todos os pedidos do utilizador ".$idUser, 0);
+        $mqtt->disconnect();
+
+        return $dataProvider;
+    }
+
     public function actionMenus($idPedido){
         $pedido = Pedido::find()->where(['id' => $idPedido])->one();
         $menus = $pedido->getMenus()->all();
@@ -144,6 +161,8 @@ class PedidoController extends ActiveController
         $mqtt->connect();
         $mqtt->publish($connection->topic, "POST de um pedido", 0);
         $mqtt->disconnect();
+
+        return $pedido->id;
     }
 
     public function actionInserir_item($idPedido, $idItem){

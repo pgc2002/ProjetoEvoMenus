@@ -41,8 +41,8 @@ public class VerPerfilFragment extends Fragment {
         TextView tvPais = view.findViewById(R.id.tvPais);
         TextView tvCidade = view.findViewById(R.id.tvCidade);
 
-        User user = SingletonGestorUsers.getInstance(getContext()).getUserLogado();
         SingletonGestorUsers.getInstance(getContext()).getMoradaAPI(getContext());
+        User user = SingletonGestorUsers.getInstance(getContext()).getUserLogado();
 
         if(user != null) {
             tvUsername.setText(user.getUsername());

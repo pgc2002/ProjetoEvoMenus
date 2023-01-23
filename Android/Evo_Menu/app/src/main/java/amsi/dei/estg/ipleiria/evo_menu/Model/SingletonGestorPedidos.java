@@ -116,7 +116,7 @@ public class SingletonGestorPedidos {
 
 
     //pedidos a api
-    public void adicionarPedidoAPI(final Pedido pedido, final Context contexto, String token)
+    public void adicionarPedidoAPI(final Pedido pedido, final Context contexto)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
@@ -169,7 +169,7 @@ public class SingletonGestorPedidos {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
             return;
         }
-        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/user/"+SingletonGestorUsers.getInstance(contexto).getUserLogado().getId(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 pedidos = PedidoJsonParser.parserJsonPedidos(response);
@@ -192,7 +192,7 @@ public class SingletonGestorPedidos {
         volleyQueue.add(req);
     }
 
-    /*public void getAllPedidosAPI(final Context contexto, int idUser)
+    /*public void getAllPedidosUserAPI(final Context contexto, int idUser)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {

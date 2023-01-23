@@ -52,6 +52,8 @@ return [
                     'extraPatterns' => [
                         'GET' => 'all',
                         'GET {idUser}' => 'one',
+                        'GET getuser/{username}' => 'getuser',
+                        'GET validarlogin/{username, password}' => 'validarlogin',
                         'GET count' => 'count',
                         'GET validar/{username, password}' => 'validar',
                         'GET {idUser}/morada' => 'morada',
@@ -78,6 +80,7 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET' => 'all',
+                        'GET user/{idUser}' => 'pedidosuser',
                         'GET {idPedido}' => 'one',
                         'GET {idPedido}/menus' => 'menus',
                         'GET {idPedido}/items' => 'items',
@@ -92,6 +95,7 @@ return [
                     ],
                     'tokens' =>[
                         '{idPedido}' => '<idPedido:\\d+>',
+                        '{idUser}' => '<idUser:\\d+>',
                         '{valor}' => '<valor:\\d+>',
                         '{valor2}' => '<valor2:\\d+>',
                         '{estado}' => '<estado:\\s+>',

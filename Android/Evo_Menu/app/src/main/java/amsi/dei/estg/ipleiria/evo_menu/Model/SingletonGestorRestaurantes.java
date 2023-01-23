@@ -36,16 +36,13 @@ public class SingletonGestorRestaurantes
     private static final long REQUEST_TIMEOUT = 15;
     private RestauranteDBHelper restaurantesDB = null;
     private static SingletonGestorRestaurantes instancia = null;
-
-    private ArrayList<Restaurante> restaurantes;
+    private ArrayList<Restaurante> restaurantes = null;
     private ArrayList<Categoria> categorias;
-
     private Restaurante restaurante;
 
     public Restaurante getRestaurante() {
         return restaurante;
     }
-
 
     private static RequestQueue volleyQueue = null;
     private RestaurantesListener restaurantesListener;

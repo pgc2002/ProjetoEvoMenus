@@ -24,6 +24,9 @@
         <item
             android:id="@+id/navHistoricoPedidos"
             android:title="Historico de Pedidos" />
+        <item
+            android:id="@+id/navLogout"
+            android:title="Logout" />
 
     </group>
 

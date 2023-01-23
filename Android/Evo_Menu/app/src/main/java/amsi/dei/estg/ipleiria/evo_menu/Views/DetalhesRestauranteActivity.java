@@ -80,7 +80,6 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
 
         int id = (int)intent.getLongExtra(ID_RESTAURANTE, -1);
         int idRestaurante = (int)intent.getIntExtra("idRestaurante", 0);
-        Log.d("idRestaurante", idRestaurante + "");
 
         SingletonGestorRestaurantes.getInstance(this).getHorarioAPI(this,idRestaurante);
         Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(idRestaurante);
