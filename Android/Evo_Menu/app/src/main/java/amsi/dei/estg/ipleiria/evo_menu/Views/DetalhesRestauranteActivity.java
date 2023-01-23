@@ -3,7 +3,8 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,9 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.RestauranteListener;
+import amsi.dei.estg.ipleiria.evo_menu.Model.Categoria;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class DetalhesRestauranteActivity extends AppCompatActivity implements RestauranteListener
@@ -29,7 +35,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
 
     private TextView tvNome, tvLotacao, tvEmail, tvTelemovel;
     private ImageView ivCapaDetalhes;
-    private FloatingActionButton fabGuardar;
+    private Button btFazerPedido;
     private Restaurante restaurante;
     private String token;
 
@@ -44,10 +50,11 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);
-        tvNome = findViewById(R.id.tvNomeRestaurante);
+        tvNome = findViewById(R.id.tvNomeItem);
         tvLotacao = findViewById(R.id.tvLotacaoMax);
         tvEmail = findViewById(R.id.tvEmail);
         tvTelemovel = findViewById(R.id.tvTelemovel);
+        btFazerPedido = findViewById(R.id.btFazerPedido);
         //ivCapaDetalhes = findViewById(R.id.ivCapaDetalhe);//adiciona no layout
 
         Intent intent = getIntent();
@@ -56,30 +63,21 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         int idRestaurante = (int)intent.getIntExtra("idRestaurante", 0);
         Log.d("idRestaurante", idRestaurante + "");
         Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(idRestaurante);
-        //Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurantesDB().get(idRestaurante);
 
+        SingletonGestorRestaurantes.getInstance(this).getCategoriasAPI(this, idRestaurante);
+        ArrayList<Categoria> categorias = SingletonGestorRestaurantes.getInstance(this).getCategorias();
+        Log.d("idRestaurante", categorias + "");
 
         mostrarDetalhes(restaurante);
-        /*restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(id);
 
-        if(restaurante != null)
-        {
-            mostrarDetalhes(restaurante);
-        }*/
-        /*else
-        {
-            fabGuardar.setImageResource(R.drawable.add_icon);
-        }*/
-
-        /*fabGuardar.setOnClickListener(new View.OnClickListener() {
+        btFazerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registarLivro();
+                Intent i = new Intent(DetalhesRestauranteActivity.this, RealizarPedido.class);
+                i.putExtra("idRestaurante", idRestaurante);
+                startActivity(i);
             }
         });
-        SingletonGestorLivros.getInstance(this).setLivroListener(this);*/
-
-
     }
 
     private void mostrarDetalhes(Restaurante restaurante)

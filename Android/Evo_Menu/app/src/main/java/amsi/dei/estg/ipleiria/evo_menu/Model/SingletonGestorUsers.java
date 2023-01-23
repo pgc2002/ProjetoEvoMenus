@@ -287,7 +287,7 @@ public class SingletonGestorUsers {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                    Log.d("testeValidacao", error.getMessage());
+                Log.d("testeValidacao", error.getMessage());
                 return;
             }
         });

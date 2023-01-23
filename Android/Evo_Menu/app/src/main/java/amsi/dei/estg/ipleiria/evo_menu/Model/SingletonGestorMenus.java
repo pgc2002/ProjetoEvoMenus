@@ -80,7 +80,7 @@ public class SingletonGestorMenus {
             @Override
             public void onResponse(JSONArray response) {
                 menus = MenuJsonParser.parserJsonMenus(response);
-                adicionarMenusDB(menus);
+                //adicionarMenusDB(menus);
                 //Ativar o listener
                 if(menuListener !=null)
                 {

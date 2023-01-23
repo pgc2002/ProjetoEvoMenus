@@ -8,6 +8,7 @@ use common\models\Mesa;
 
 use common\models\Morada;
 use common\models\Restaurante;
+use common\models\Categoria;
 use common\models\User;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
@@ -170,6 +171,23 @@ class RestauranteController extends ActiveController
         return $horario;
     }
 
+    public function actionCategorias($id)
+    {
+        $query = Categoria::find()->where(['idRestaurante' => $id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false
+        ]);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET das categorias do restaurante " . $id, 0);
+        $mqtt->disconnect();
+
+        return $dataProvider;
+    }
 
     /*public function behaviors() {
         return [

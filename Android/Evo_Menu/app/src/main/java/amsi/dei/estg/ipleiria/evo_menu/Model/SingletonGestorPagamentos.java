@@ -119,7 +119,7 @@ public class SingletonGestorPagamentos {
         StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpagamento, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adicionarPagamentoBD(PagamentoJsonParser.parserJsonPagamento(response));
+                //adicionarPagamentoBD(PagamentoJsonParser.parserJsonPagamento(response));
                 //ativar o listener...
                 /*if(pagamentoListener != null)
                 {
@@ -163,7 +163,7 @@ public class SingletonGestorPagamentos {
             @Override
             public void onResponse(JSONArray response) {
                 pagamentos = PagamentoJsonParser.parserJsonPagamentos(response);
-                adicionarPagamentosBD(pagamentos);
+                //adicionarPagamentosBD(pagamentos);
                 //Ativar o listener
                 if(pagamentoListener!=null)
                 {
@@ -250,6 +250,10 @@ public class SingletonGestorPagamentos {
         };
         volleyQueue.add(request);
     }*/
+
+    public ArrayList<Pagamento> getPagamentos(){
+        return pagamentos;
+    }
 
     public void setPagamentosListener(PagamentosListener pagamentosListener) {
         this.pagamentosListener = pagamentosListener;

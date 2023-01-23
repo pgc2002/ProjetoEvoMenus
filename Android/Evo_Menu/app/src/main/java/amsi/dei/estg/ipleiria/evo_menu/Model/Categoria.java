@@ -13,6 +13,11 @@ public class Categoria implements Serializable
         this.idRestaurante = idRestaurante;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     public int getId() {
         return id;
     }

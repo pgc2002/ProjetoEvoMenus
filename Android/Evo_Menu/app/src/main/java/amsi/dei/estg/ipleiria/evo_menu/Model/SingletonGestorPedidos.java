@@ -39,6 +39,9 @@ public class SingletonGestorPedidos {
     private PedidosListener pedidosListener;
     private PedidoListener pedidoListener;
 
+    private int[] idItensPedido;
+    private int[] idMenusPedido;
+
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorPedidos getInstance(Context contexto) {
         if (instancia == null) {
@@ -69,7 +72,6 @@ public class SingletonGestorPedidos {
         return null;
     }
 
-    //adicionarlivrosapi
     public void adicionarPedidosBD(ArrayList<Pedido> pedidos) {
         pedidoBD.removerAllPedidosBD();
         for (Pedido pedido : pedidos) {
@@ -124,7 +126,7 @@ public class SingletonGestorPedidos {
         StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpedido, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adicionarPedidoBD(PedidoJsonParser.parserJsonPedido(response));
+                //adicionarPedidoBD(PedidoJsonParser.parserJsonPedido(response));
                 //ativar o listener...
                 /*if(livroListener != null)
                 {
@@ -303,5 +305,21 @@ public class SingletonGestorPedidos {
 
     public void setPedidoListener(PedidoListener pedidoListener) {
         this.pedidoListener = pedidoListener;
+    }
+
+    public int[] getIdItensPedido() {
+        return idItensPedido;
+    }
+
+    public void setIdItensPedido(int[] idItensPedido) {
+        this.idItensPedido = idItensPedido;
+    }
+
+    public int[] getIdMenusPedido() {
+        return idMenusPedido;
+    }
+
+    public void setIdMenusPedido(int[] idMenusPedido) {
+        this.idMenusPedido = idMenusPedido;
     }
 }

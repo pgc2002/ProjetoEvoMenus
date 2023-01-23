@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
-import amsi.dei.estg.ipleiria.evo_menu.Model.RestauranteDBHelper;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -76,7 +75,7 @@ public class ListaPedidosAdaptador extends BaseAdapter {
         //private ImageView ivRestauranteBackground;
 
         public ViewHolderLista(View view) {
-            tvNomeRestaurante = view.findViewById(R.id.tvNomeRestaurante);
+            tvNomeRestaurante = view.findViewById(R.id.tvNomeItem);
             tvValorTotal = view.findViewById(R.id.tvValorTotal);
             tvData = view.findViewById(R.id.tvData);
             //ivRestauranteBackground = view.findViewById(R.id.ivRestauranteBackground);

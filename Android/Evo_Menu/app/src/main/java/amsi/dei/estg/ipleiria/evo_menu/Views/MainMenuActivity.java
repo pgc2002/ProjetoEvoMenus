@@ -1,10 +1,9 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,15 +21,12 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorHorarios;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
-import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
@@ -68,7 +64,22 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         Thread objBgThread = new Thread(objRunnable);
         objBgThread.start();*/
 
+        final Handler handler = new Handler();
+        final int delay = 240000;
+
         super.onCreate(saveInstanceState);
+        inicializarSingletons();
+        new Thread(new Runnable() {
+            public void run() {
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        inicializarSingletons();
+                        Log.d("teste", "funciona");
+                        handler.postDelayed(this, delay);
+                    }
+                }, delay);
+            }
+        }).start();
         setContentView(R.layout.activity_main_menu);
         navigationView = findViewById(R.id.navView);
         drawer = findViewById(R.id.drawerLayout);
@@ -87,6 +98,16 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarCabecalho();
 
         carregarFragmentoInicial();
+    }
+
+    private void inicializarSingletons() {
+        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+        SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
+        SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
+        SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
+        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
+        SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
+        SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
     }
 
     private void carregarFragmentoInicial()
@@ -111,7 +132,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             email = sharedPreferences.getString(MAIL, "Email não definido");
         }
 
-        Bundle extras = getIntent().getExtras();
+        //Bundle extras = getIntent().getExtras();
 
         //SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
 

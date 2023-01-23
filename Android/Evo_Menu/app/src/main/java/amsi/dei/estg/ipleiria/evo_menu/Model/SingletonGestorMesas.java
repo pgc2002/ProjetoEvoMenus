@@ -94,7 +94,7 @@ public class SingletonGestorMesas
             @Override
             public void onResponse(JSONArray response) {
                 mesas = MesasJsonParser.parserJsonMesa(response);
-                adicionarMesasDB(mesas);
+                //adicionarMesasDB(mesas);
                 //Ativar o listener
                 if(mesaListener!=null)
                 {
@@ -111,6 +111,9 @@ public class SingletonGestorMesas
         volleyQueue.add(req);
     }
 
+    public ArrayList<Mesa> getMesas() {
+        return mesas;
+    }
 
     public void setMesasDB(MesasListener mesasListener) {
         this.mesasListener = mesasListener;

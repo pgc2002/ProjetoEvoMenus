@@ -82,13 +82,12 @@ public class SingletonGestorCategorias {
             @Override
             public void onResponse(JSONArray response) {
                 categorias = CategoriaJsonParser.parserJsonCategorias(response);
-                adicionarCategoriasDB(categorias);
+                //adicionarCategoriasDB(categorias);
                 //Ativar o listener
                 if(categoriaListener !=null)
                 {
                     categoriasListener.onRefreshListaCategorias(categorias);
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override

@@ -82,7 +82,7 @@ public class SingletonGestorItems {
             @Override
             public void onResponse(JSONArray response) {
                 items = ItemJsonParser.parserJsonItems(response);
-                adicionarItemsDB(items);
+                //adicionarItemsDB(items);
                 //Ativar o listener
                 if(itemListener !=null)
                 {

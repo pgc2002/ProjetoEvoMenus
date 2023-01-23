@@ -73,17 +73,10 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
                         Toast.LENGTH_SHORT).show();
 
                 startActivityForResult(intent, CODE_REQUEST_EDITAR);
-                /**/
-                /*Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
-                        Toast.LENGTH_SHORT).show();*/
-                //Chamar atividade detalhada
-
-
             }
         });
 
         SingletonGestorRestaurantes.getInstance(getContext()).setRestaurantesListener(this);
-        //SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB();
 
         return view;
     }

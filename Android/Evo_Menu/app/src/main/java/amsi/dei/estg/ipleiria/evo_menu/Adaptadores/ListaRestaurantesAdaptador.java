@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class ListaRestaurantesAdaptador extends BaseAdapter {
         //private ImageView ivRestauranteBackground;
 
         public ViewHolderLista(View view) {
-            tvNomeRestaurante = view.findViewById(R.id.tvNomeRestaurante);
+            tvNomeRestaurante = view.findViewById(R.id.tvNomeItem);
             //ivRestauranteBackground = view.findViewById(R.id.ivRestauranteBackground);
         }
 
