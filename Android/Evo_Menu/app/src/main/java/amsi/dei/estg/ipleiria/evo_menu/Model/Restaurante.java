@@ -8,6 +8,12 @@ public class Restaurante implements Serializable
     private int id, lotacao_max, id_horario, id_morada;
     private String nome, email, telemovel;
 
+    private HorarioFuncionamento horario;
+
+    public void setHorario(HorarioFuncionamento horario) {
+        this.horario = horario;
+    }
+
     public Restaurante(int id, String nome, String email, int lotacao_max, String telemovel, int id_horario, int id_morada)
     {
         this.id=id;
@@ -49,4 +55,8 @@ public class Restaurante implements Serializable
 
     @Override
     public String toString() { return this.nome + ", " + this.telemovel; }
+
+    public HorarioFuncionamento getHorario() {
+        return horario;
+    }
 }

@@ -160,6 +160,7 @@ public class SingletonGestorRestaurantes
         }
     }
 
+
     public Restaurante getRestauranteDB(int id){
         Restaurante restaurante;
 
@@ -177,11 +178,7 @@ public class SingletonGestorRestaurantes
 
     public void getRestauranteAPI(final Context contexto, final int id)
     {
-        if(!UserJsonParser.isConnectionInternet(contexto))
-        {
-            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + id,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -222,6 +219,28 @@ public class SingletonGestorRestaurantes
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+    public void getHorarioAPI(final Context contexto, final int id)
+    {
+        if(!UserJsonParser.isConnectionInternet(contexto)){
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Restaurante restaurante = getRestaurante(id);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + restaurante.getId_horario() + "/horario",null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                restaurante.setHorario(RestauranteJsonParser.parserJsonHorario(response));
+                //adicionarUserBD(user);
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         volleyQueue.add(req);

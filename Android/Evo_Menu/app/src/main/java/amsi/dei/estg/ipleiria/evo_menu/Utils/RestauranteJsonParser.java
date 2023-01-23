@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.HorarioFuncionamento;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
@@ -32,6 +33,26 @@ public class RestauranteJsonParser
             e.printStackTrace();
         }
         return restaurante;
+    }
+
+    public static HorarioFuncionamento parserJsonHorario(JSONObject resposta)
+    {
+        HorarioFuncionamento horario = null;
+        try {
+            int id = resposta.getInt("id");
+            String segunda = resposta.getString("segunda");
+            String terca = resposta.getString("terca");
+            String quarta = resposta.getString("quarta");
+            String quinta = resposta.getString("quinta");
+            String sexta = resposta.getString("sexta");
+            String sabado = resposta.getString("sabado");
+            String domingo = resposta.getString("domingo");
+
+            horario = new HorarioFuncionamento(id, segunda, terca, quarta, quinta, sexta, sabado, domingo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return horario;
     }
 
     public static ArrayList<Restaurante> parserJsonRestaurante(JSONArray resposta)

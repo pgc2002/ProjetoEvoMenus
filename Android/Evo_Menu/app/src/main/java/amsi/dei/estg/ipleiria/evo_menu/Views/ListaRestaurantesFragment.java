@@ -69,8 +69,6 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
                 intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
 
                 intent.putExtra("idRestaurante", SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getId());
-                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getNome(),
-                        Toast.LENGTH_SHORT).show();
 
                 startActivityForResult(intent, CODE_REQUEST_EDITAR);
             }

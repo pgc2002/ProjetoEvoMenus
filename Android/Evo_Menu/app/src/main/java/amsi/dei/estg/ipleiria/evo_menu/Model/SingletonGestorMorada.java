@@ -22,14 +22,19 @@ import java.util.Map;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.MoradaListener;
 import amsi.dei.estg.ipleiria.evo_menu.Listeners.MoradasListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
+import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.MoradaJsonParser;
 
 public class SingletonGestorMorada {
-    private final static String ip = "192.168.1.87";
-    private final static String mUrlAPImorada = "http://"+ ip +"/ProjetoEvoMenus/projetofinal/backend/web/api/morada";
+    private final static String mUrlAPImorada = new UrlApi().getUrl() + "morada";
     private MoradaBdHelper moradasBD = null;
     private static SingletonGestorMorada instancia = null;
+
     private ArrayList<Morada> moradas;
+
+    public ArrayList<Morada> getMoradas() {
+        return moradas;
+    }
     private static RequestQueue volleyQueue = null;
     private MoradasListener moradasListener;
     private MoradaListener moradaListener;
@@ -160,12 +165,12 @@ public class SingletonGestorMorada {
             @Override
             public void onResponse(JSONArray response) {
                 moradas = MoradaJsonParser.parserJsonMoradas(response);
-                adicionarMoradasBD(moradas);
+                //adicionarMoradasBD(moradas);
                 //Ativar o listener
-                if(moradaListener!=null)
+                /*if(moradaListener!=null)
                 {
                     moradasListener.onRefreshListaMoradas(moradas);
-                }
+                }*/
             }
         }, new Response.ErrorListener() {
             @Override
