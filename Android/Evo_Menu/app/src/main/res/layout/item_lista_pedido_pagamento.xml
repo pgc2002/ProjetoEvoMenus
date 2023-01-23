@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     style="@style/CardView.Light"
-    android:layout_marginTop="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvNomeItemPagamento"
@@ -22,16 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|end"
+        android:layout_marginEnd="10dp"
         android:text="10$"
-        android:layout_marginEnd="70dp"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btAdicionarItem"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center|end"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/add_icon" />
 </androidx.cardview.widget.CardView>
-

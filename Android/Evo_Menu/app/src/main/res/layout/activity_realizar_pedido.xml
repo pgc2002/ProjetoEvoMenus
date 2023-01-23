@@ -96,13 +96,13 @@
                     android:id="@+id/tvItensTotais"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12" />
+                    android:text="0" />
 
                 <TextView
                     android:id="@+id/tvValorTotalPedido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="120$" />
+                    android:text="0€" />
             </LinearLayout>
 
         </LinearLayout>
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:text="Fazer Pagamento" />
+            android:text="Realizar Pagamento" />
     </LinearLayout>
 
 </LinearLayout>

@@ -65,7 +65,7 @@ public class ListaRestaurantesAdaptador extends BaseAdapter {
         //private ImageView ivRestauranteBackground;
 
         public ViewHolderLista(View view) {
-            tvNomeRestaurante = view.findViewById(R.id.tvNomeItem);
+            tvNomeRestaurante = view.findViewById(R.id.tvNomeItemPagamento);
             //ivRestauranteBackground = view.findViewById(R.id.ivRestauranteBackground);
         }
 

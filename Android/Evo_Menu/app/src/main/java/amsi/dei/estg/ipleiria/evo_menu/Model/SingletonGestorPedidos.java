@@ -39,8 +39,8 @@ public class SingletonGestorPedidos {
     private PedidosListener pedidosListener;
     private PedidoListener pedidoListener;
 
-    private int[] idItensPedido;
-    private int[] idMenusPedido;
+    private ArrayList<Integer> idItensPedido;
+    private ArrayList<Integer> idMenusPedido;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorPedidos getInstance(Context contexto) {
@@ -307,19 +307,19 @@ public class SingletonGestorPedidos {
         this.pedidoListener = pedidoListener;
     }
 
-    public int[] getIdItensPedido() {
+    public ArrayList<Integer> getIdItensPedido() {
         return idItensPedido;
     }
 
-    public void setIdItensPedido(int[] idItensPedido) {
+    public void setIdItensPedido(ArrayList<Integer> idItensPedido) {
         this.idItensPedido = idItensPedido;
     }
 
-    public int[] getIdMenusPedido() {
+    public ArrayList<Integer> getIdMenusPedido() {
         return idMenusPedido;
     }
 
-    public void setIdMenusPedido(int[] idMenusPedido) {
+    public void setIdMenusPedido(ArrayList<Integer> idMenusPedido) {
         this.idMenusPedido = idMenusPedido;
     }
 }
