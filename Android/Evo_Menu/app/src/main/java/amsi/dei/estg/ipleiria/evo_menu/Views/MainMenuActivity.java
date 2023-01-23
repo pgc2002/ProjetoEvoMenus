@@ -1,11 +1,8 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,17 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
-
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorHorarios;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMesas;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
-import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
-import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 
 import amsi.dei.estg.ipleiria.evo_menu.R;
 

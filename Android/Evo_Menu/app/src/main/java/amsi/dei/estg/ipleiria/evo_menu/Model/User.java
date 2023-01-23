@@ -6,6 +6,7 @@ public class User implements Serializable
 {
     private int id, id_restaurante, id_mesa, id_morada;
     private String username, pass, email, telemovel, nif, nome;
+    private Morada morada;
 
     public User(int id, String username, String nome, String pass, String email, String telemovel, String nif){
         this.id = id;
@@ -67,4 +68,12 @@ public class User implements Serializable
     public int getId_mesa() {return id_mesa; }
 
     public void setId_mesa(int id_mesa) {this.id_mesa = id_mesa; }
+
+    public void setMorada(Morada morada) {
+        this.morada = morada;
+    }
+
+    public Morada getMorada() {
+        return morada;
+    }
 }

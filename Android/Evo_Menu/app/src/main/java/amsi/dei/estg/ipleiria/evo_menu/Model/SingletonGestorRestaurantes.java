@@ -30,16 +30,7 @@ public class SingletonGestorRestaurantes
         private final static String mUrlAPIrestaurantes =  new UrlApi().getUrl() + "restaurante"; //link da api
         private RestauranteDBHelper restaurantesDB = null;
         private static SingletonGestorRestaurantes instancia = null;
-
         private ArrayList<Restaurante> restaurantes;
-
-        private Restaurante restaurante;
-
-        public Restaurante getRestaurante() {
-            return restaurante;
-        }
-
-
         private static RequestQueue volleyQueue = null;
         private RestaurantesListener restaurantesListener;
         private RestauranteListener restauranteListener;
@@ -144,19 +135,19 @@ public class SingletonGestorRestaurantes
             return restaurante;
         }
 
-
-
-        public void getRestauranteAPI(final Context contexto, final int id)
+        public void getHorarioAPI(final Context contexto, final int id)
         {
             if(!UserJsonParser.isConnectionInternet(contexto))
             {
                 Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
                 return;
             }
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + id,null, new Response.Listener<JSONObject>() {
+            Restaurante restaurante = getRestaurante(id);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + restaurante.getId_horario() + "/horario",null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    restaurante = RestauranteJsonParser.parserJsonRestaurante(response);
+                    restaurante.setHorario(RestauranteJsonParser.parserJsonHorario(response));
                     //adicionarUserBD(user);
                 }
             } , new Response.ErrorListener() {

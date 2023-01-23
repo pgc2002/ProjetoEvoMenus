@@ -35,8 +35,7 @@ public class SingletonGestorUsers {
     private String validacao;
     private UsersListener usersListener;
     private UserListener userListener;
-    private User user;
-    private Morada morada = null;
+    private User userLogado;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorUsers getInstance(Context contexto) {
@@ -167,8 +166,8 @@ public class SingletonGestorUsers {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/" + id,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                user = UserJsonParser.parserJsonUserObjeto(response, pass);
-                Log.d("wadhi", user.getUsername());
+                userLogado = UserJsonParser.parserJsonUserObjeto(response, pass);
+                Log.d("wadhi", userLogado.getUsername());
                 //adicionarUserBD(user);
                 //Ativar o listener
                 /*if(userListener!=null)
@@ -325,9 +324,8 @@ public class SingletonGestorUsers {
         volleyQueue.add(req);
     }
 
-    public void getMoradaAPI(final int idUser, Context contexto)
+    /*public Morada getMoradaAPI(final int idMorada, Context contexto)
     {
-
         if(!UserJsonParser.isConnectionInternet(contexto))
         {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
@@ -337,12 +335,6 @@ public class SingletonGestorUsers {
                     , new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    //editarUserBD(morada);
-                    //ativar o listener...
-                /*if(livroListener != null)
-                {
-                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_EDITAR);
-                }*/
                     morada = MoradaJsonParser.parserJsonMorada(response);
                 }
             }, new Response.ErrorListener() {
@@ -355,10 +347,38 @@ public class SingletonGestorUsers {
             });
             volleyQueue.add(req);
         }
-    }
+        SingletonGestorMorada.getInstance(contexto).getAllMoradasAPI(contexto);
+        ArrayList<Morada> moradas = SingletonGestorMorada.getInstance(contexto).getMoradas();
+        Log.d("testeMorada", String.valueOf(moradas.size()));
+        for (Morada morada : moradas) {
+            if(morada.getId() == idMorada)
+                return morada;
+        }
 
-    public Morada getMorada(){
-        return morada;
+        return null;
+    }*/
+    
+    public void getMoradaAPI(Context contexto) {
+
+        if (!UserJsonParser.isConnectionInternet(contexto)) {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+        } else {
+            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser + "/" + userLogado.getId() + "/morada"
+                    , new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    userLogado.setMorada(MoradaJsonParser.parserJsonMorada(response));
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d("testeValidacaoMorada", error.getMessage());
+                    return;
+                }
+            });
+            volleyQueue.add(req);
+        }
     }
 
     public String getValidacao(){
@@ -366,6 +386,6 @@ public class SingletonGestorUsers {
     }
 
     public User getUserLogado(){
-        return user;
+        return userLogado;
     }
 }
