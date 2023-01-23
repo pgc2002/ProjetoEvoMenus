@@ -109,14 +109,14 @@ public class SingletonGestorPagamentos {
     }*/
 
     //pedidos a api
-    public void adicionarPagamentoAPI(final Pagamento pagamento, final Context contexto, String token)
+    public void adicionarPagamentoAPI(final int idPedido, final float valor, final String metodo, final Context contexto)
     {
         if(!PagamentoJsonParser.isConnectionInternet(contexto))
         {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpagamento, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpagamento + "/criar?idPedido="+idPedido+"&valor="+valor+"&metodo="+metodo, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //adicionarPagamentoBD(PagamentoJsonParser.parserJsonPagamento(response));
@@ -133,22 +133,7 @@ public class SingletonGestorPagamentos {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-        })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", "" + pagamento.getId());
-                params.put("idPedido", "" + pagamento.getIdPedido());
-                params.put("valor", "" + pagamento.getValor());
-                params.put("metodo", pagamento.getMetodo());
-                //params.put("capa", livro.getCapa() == null? DetalhesLivroActivity.IMG_DEFAULT : livro.getCapa());
-
-                return params;
-            };
-        };
+        });
         volleyQueue.add(request);
     }
 

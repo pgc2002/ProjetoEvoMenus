@@ -73,11 +73,13 @@ public class ListaItemsAdaptador extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Log.d("Nome Item",listaItens.get(i).getNome());
-                    if (SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdItensPedido() != null)
+                    if (SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdItensPedido() != null) {
                         SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdItensPedido().add(listaItens.get(i).getId());
-                    else {
+                        SingletonGestorPedidos.getInstance(contexto).setValorTotal((float)(SingletonGestorPedidos.getInstance(contexto).getValorTotal()+listaItens.get(i).getPreco()));
+                    }else {
                         idItems.add(listaItens.get(i).getId());
                         SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).setIdItensPedido(idItems);
+                        SingletonGestorPedidos.getInstance(contexto).setValorTotal((float)(SingletonGestorPedidos.getInstance(contexto).getValorTotal()+listaItens.get(i).getPreco()));
                     }
                 }
             });

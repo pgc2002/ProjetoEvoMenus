@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Menu;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
@@ -74,11 +75,13 @@ public class ListaMenusAdaptador extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Log.d("Nome Item",listaMenus.get(i).getNome());
-                    if (SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdMenusPedido() != null)
+                    if (SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdMenusPedido() != null) {
                         SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdMenusPedido().add(listaMenus.get(i).getId());
-                    else {
+                        SingletonGestorPedidos.getInstance(contexto).setValorTotal((float) (SingletonGestorPedidos.getInstance(contexto).getValorTotal() + listaMenus.get(i).getDesconto()));
+                    }else {
                         idMenus.add(listaMenus.get(i).getId());
                         SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).setIdMenusPedido(idMenus);
+                        SingletonGestorPedidos.getInstance(contexto).setValorTotal((float)(SingletonGestorPedidos.getInstance(contexto).getValorTotal()+listaMenus.get(i).getDesconto()));
                     }
                 }
             });

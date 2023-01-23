@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity
                     }).start();*/
                     
                     SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                    SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
+
 
                     try {
                         Thread.sleep(2000);

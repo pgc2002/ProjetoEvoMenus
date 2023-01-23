@@ -47,6 +47,8 @@ public class SingletonGestorPedidos {
     private float valorTotal;
     private int idPedido;
 
+    private boolean isPedidoSent;
+
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorPedidos getInstance(Context contexto) {
         if (instancia == null) {
@@ -60,6 +62,7 @@ public class SingletonGestorPedidos {
         pedidos = new ArrayList<>();
         pedidoBD = new PedidoBdHelper(contexto);
         valorTotal = 0;
+        isPedidoSent = false;
     }
 
     public ArrayList<Pedido> getPedidosBD() {
@@ -461,5 +464,13 @@ public class SingletonGestorPedidos {
 
     public int getIdPedido() {
         return idPedido;
+    }
+
+    public boolean getIsPedidoSent() {
+        return isPedidoSent;
+    }
+
+    public void setIsPedidoSent(boolean b) {
+        this.isPedidoSent = b;
     }
 }

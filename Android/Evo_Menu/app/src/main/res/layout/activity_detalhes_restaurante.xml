@@ -287,21 +287,19 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvEstadoTitulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Estado do Pedido"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvEstadoTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tvEstado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btFazerPedido"

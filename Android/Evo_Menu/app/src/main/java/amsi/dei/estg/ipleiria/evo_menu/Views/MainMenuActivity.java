@@ -173,10 +173,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 fragment = new ListaRestaurantesFragment();
                 break;
 
-            case R.id.navFavoritos:
-                fragment = new ListaRestaurantesFavFragment();
-                break;
-
             case R.id.navVerPerfil:
                 fragment = new VerPerfilFragment();
                 break;

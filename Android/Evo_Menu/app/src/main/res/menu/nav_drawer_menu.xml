@@ -11,12 +11,6 @@
 
         </item>
         <item
-            android:id="@+id/navFavoritos"
-            android:title="Favoritos">
-
-
-        </item>
-        <item
             android:id="@+id/navRestaurantes"
             android:title="Restaurantes">
 

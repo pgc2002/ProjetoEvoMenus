@@ -24,6 +24,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.Pedido;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPagamentos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
@@ -37,7 +38,7 @@ public class RealizarPagamento extends AppCompatActivity {
     Button btnConcluirPagamento, btnCancelarPedidoPagamento;
     ArrayList<Item> itens;
     ArrayList<Menu> menus;
-    int idRestaurante;
+    int idRestaurante, goBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class RealizarPagamento extends AppCompatActivity {
         itens = new ArrayList<>();
         menus = new ArrayList<>();
         idRestaurante = getIntent().getExtras().getInt("idRestaurante");
+        goBack = 0;
 
         spMetodosPagamento = findViewById(R.id.spMetodosPagamento);
         lvItensPedido = findViewById(R.id.lvItensPedido);
@@ -69,7 +71,10 @@ public class RealizarPagamento extends AppCompatActivity {
                 Pedido pedido = new Pedido(SingletonGestorPedidos.getInstance(context).getValorTotal(), "Recebido",
                 SingletonGestorUsers.getInstance(context).getUserLogado().getId(), idRestaurante);
 
-                SingletonGestorPedidos.getInstance(getApplicationContext()).adicionarPedidoAPI(pedido, getApplicationContext());
+                if(!SingletonGestorPedidos.getInstance(getApplicationContext()).getIsPedidoSent()) {
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).adicionarPedidoAPI(pedido, getApplicationContext());
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).setIsPedidoSent(true);
+                }
 
                 if(SingletonGestorPedidos.getInstance(getApplicationContext()).getIdPedido() > 0) {
                     if (!SingletonGestorPedidos.getInstance(getApplicationContext()).getIdItensPedido().isEmpty())
@@ -80,6 +85,15 @@ public class RealizarPagamento extends AppCompatActivity {
                         for (int idMenu : SingletonGestorPedidos.getInstance(getApplicationContext()).getIdMenusPedido()){
                             SingletonGestorPedidos.getInstance(getApplicationContext()).adicionarMenuPedidoAPI(idMenu, getApplicationContext());
                         }
+                }
+                SingletonGestorPagamentos.getInstance(getApplicationContext()).adicionarPagamentoAPI(SingletonGestorPedidos.getInstance(getApplicationContext()).getIdPedido(), SingletonGestorPedidos.getInstance(getApplicationContext()).getValorTotal(),
+                        spMetodosPagamento.getSelectedItem().toString(), getApplicationContext());
+
+                goBack++;
+                if(goBack == 2){
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).setValorTotal(0);
+                    SingletonGestorPedidos.getInstance(getApplicationContext()).setIsPedidoSent(false);
+                    finish();
                 }
             }
         });

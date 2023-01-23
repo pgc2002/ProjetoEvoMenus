@@ -82,6 +82,8 @@ public class RealizarPedido extends AppCompatActivity {
             spCategorias.setSelection(0);
         }
 
+        SingletonGestorPedidos.getInstance(this).setValorTotal(0);
+
         final Handler handler = new Handler();
         final int delay = 1500;
         Runnable runnable = new Runnable() {
