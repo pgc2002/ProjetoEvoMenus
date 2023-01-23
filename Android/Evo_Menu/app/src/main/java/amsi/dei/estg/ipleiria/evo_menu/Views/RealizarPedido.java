@@ -2,6 +2,7 @@ package amsi.dei.estg.ipleiria.evo_menu.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,21 +26,23 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class RealizarPedido extends AppCompatActivity {
 
     Spinner spCategorias;
-    Button btnItem, btnMenu, btnCancelar, btnFazerPagamento, btnAdicionar;
+    Button btnItem, btnMenu, btnCancelar, btnFazerPagamento;
     TextView tvItensTotais, tvValorTotal, tvCategoria;
     ListView lvItens;
     ArrayList<Categoria> categorias;
     ArrayList<Item> items;
     ArrayList<Menu> menus;
     int idRestaurante;
-    boolean isItem, runThread;
-    int[] idItems;
-    int[] idMenus;
+    boolean isItem;
+    ArrayList<Integer> idItems;
+    ArrayList<Integer> idMenus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +66,9 @@ public class RealizarPedido extends AppCompatActivity {
         menus = new ArrayList<Menu>();
 
         isItem = true;
-        runThread = true;
 
-        idItems = null;
-        idMenus = null;
-
-
+        idItems = new ArrayList<Integer>();
+        idMenus = new ArrayList<Integer>();
 
         categorias = new ArrayList<Categoria>();
         for (Categoria categoria: SingletonGestorCategorias.getInstance(this).getCategorias()) {
@@ -83,19 +84,19 @@ public class RealizarPedido extends AppCompatActivity {
 
         final Handler handler = new Handler();
         final int delay = 3000;
-        new Thread(new Runnable() {
+        Runnable runnable = new Runnable() {
             public void run() {
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        while(runThread) {
-                            atualizarPedido();
-                            Log.d("still works", "i guess");
-                        }
+                        atualizarPedido();
+                        Log.d("idsItens", SingletonGestorPedidos.getInstance(getApplicationContext()).getIdItensPedido() + "");
+                        Log.d("idsMenus", SingletonGestorPedidos.getInstance(getApplicationContext()).getIdMenusPedido() + "");
                         handler.postDelayed(this, delay);
                     }
                 }, delay);
             }
-        }).start();
+        };
+        new Thread(runnable).start();
 
         preencherLV();
 
@@ -129,7 +130,6 @@ public class RealizarPedido extends AppCompatActivity {
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                runThread = false;
                 finish();
             }
         });
@@ -137,7 +137,12 @@ public class RealizarPedido extends AppCompatActivity {
         btnFazerPagamento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), RealizarPagamento.class);
+                if (SingletonGestorPedidos.getInstance(getApplicationContext()).getIdMenusPedido().isEmpty() && SingletonGestorPedidos.getInstance(getApplicationContext()).getIdItensPedido().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Precisa de selcionar pelo menos um item ou menu.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                startActivity(intent);
             }
         });
     }
@@ -147,10 +152,10 @@ public class RealizarPedido extends AppCompatActivity {
         SingletonGestorPedidos.getInstance(this).setIdMenusPedido(idMenus);
         int contadorItens = 0;
         if(SingletonGestorPedidos.getInstance(this).getIdItensPedido() != null)
-            contadorItens += SingletonGestorPedidos.getInstance(this).getIdItensPedido().length;
+            contadorItens += SingletonGestorPedidos.getInstance(this).getIdItensPedido().size();
 
         if(SingletonGestorPedidos.getInstance(this).getIdMenusPedido() != null)
-            contadorItens += SingletonGestorPedidos.getInstance(this).getIdMenusPedido().length;
+            contadorItens += SingletonGestorPedidos.getInstance(this).getIdMenusPedido().size();
 
         tvItensTotais.setText(contadorItens + "");
         tvValorTotal.setText("bababooey");

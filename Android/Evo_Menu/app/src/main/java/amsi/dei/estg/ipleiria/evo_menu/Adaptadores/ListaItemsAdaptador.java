@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.Item;
-import amsi.dei.estg.ipleiria.evo_menu.Model.Menu;
+import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class ListaItemsAdaptador extends BaseAdapter {
@@ -62,16 +62,23 @@ public class ListaItemsAdaptador extends BaseAdapter {
         private TextView tvValorItem;
         private Button btnAdicionar;
         private int i;
+        ArrayList<Integer> idItems = new ArrayList<>();
 
         public ViewHolderLista(View view) {
-            tvNomeItem = view.findViewById(R.id.tvNomeItem);
-            tvValorItem = view.findViewById(R.id.tvValorItem);
+            tvNomeItem = view.findViewById(R.id.tvNomeItemPagamento);
+            tvValorItem = view.findViewById(R.id.tvValorItemPagamento);
             btnAdicionar = view.findViewById(R.id.btAdicionarItem);
 
             btnAdicionar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("Nome Item",listaItens.get(i).getNome());
+                    if (SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdItensPedido() != null)
+                        SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).getIdItensPedido().add(listaItens.get(i).getId());
+                    else {
+                        idItems.add(listaItens.get(i).getId());
+                        SingletonGestorPedidos.getInstance(contexto.getApplicationContext()).setIdItensPedido(idItems);
+                    }
                 }
             });
         }

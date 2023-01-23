@@ -22,7 +22,7 @@
         android:focusableInTouchMode="false"/>
 
     <TextView
-        android:id="@+id/tvNomeItem"
+        android:id="@+id/tvNomeItemPagamento"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
