@@ -105,9 +105,14 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
         SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
         SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
-        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
         SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
         SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
+
+        for (int i = 0; i < SingletonGestorPedidos.getInstance(this).getPedidos().size(); i++){
+            SingletonGestorPedidos.getInstance(this).getAllItensPedidoAPI(this, i);
+            SingletonGestorPedidos.getInstance(this).getAllMenusPedidoAPI(this, i);
+        }
     }
 
     private void carregarFragmentoInicial()

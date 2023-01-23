@@ -70,4 +70,32 @@ public class PedidoJsonParser {
     public static String parserJsonIdPedido(String response) {
         return response;
     }
+
+    public static ArrayList<Integer> parserJsonItemIds(JSONArray response) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < response.length(); i++){
+            try {
+                JSONObject jsonItem = (JSONObject) response.get(i);
+                ids.add(jsonItem.getInt("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return ids;
+    }
+
+    public static ArrayList<Integer> parserJsonMenuIds(JSONArray response) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < response.length(); i++){
+            try {
+                JSONObject jsonMenu = (JSONObject) response.get(i);
+                ids.add(jsonMenu.getInt("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return ids;
+    }
 }
