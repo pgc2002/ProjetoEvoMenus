@@ -35,7 +35,7 @@ public class DetalhesPedidoActivity extends AppCompatActivity {
         lvItensPedido = findViewById(R.id.lvItensPedido);
         preencherLV();
     }
-    
+
     public void preencherLV() {
         Intent intent = getIntent();
 

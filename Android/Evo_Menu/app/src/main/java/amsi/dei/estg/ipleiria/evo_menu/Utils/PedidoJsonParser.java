@@ -66,4 +66,8 @@ public class PedidoJsonParser {
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+
+    public static String parserJsonIdPedido(String response) {
+        return response;
+    }
 }

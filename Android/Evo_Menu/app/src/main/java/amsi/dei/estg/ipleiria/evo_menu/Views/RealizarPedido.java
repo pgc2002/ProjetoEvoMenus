@@ -83,7 +83,7 @@ public class RealizarPedido extends AppCompatActivity {
         }
 
         final Handler handler = new Handler();
-        final int delay = 3000;
+        final int delay = 1500;
         Runnable runnable = new Runnable() {
             public void run() {
                 handler.postDelayed(new Runnable() {
@@ -138,6 +138,7 @@ public class RealizarPedido extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RealizarPagamento.class);
+                intent.putExtra("idRestaurante", idRestaurante);
                 if (SingletonGestorPedidos.getInstance(getApplicationContext()).getIdMenusPedido().isEmpty() && SingletonGestorPedidos.getInstance(getApplicationContext()).getIdItensPedido().isEmpty()){
                     Toast.makeText(getApplicationContext(), "Precisa de selcionar pelo menos um item ou menu.", Toast.LENGTH_SHORT).show();
                     return;
@@ -158,7 +159,7 @@ public class RealizarPedido extends AppCompatActivity {
             contadorItens += SingletonGestorPedidos.getInstance(this).getIdMenusPedido().size();
 
         tvItensTotais.setText(contadorItens + "");
-        tvValorTotal.setText("bababooey");
+        tvValorTotal.setText(SingletonGestorPedidos.getInstance(this).getValorTotal()+"€");
     }
 
     public void preencherLV() {
@@ -183,5 +184,6 @@ public class RealizarPedido extends AppCompatActivity {
             }
             lvItens.setAdapter(new ListaMenusAdaptador(this, menus));
         }
+
     }
 }
