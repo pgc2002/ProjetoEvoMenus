@@ -64,13 +64,11 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
         lvRestaurantes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                Log.d("coisas", "aconteceram");
                 Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
-                intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
-
+                //intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
                 intent.putExtra("idRestaurante", SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getId());
 
-                startActivityForResult(intent, CODE_REQUEST_EDITAR);
+                startActivity(intent);
             }
         });
 

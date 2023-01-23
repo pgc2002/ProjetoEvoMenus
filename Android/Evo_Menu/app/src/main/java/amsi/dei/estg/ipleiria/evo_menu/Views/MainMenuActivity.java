@@ -91,6 +91,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         carregarFragmentoInicial();
     }
 
+    // TESTAR DPS !!!!!!!
     private void atualizarSingletons() {
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
         SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());

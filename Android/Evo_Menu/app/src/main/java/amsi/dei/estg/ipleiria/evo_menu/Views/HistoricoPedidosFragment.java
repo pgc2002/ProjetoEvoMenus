@@ -1,5 +1,6 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -63,12 +65,10 @@ public class HistoricoPedidosFragment extends Fragment implements PedidosListene
         lvPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                Log.d("coisas", "aconteceram");
-                /*Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
-                intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
-                startActivityForResult(intent, CODE_REQUEST_EDITAR);
-                Toast.makeText(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB().get(position).getNome(),
-                        Toast.LENGTH_SHORT).show();*/
+                Intent intent = new Intent(getContext(), DetalhesPedidoActivity.class);
+                intent.putExtra("idPedido", SingletonGestorPedidos.getInstance(getContext()).getPedidos().get(position).getId());
+                startActivity(intent);
+
                 //Chamar atividade detalhada
             }
         });

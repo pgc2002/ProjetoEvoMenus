@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Evo_Menu"
         tools:targetApi="31">
         <activity
+            android:name=".DetalhesPedidoActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.RealizarPagamento"
             android:exported="false">
             <meta-data
