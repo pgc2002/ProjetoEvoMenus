@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 import amsi.dei.estg.ipleiria.evo_menu.UrlApi;
 import amsi.dei.estg.ipleiria.evo_menu.Utils.PedidoJsonParser;
+import amsi.dei.estg.ipleiria.evo_menu.Utils.UserJsonParser;
 
 public class SingletonGestorPedidos {
     private final static String mUrlAPIpedido = new UrlApi().getUrl() + "pedido";
@@ -41,6 +44,8 @@ public class SingletonGestorPedidos {
 
     private ArrayList<Integer> idItensPedido;
     private ArrayList<Integer> idMenusPedido;
+    private float valorTotal;
+    private int idPedido;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorPedidos getInstance(Context contexto) {
@@ -54,6 +59,7 @@ public class SingletonGestorPedidos {
     private SingletonGestorPedidos(Context contexto) {
         pedidos = new ArrayList<>();
         pedidoBD = new PedidoBdHelper(contexto);
+        valorTotal = 0;
     }
 
     public ArrayList<Pedido> getPedidosBD() {
@@ -116,14 +122,48 @@ public class SingletonGestorPedidos {
 
 
     //pedidos a api
-    public void adicionarPedidoAPI(final Pedido pedido, final Context contexto, String token)
+    public void adicionarPedidoAPI(final Pedido pedido, final Context contexto)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
         {
             Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
             return;
         }
-        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpedido, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpedido +
+                "/criar?valorTotal=" + pedido.getValor_total() + "&estado=" + pedido.getEstado() + "&idCliente=" + pedido.getId_cliente() + "&idRestaurante=" + pedido.getId_restaurante(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //adicionarPedidoBD(PedidoJsonParser.parserJsonPedido(response));
+                //ativar o listener...
+                /*if(livroListener != null)
+                {
+                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
+                }*/
+
+                idPedido = Integer.parseInt(PedidoJsonParser.parserJsonIdPedido(response));
+
+                Log.d("id do pedido", idPedido + "");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(request);
+    }
+
+    //pedidos a api
+    public void adicionarItemPedidoAPI(final int idItem, final Context contexto)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+            return;
+        }
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpedido +
+                "/inserir_item?idPedido=" + idPedido + "&idItem=" + idItem, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //adicionarPedidoBD(PedidoJsonParser.parserJsonPedido(response));
@@ -140,26 +180,37 @@ public class SingletonGestorPedidos {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
             }
-        })
-        {
-            @Nullable
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", "" + pedido.getId());
-                params.put("valorTotal", "" + pedido.getValor_total());
-                params.put("estado", pedido.getEstado());
-                params.put("idCliente", "" + pedido.getId_cliente());
-                params.put("idRestaurante", "" + pedido.getId_restaurante());
-                //params.put("capa", livro.getCapa() == null? DetalhesLivroActivity.IMG_DEFAULT : livro.getCapa());
-
-                return params;
-            };
-        };
+        });
         volleyQueue.add(request);
+    }
 
+    public void adicionarMenuPedidoAPI(final int idMenu, final Context contexto)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
+            return;
+        }
+        StringRequest request = new StringRequest(Request.Method.POST, mUrlAPIpedido +
+                "/inserir_menu?idPedido=" + idPedido + "&idItem=" + idMenu, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //adicionarPedidoBD(PedidoJsonParser.parserJsonPedido(response));
+                //ativar o listener...
+                /*if(livroListener != null)
+                {
+                    livroListener.onRefreshDetalhes(DetalhesLivroActivity.OP_CODE_ADICIONAR);
+                }*/
 
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(request);
     }
 
     public void getAllPedidosAPI(final Context contexto)
@@ -321,5 +372,17 @@ public class SingletonGestorPedidos {
 
     public void setIdMenusPedido(ArrayList<Integer> idMenusPedido) {
         this.idMenusPedido = idMenusPedido;
+    }
+
+    public float getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(float valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public int getIdPedido() {
+        return idPedido;
     }
 }

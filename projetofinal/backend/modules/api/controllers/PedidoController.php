@@ -144,6 +144,8 @@ class PedidoController extends ActiveController
         $mqtt->connect();
         $mqtt->publish($connection->topic, "POST de um pedido", 0);
         $mqtt->disconnect();
+
+        return $pedido->id;
     }
 
     public function actionInserir_item($idPedido, $idItem){

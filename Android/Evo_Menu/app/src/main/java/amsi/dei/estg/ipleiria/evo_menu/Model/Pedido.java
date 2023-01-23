@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.evo_menu.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Pedido implements Serializable
 {
@@ -9,6 +10,8 @@ public class Pedido implements Serializable
     private String estado;
     private int id_cliente;
     private int id_restaurante;
+    private ArrayList<Integer> idItensPedido;
+    private ArrayList<Integer> idMenusPedido;
 
     public Pedido(int id, double valor_total, String estado, int id_cliente, int id_restaurante) {
         this.id = id;
@@ -18,6 +21,39 @@ public class Pedido implements Serializable
         this.id_restaurante = id_restaurante;
     }
 
+    public Pedido(double valor_total, String estado, int id_cliente, int id_restaurante) {
+        this.id = 1000;
+        this.valor_total = valor_total;
+        this.estado = estado;
+        this.id_cliente = id_cliente;
+        this.id_restaurante = id_restaurante;
+    }
+
+    public Pedido(int id, double valor_total, String estado, int id_cliente, int id_restaurante, ArrayList<Integer> idItensPedido, ArrayList<Integer> idMenusPedido) {
+        this.id = id;
+        this.valor_total = valor_total;
+        this.estado = estado;
+        this.id_cliente = id_cliente;
+        this.id_restaurante = id_restaurante;
+        this.idItensPedido = idItensPedido;
+        this.idMenusPedido = idMenusPedido;
+    }
+
+    public ArrayList<Integer> getIdItensPedido() {
+        return idItensPedido;
+    }
+
+    public ArrayList<Integer> getIdMenusPedido() {
+        return idMenusPedido;
+    }
+
+    public void setIdItensPedido(ArrayList<Integer> idItensPedido) {
+        this.idItensPedido = idItensPedido;
+    }
+
+    public void setIdMenusPedido(ArrayList<Integer> idMenusPedido) {
+        this.idMenusPedido = idMenusPedido;
+    }
 
     public int getId() {return id; }
 
