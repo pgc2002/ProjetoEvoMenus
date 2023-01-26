@@ -62,7 +62,7 @@ public class HistoricoPedidosFragment extends Fragment implements PedidosListene
 
         lvPedidos.setAdapter(adaptador);
 
-        lvPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lvPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 Intent intent = new Intent(getContext(), DetalhesPedidoActivity.class);
@@ -71,7 +71,7 @@ public class HistoricoPedidosFragment extends Fragment implements PedidosListene
 
                 //Chamar atividade detalhada
             }
-        });
+        });*/
 
         SingletonGestorPedidos.getInstance(getContext()).setPedidosListener(this);
         //SingletonGestorPedidos.getInstance(getContext()).getAllPedidosAPI(getContext(), 20);

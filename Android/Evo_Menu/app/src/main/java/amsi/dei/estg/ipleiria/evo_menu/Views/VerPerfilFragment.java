@@ -30,7 +30,6 @@ public class VerPerfilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ver_perfil, container, false);
 
-        TextView tvUsername = view.findViewById(R.id.tvUsername);
         TextView tvNome = view.findViewById(R.id.tvNome);
         TextView tvEmail = view.findViewById(R.id.tvEmail);
         TextView tvTelemovel = view.findViewById(R.id.tvTelemovel);
@@ -45,7 +44,6 @@ public class VerPerfilFragment extends Fragment {
         User user = SingletonGestorUsers.getInstance(getContext()).getUserLogado();
 
         if(user != null) {
-            tvUsername.setText(user.getUsername());
             tvNome.setText(user.getNome());
             tvEmail.setText(user.getEmail());
             tvTelemovel.setText(user.getTelemovel());

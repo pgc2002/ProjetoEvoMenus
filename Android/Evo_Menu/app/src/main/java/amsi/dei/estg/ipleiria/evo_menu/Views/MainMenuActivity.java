@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -111,11 +112,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
         SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
         SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-
-        for (int i = 0; i < SingletonGestorPedidos.getInstance(this).getPedidos().size(); i++){
-            SingletonGestorPedidos.getInstance(this).getAllItensPedidoAPI(this, i);
-            SingletonGestorPedidos.getInstance(this).getAllMenusPedidoAPI(this, i);
-        }
+        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
     }
 
     private void carregarFragmentoInicial()

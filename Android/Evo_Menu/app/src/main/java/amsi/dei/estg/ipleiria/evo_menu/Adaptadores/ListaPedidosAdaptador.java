@@ -71,13 +71,12 @@ public class ListaPedidosAdaptador extends BaseAdapter {
     }
 
     private class ViewHolderLista {
-        private TextView tvNomeRestaurante, tvValorTotal, tvData;
+        private TextView tvNomeRestaurante, tvValorTotal;
         //private ImageView ivRestauranteBackground;
 
         public ViewHolderLista(View view) {
             tvNomeRestaurante = view.findViewById(R.id.tvNomeItemPagamento);
             tvValorTotal = view.findViewById(R.id.tvValorTotal);
-            tvData = view.findViewById(R.id.tvData);
             //ivRestauranteBackground = view.findViewById(R.id.ivRestauranteBackground);
         }
 

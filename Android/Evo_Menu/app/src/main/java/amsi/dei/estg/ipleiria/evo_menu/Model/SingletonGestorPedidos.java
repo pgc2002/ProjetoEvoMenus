@@ -33,6 +33,8 @@ public class SingletonGestorPedidos {
     private PedidoBdHelper pedidoBD = null;
     private static SingletonGestorPedidos instancia = null;
     private ArrayList<Pedido> pedidos;
+    private int numItems;
+    private int numMenus;
 
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
@@ -244,7 +246,6 @@ public class SingletonGestorPedidos {
         volleyQueue.add(req);
     }*/
 
-
     public void getAllItensPedidoAPI(final Context contexto, final int i)
     {
         if(!PedidoJsonParser.isConnectionInternet(contexto))
@@ -255,8 +256,11 @@ public class SingletonGestorPedidos {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/" + idPedido + "/items", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                pedidos.get(i).setIdItensPedido(PedidoJsonParser.parserJsonItemIds(response));
-                Log.d("Itens do pedido "+ pedidos.get(i).getId(), PedidoJsonParser.parserJsonItemIds(response)+"");
+                if(response != null) {
+                    for (Pedido pedido : pedidos) {
+                        pedido.setIdItensPedido(PedidoJsonParser.parserJsonItemIds(response));
+                    }
+                }
                 //adicionarPedidosBD(pedidos);
             }
         }, new Response.ErrorListener() {
@@ -279,9 +283,59 @@ public class SingletonGestorPedidos {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIpedido + "/" + idPedido + "/menus", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                pedidos.get(i).setIdItensPedido(PedidoJsonParser.parserJsonMenuIds(response));
-                Log.d("Itens do pedido "+ pedidos.get(i).getId(), PedidoJsonParser.parserJsonMenuIds(response)+"");
+                if(response != null) {
+                    for (Pedido pedido : pedidos) {
+                        if (response != null)
+                            pedido.setIdMenusPedido(PedidoJsonParser.parserJsonItemIds(response));
+                    }
+                }
                 //adicionarPedidosBD(pedidos);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void getCountItemsAPI(int id, final Context contexto)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIpedido + '/' + id + "/countitems", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                numItems = Integer.parseInt(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void getCountMenusAPI(int id, final Context contexto)
+    {
+        if(!PedidoJsonParser.isConnectionInternet(contexto))
+        {
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIpedido + '/' + id + "/countmenus", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                numMenus = Integer.parseInt(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -472,5 +526,13 @@ public class SingletonGestorPedidos {
 
     public void setIsPedidoSent(boolean b) {
         this.isPedidoSent = b;
+    }
+
+    public int getNumItems() {
+        return numItems;
+    }
+
+    public int getNumMenus() {
+        return numMenus;
     }
 }

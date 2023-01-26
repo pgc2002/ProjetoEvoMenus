@@ -86,6 +86,18 @@ class PedidoController extends ActiveController
         return $dataProvider;
     }
 
+    public function actionCountmenus($idPedido){
+        $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $menus = $pedido->getMenus()->all();
+        return count($menus);
+    }
+
+    public function actionCountitems($idPedido){
+        $pedido = Pedido::find()->where(['id' => $idPedido])->one();
+        $items = $pedido->getItems()->all();
+        return count($items);
+    }
+
     public function actionItems($idPedido)
     {
         $pedido = Pedido::find()->where(['id' => $idPedido])->one();
