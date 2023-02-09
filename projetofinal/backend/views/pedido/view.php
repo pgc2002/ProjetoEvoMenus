@@ -17,7 +17,7 @@ $this->title = "Detalhes do pedido ".$model->id;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Voltar para pedidos', ['index#'.$model->estado.'s'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('Voltar para pedidos', ['index?id='.Yii::$app->request->get('idRestaurante').'#'.strtolower($model->estado).'s'], ['class' => 'btn btn-secondary']) ?>
     </p>
 
     <?= DetailView::widget([

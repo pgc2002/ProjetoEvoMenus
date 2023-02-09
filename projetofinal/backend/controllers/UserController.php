@@ -97,7 +97,12 @@ class UserController extends Controller
                         $morada->save(false);
                         $idMorada = $morada->id;
                     }*/
+                    $pais = mb_convert_case(Yii::$app->request->post('pais'), MB_CASE_TITLE, "UTF-8");
+                    $morada->pais = $pais;
+                    $codpost = Yii::$app->request->post('codpost1')."-".Yii::$app->request->post('codpost2');
+                    $morada->codpost  = $codpost;
                     $morada->save(false);
+
                     $user->idMorada = $morada->id;
                     $user->setPassword($this->password);
                     $user->generateAuthKey();
@@ -110,14 +115,17 @@ class UserController extends Controller
                     } catch (\Exception $e) {
                     }
 
-                    return $this->redirect(['view', 'id' => $user->id]);
+                    //return $this->redirect(['view', 'id' => $user->id]);
+                    return $this->redirect(['index']);
 
                 } else if ($user->load($this->request->post())) {
                     $this->password = Yii::$app->request->post('password');
                     $user->setPassword($this->password);
                     $user->generateAuthKey();
-                    $user->save();
 
+                    $user->idRestaurante = Yii::$app->request->post('restaurante');
+
+                    $user->save();
                     $auth = \Yii::$app->authManager;
                     switch ($user->tipo) {
                         case 'Admin':
@@ -166,12 +174,15 @@ class UserController extends Controller
             $morada = Morada::findOne($user->idMorada);
 
             if ($this->request->isPost) {
-
                 if($morada == null){
                     if ($user->load($this->request->post()))
                         $user->save();
                 }else{
                     if($user->load($this->request->post()) && $morada->load($this->request->post() )){
+                        $codpost = Yii::$app->request->post('codpost1')."-".Yii::$app->request->post('codpost2');
+                        $morada->codpost  = $codpost;
+                        $pais = mb_convert_case(Yii::$app->request->post('pais'), MB_CASE_TITLE, "UTF-8");
+                        $morada->pais = $pais;
                         $morada->save();
                         $user->save();
                     }

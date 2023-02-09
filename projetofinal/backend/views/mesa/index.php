@@ -57,7 +57,7 @@ $this->title = 'Mesas';
             'capacidade',
             'estado',
             [
-                'class' => ActionColumn::className(),
+                'class' => 'yii\grid\ActionColumn',
                 'urlCreator' => function ($action, Mesa $mesas, $key, $index, $column) {
                     //if ($action == "delete")
                         return Url::toRoute([$action, 'id' => $mesas->id, 'idRestaurante' => $mesas->idRestaurante]);

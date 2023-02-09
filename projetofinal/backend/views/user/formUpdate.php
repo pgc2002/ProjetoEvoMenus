@@ -43,13 +43,13 @@ else
 ?>
         <h3><?= Html::encode($this->title) ?></h3>
 
-        <?= $form->field($user, 'telemovel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'telemovel')->textInput(['type' => 'tel', 'maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:130px"]) ?>
 
-        <?= $form->field($user, 'nif')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nif')->textInput(['maxlength' => true, "style" => "width:100px"]) ?>
 
-        <?= $form->field($user, 'nome')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nome')->textInput(['maxlength' => true, "style" => "width:450px"]) ?>
 
-        <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'email')->textInput(['maxlength' => true, "style" => "width:450px"]) ?>
 
         <?= $form->field($user, 'status')->hiddenInput(['value' => 10])->label(false) ?>
 

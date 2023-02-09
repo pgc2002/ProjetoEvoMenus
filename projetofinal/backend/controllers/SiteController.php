@@ -91,7 +91,7 @@ class SiteController extends Controller
             if(Yii::$app->user->can('acessoBackend')){
                 return $this->goBack();
             }else{
-                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/');
+                return $this->redirect('http://localhost/ProjetoEvoMenus/projetofinal/frontend/web/site/index');
             }
         }
 
