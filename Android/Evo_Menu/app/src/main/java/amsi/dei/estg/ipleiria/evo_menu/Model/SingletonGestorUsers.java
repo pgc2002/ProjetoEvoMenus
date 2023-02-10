@@ -63,6 +63,10 @@ public class SingletonGestorUsers {
         return users = usersBD.getAllUsersBD();
     }
 
+    public ArrayList<User> getUsersSingleton() {
+        return users;
+    }
+
     //Buscar os users do ficheiro criado para a lista
     public void setUsers(ArrayList<User> users) {
         this.users = users;
@@ -163,74 +167,23 @@ public class SingletonGestorUsers {
         volleyQueue.add(req);
     }
 
-    /*public void getUserAPI(final Context contexto, final int id, final String pass)
-    {
-        if(!UserJsonParser.isConnectionInternet(contexto))
-        {
-            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/" + id,null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                userLogado = UserJsonParser.parserJsonUserObjeto(response, pass);
-                Log.d("wadhi", userLogado.getUsername());
-                //adicionarUserBD(user);
-                //Ativar o listener
-                /*if(userListener!=null)
-                {
-                    usersListener.onRefreshListaUsers(users);
-                }
-            }
-        } , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        volleyQueue.add(req);
-    }*/
-
     public void getUserLogadoAPI(final Context contexto, final String username, final String password)
     {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/getuser?username=" + username,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 userLogado = UserJsonParser.parserJsonUserObjeto(response);
+                userLogado.setPass(password);
             }
         } , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("erro de user logado", error.getMessage());
             }
         });
         volleyQueue.add(req);
     }
-
-
-    /*if(!UserJsonParser.isConnectionInternet(contexto))
-    {
-        Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
-        return;
-    }
-    StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser  + "/validar?username="+ username +"&password="+pass, new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            try {
-                validacao = UserJsonParser.parserJsonValidacao(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.d("testeValidacao", error.getMessage());
-            return;
-        }
-    });
-        volleyQueue.add(req);*/
 
     public void removerUserAPI(final User user, final Context contexto)
     {
@@ -347,40 +300,6 @@ public class SingletonGestorUsers {
         });
         volleyQueue.add(req);
     }
-
-    /*public Morada getMoradaAPI(final int idMorada, Context contexto)
-    {
-        if(!UserJsonParser.isConnectionInternet(contexto))
-        {
-            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT);
-        }
-        else {
-            StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIuser +"/"+ idUser + "/morada"
-                    , new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    morada = MoradaJsonParser.parserJsonMorada(response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("testeValidacao", error.getMessage());
-                    return;
-                }
-            });
-            volleyQueue.add(req);
-        }
-        SingletonGestorMorada.getInstance(contexto).getAllMoradasAPI(contexto);
-        ArrayList<Morada> moradas = SingletonGestorMorada.getInstance(contexto).getMoradas();
-        Log.d("testeMorada", String.valueOf(moradas.size()));
-        for (Morada morada : moradas) {
-            if(morada.getId() == idMorada)
-                return morada;
-        }
-
-        return null;
-    }*/
     
     public void getMoradaAPI(Context contexto) {
 
@@ -412,6 +331,8 @@ public class SingletonGestorUsers {
     public User getUserLogado(){
         return userLogado;
     }
+
+    public void setUserLogado(User user) { userLogado = user; }
 
     public void validarLogin(Context context, String username, String password) {
         if (!UserJsonParser.isConnectionInternet(context)) {

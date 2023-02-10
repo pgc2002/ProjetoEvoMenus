@@ -146,11 +146,12 @@ $this->title = 'Contactos';
     .single_advisor_profile:focus .single_advisor_details_info p {
         color: #ffffff;
     }
-    .usuarios{text-align: center}
+    .utilizadores{text-align: center}
+    .contactos{background-color: #cccccc}
 </style>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-<div class="container">
+<div class="container contactos">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-lg-6">
             <!-- Section Heading-->
@@ -162,7 +163,7 @@ $this->title = 'Contactos';
         </div>
         <div class="row">
         <!-- Single Advisor-->
-        <div class="usuarios">
+        <div class="utilizadores">
             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
                 <!-- Team Thumb-->
                 <div class="advisor_thumb"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></div>
@@ -174,7 +175,7 @@ $this->title = 'Contactos';
             </div>
         </div>
         <!-- Single Advisor-->
-        <div class="usuarios">
+        <div class="utilizadores">
             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
                 <!-- Team Thumb-->
                 <div class="advisor_thumb"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt=""></div>
@@ -186,7 +187,7 @@ $this->title = 'Contactos';
             </div>
         </div>
         <!-- Single Advisor-->
-        <div class="usuarios">
+        <div class="utilizadores">
             <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
                 <!-- Team Thumb-->
                 <div class="advisor_thumb"><img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt=""></div>

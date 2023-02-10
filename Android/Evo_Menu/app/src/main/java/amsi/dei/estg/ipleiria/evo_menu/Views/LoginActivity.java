@@ -12,6 +12,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.temporal.ValueRange;
+import java.util.ArrayList;
+
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
@@ -44,8 +47,10 @@ public class LoginActivity extends AppCompatActivity
         etPass = findViewById(R.id.etPasswordLogin);
         btnLogin = findViewById(R.id.btLogin);
         btnRegistar = findViewById(R.id.btRegistar);
-        SingletonGestorUsers.getInstance(this).getAllUsersAPI(this);
-        //bt click event
+
+        SingletonGestorUsers.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext());
+        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -72,34 +77,25 @@ public class LoginActivity extends AppCompatActivity
                     }
                 }, 500);
 
-                if(validarLogin()){
-                    /*final int delay = 30000;
-                    new Thread(new Runnable() {
-                        public void run() {
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    //new Dados().inicializarSingletons(getApplicationContext());
-                                    inicializarSingletons();
-                                    Log.d("teste", "funciona");
-                                    handler.postDelayed(this, delay);
-                                }
-                            }, delay);
-                        }
-                    }).start();*/
+                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
 
+                if(validarLoginBD()){
                     SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(intent);
+                }else {
+                    if (validarLogin()) {
+                        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        startActivity(intent);
+                    }
                 }
             }
         });
+
         btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -111,17 +107,13 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private boolean validarLogin() {
-        String username = etUsername.getText().toString();
-        String password = etPass.getText().toString();
 
-        SingletonGestorUsers.getInstance(this).validarLogin(this, username, password);
+        SingletonGestorUsers.getInstance(this).validarLogin(this, etUsername.getText().toString(), etPass.getText().toString());
         String loginValido = SingletonGestorUsers.getInstance(this).getLoginValido();
 
         if(loginValido != null){
-            Log.d("LoginTeste", loginValido);
-
             if(loginValido.equals("true")){
-                SingletonGestorUsers.getInstance(this).getUserLogadoAPI(this, username, password);
+                SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogadoAPI(this, etUsername.getText().toString(), etPass.getText().toString());
                 return true;
             }else{
                 return false;
@@ -129,6 +121,23 @@ public class LoginActivity extends AppCompatActivity
         }else{
             return false;
         }
+    }
+
+    private boolean validarLoginBD() {
+
+        ArrayList<User> users = SingletonGestorUsers.getInstance(getApplicationContext()).getUsersBD();
+
+        boolean validacao = false;
+
+        if (!users.isEmpty())
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getUsername().equals(etUsername.getText().toString()) && users.get(i).getPass().equals(etPass.getText().toString())) {
+                    SingletonGestorUsers.getInstance(getApplicationContext()).setUserLogado(users.get(i));
+                    validacao = true;
+                }
+            }
+
+        return validacao;
     }
 
     @Override

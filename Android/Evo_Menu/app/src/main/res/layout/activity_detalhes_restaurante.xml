@@ -51,233 +51,199 @@
                 android:ems="10"
                 android:text="Telémovel" />
 
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:text="HORÁRIO"
+                android:textAlignment="center" />
+
         </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvSegunda"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S" />
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="8dp">
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tvTerca"
+            <TextView
+                android:id="@+id/tvSegunda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Segunda" />
+
+            <TextView
+                android:id="@+id/tvTerca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Terça" />
+
+            <TextView
+                android:id="@+id/tvQuarta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quarta" />
+
+            <TextView
+                android:id="@+id/tvQuinta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quinta" />
+
+            <TextView
+                android:id="@+id/tvSexta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sexta" />
+
+            <TextView
+                android:id="@+id/tvSabado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sabado" />
+
+            <TextView
+                android:id="@+id/tvDomingo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Domingo" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T" />
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Almoço"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tvQuarta"
+            <TextView
+                android:id="@+id/tvSegundaAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvTercaAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvQuartaAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvQuintaAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvSextaAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvSabadoAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+            <TextView
+                android:id="@+id/tvDomingoAlmoco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Q" />
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jantar"
+                android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/tvQuinta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Q" />
+            <TextView
+                android:id="@+id/tvSegundaJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvTercaJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <TextView
-            android:id="@+id/tvSexta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S" />
+            <TextView
+                android:id="@+id/tvQuartaJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvQuintaJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <TextView
-            android:id="@+id/tvSabado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="S" />
+            <TextView
+                android:id="@+id/tvSextaJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvSabadoJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-        <TextView
-            android:id="@+id/tvDomingo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="D" />
+            <TextView
+                android:id="@+id/tvDomingoJantar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00-00-00-00" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/tvSegundaAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvTercaAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvQuartaAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvQuintaAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvSextaAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvSabadoAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvDomingoAlmoco"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="100dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/tvSegundaJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvTercaJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvQuartaJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvQuintaJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvSextaJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvSabadoJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/tvDomingoJantar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="J" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -290,7 +256,7 @@
         <TextView
             android:id="@+id/tvEstadoTitulo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:textAlignment="center"
             android:textSize="20sp" />
 

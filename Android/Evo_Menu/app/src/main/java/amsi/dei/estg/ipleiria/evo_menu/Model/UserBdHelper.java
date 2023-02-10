@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class UserBdHelper extends SQLiteOpenHelper {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "user";
-    private final static int DB_VERSION = 2;
+    private final static int DB_VERSION = 3;
     private final static String ID = "id";
     private final static String USERNAME = "username";
     private final static String PASS = "pass";
@@ -39,6 +39,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
                 + USERNAME + " TEXT NOT NULL, "
                 + NOME + " TEXT NOT NULL, "
                 + PASS + " TEXT NOT NULL, "
+                + EMAIL + " TEXT NOT NULL, "
                 + TELEMOVEL + " TEXT NOT NULL, "
                 + NIF + " TEXT NOT NULL, "
                 + ID_MORADA + " INTEGER NOT NULL, "
@@ -61,6 +62,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
         valores.put(USERNAME, user.getUsername());
         valores.put(NOME, user.getNome());
         valores.put(PASS, user.getPass());
+        valores.put(EMAIL, user.getEmail());
         valores.put(TELEMOVEL, user.getTelemovel());
         valores.put(NIF, user.getNif());
         valores.put(ID_MORADA, user.getId_morada());
@@ -80,6 +82,7 @@ public class UserBdHelper extends SQLiteOpenHelper {
         valores.put(ID, user.getId());
         valores.put(USERNAME, user.getUsername());
         valores.put(PASS, user.getPass());
+        valores.put(EMAIL, user.getEmail());
         valores.put(TELEMOVEL, user.getTelemovel());
         valores.put(NIF, user.getNif());
         valores.put(NOME, user.getNome());

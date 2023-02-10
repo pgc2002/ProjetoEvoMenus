@@ -21,6 +21,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
+import amsi.dei.estg.ipleiria.evo_menu.Model.Restaurante;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
@@ -30,6 +33,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
+import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,15 +91,53 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        verificarUserLogadoNaBd();
+
+        preencherRestaurantesNaBd();
+
         carregarCabecalho();
 
         carregarFragmentoInicial();
     }
 
+    private void preencherRestaurantesNaBd() {
+        ArrayList<Restaurante> restaurantesApi = SingletonGestorRestaurantes.getInstance(getApplicationContext()).getRestaurantes();
+        ArrayList<Restaurante> restaurantesBd = SingletonGestorRestaurantes.getInstance(getApplicationContext()).getRestaurantesDB();
+
+        if (!restaurantesApi.isEmpty()){
+            for (int i = 0; i < restaurantesApi.size(); i++){
+                if (restaurantesBd.isEmpty())
+                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).adicionarRestauranteBD(restaurantesApi.get(i));
+                else
+                    for (int p = 0; p < restaurantesBd.size(); p++) {
+                        boolean naoEstaNaBd = true;
+                        if (restaurantesApi.get(i).getId() == restaurantesBd.get(p).getId())
+                            naoEstaNaBd = false;
+
+                        if (naoEstaNaBd)
+                            SingletonGestorRestaurantes.getInstance(getApplicationContext()).adicionarRestauranteBD(restaurantesApi.get(i));
+                    }
+            }
+        }
+    }
+
+    private void verificarUserLogadoNaBd() {
+        ArrayList<User> usersbd = SingletonGestorUsers.getInstance(getApplicationContext()).getUsersBD();
+        if (!usersbd.isEmpty()){
+            boolean usernaoestanabd = true;
+            for (int i = 0; i<usersbd.size(); i++)
+                if (usersbd.get(i).getId() == SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado().getId())
+                    usernaoestanabd = false;
+
+            if (usernaoestanabd)
+                SingletonGestorUsers.getInstance(getApplicationContext()).adicionarUserBD(SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado());
+        }else
+            SingletonGestorUsers.getInstance(getApplicationContext()).adicionarUserBD(SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado());
+    }
+
     // TESTAR DPS !!!!!!!
     private void atualizarSingletons() {
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-        SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
         SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
         SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());

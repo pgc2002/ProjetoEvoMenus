@@ -9,6 +9,8 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
@@ -55,11 +57,15 @@ public class RegistarActivity extends AppCompatActivity
 
     private void registarUser() {
         try {
-        User user = new User(1, etUsername.getText().toString(), etNomeCompleto.getText().toString(), etPassword.getText().toString(),
-                etMail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
+            ArrayList<User> users = SingletonGestorUsers.getInstance(getApplicationContext()).getUsersSingleton();
+            User user = new User( 1/*users.get(users.size()-1).getId()+2*/, etUsername.getText().toString(), etNomeCompleto.getText().toString(), etPassword.getText().toString(),
+            etMail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
 
             SingletonGestorUsers.getInstance(this).adicionarUserAPI(user, etPais.getText().toString(), etCidade.getText().toString(),
                     etRua.getText().toString(), etCodPost.getText().toString(), this);
+
+            //SingletonGestorUsers.getInstance(this).adicionarUserBD(user);
+
         }catch (Exception e){
             Log.d("testeCriar user", e.getMessage());
         }

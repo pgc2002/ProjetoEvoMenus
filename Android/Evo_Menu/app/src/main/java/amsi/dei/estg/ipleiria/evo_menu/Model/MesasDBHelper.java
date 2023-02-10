@@ -10,7 +10,7 @@ public class MesasDBHelper extends SQLiteOpenHelper
 {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "mesas";
-    private final static int DB_VERSION = 2;
+    private final static int DB_VERSION = 3;
     private final static String ID = "id";
     private final static String numero = "numero";
     private final static String capacidade = "capacidade";

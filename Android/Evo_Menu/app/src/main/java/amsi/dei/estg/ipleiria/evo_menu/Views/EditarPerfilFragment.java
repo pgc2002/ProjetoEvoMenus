@@ -76,6 +76,7 @@ public class EditarPerfilFragment extends Fragment
 
                 SingletonGestorUsers.getInstance(getContext()).editarUserAPI(user, getContext());
                 SingletonGestorUsers.getInstance(getContext()).editarMoradaAPI(morada, getContext());
+                SingletonGestorUsers.getInstance(getContext()).editarUserBD(user);
 
                 Fragment verPerfil = new VerPerfilFragment();
                 FragmentManager fragmentManager = getFragmentManager();
