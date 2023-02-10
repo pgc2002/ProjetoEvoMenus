@@ -54,7 +54,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
 
-        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+        //SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
         adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
         /*ArrayList<Restaurante> restaurantes = SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes();
         adaptador = new ListaRestaurantesAdaptador(getContext(), restaurantes);*/

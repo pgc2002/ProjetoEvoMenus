@@ -127,7 +127,7 @@ public class SingletonGestorUsers {
             @Override
             public void onResponse(String response) {
                 Log.d("respostaAPI", response);
-                //adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
+                adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
             }
         }, new Response.ErrorListener() {
             @Override

@@ -83,7 +83,6 @@ public class SingletonGestorRestaurantes
         return restaurantes;
     }
 
-    //adicionarlivrosapi
     public void adicionarRestaurantesBD(ArrayList<Restaurante> lista) {
         restaurantesDB.removerAllRestaurantesBD();
         for (Restaurante restaurante : lista) {
@@ -114,7 +113,7 @@ public class SingletonGestorRestaurantes
             @Override
             public void onResponse(JSONArray response) {
                 restaurantes = RestauranteJsonParser.parserJsonRestaurante(response);
-                //adicionarRestaurantesBD(restaurantes);
+                adicionarRestaurantesBD(restaurantes);
 
                 //Ativar o listener
                 if(restauranteListener!=null)

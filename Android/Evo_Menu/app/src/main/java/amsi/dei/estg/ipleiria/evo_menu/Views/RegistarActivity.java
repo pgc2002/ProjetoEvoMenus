@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,15 +51,25 @@ public class RegistarActivity extends AppCompatActivity
         btnRegistar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registarUser();
+                if(etUsername.getText().toString().length() <= 0 || etNomeCompleto.getText().toString().length() <= 0
+                   || etPassword.getText().toString().length() <= 0 || etMail.getText().toString().length() <= 0
+                   || etTelemovel.getText().toString().length() <= 0 || etNif.getText().toString().length() <= 0
+                   || etPais.getText().toString().length() <= 0 || etCidade.getText().toString().length() <= 0
+                   || etRua.getText().toString().length() <= 0 || etCodPost.getText().toString().length() <= 0
+                ){
+                    Toast.makeText(getApplicationContext(), "Todos os campos devem estar preenchidos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!existeUser())
+                    registarUser();
             }
         });
     }
 
     private void registarUser() {
         try {
-            ArrayList<User> users = SingletonGestorUsers.getInstance(getApplicationContext()).getUsersSingleton();
-            User user = new User( 1/*users.get(users.size()-1).getId()+2*/, etUsername.getText().toString(), etNomeCompleto.getText().toString(), etPassword.getText().toString(),
+            //ArrayList<User> users = SingletonGestorUsers.getInstance(getApplicationContext()).getUsersSingleton();
+            User user = new User(etUsername.getText().toString(), etNomeCompleto.getText().toString(), etPassword.getText().toString(),
             etMail.getText().toString(), etTelemovel.getText().toString(), etNif.getText().toString());
 
             SingletonGestorUsers.getInstance(this).adicionarUserAPI(user, etPais.getText().toString(), etCidade.getText().toString(),
@@ -69,6 +80,11 @@ public class RegistarActivity extends AppCompatActivity
         }catch (Exception e){
             Log.d("testeCriar user", e.getMessage());
         }
+    }
 
+
+    private boolean existeUser(){
+
+        return true;
     }
 }
