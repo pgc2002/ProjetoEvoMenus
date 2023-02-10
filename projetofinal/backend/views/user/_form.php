@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Pais;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -43,31 +44,46 @@ use common\models\Restaurante;
 
         <h3>Criar Cliente</h3>
 
-        <?= $form->field($user, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'username')->textInput(['maxlength' => true, "style" => "width:305px"]) ?>
 
         <?= Html::label('Password', 'username', ['class' => 'label username']) ?>
-        <?= HTML::input('password', 'password', '', ['class' => 'form-control'])?>
+        <?= HTML::input('password', 'password', null, ['class' => 'form-control', 'maxlength' => 32, "style" => "width:305px"])?>
         <br>
 
-        <?= $form->field($user, 'telemovel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'telemovel')->textInput(['type' => 'tel', 'maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:130px"]) ?>
 
-        <?= $form->field($user, 'nif')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nif')->textInput(['maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:120px"]) ?>
 
         <?= $form->field($user, 'tipo')->hiddenInput(['value' => 'Cliente'])->label(false) ?>
 
-        <?= $form->field($user, 'nome')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nome')->textInput(['type' => 'text', 'maxlength' => true, "style" => "width:450px"]) ?>
 
-        <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'email')->textInput(['type' => 'email', 'maxlength' => true, "style" => "width:450px"]) ?>
 
         <?= $form->field($user, 'status')->hiddenInput(['value' => 10])->label(false) ?>
 
-        <?= $form->field($morada, 'pais')->textInput() ?>
+        <?php
+            $paises = ArrayHelper::map(Pais::find()->all(), 'paisNome','paisNome');
+            $paises = array_map('formatarPais', $paises);
 
-        <?= $form->field($morada, 'cidade')->textInput() ?>
+            function formatarPais($pais){
+                return mb_convert_case($pais, MB_CASE_TITLE, "UTF-8");
+            }
+        ?>
+        <?= Html::label('País', 'pais')?><br>
+        <?= Html::dropDownList('pais', null, $paises, ['class' => 'form-control', 'required' => 'true', 'id' =>'pais', "style" => "width:310px"]) ?><br>
 
-        <?= $form->field($morada, 'rua')->textInput() ?>
+        <?= $form->field($morada, 'cidade')->textInput(['type' => 'text','maxlength' => true, "style" => "width:310px"]) ?>
 
-        <?= $form->field($morada, 'codpost')->textInput() ?>
+        <?= $form->field($morada, 'rua')->textInput(['type' => 'text', 'maxlength' => true, "style" => "width:800px"])->label("Morada") ?>
+
+        <?= Html::label('Código Postal', 'codpost', ['class' => 'control-label'])?>
+        <div class="form-inline">
+            <?= Html::input('text', 'codpost1', null, ['class' => 'form-control', 'required' => 'true', 'maxlength' => 5, 'pattern' => '[0-9]{5}', "style" => "width:70px;", 'id' =>'codpost1']) ?>
+            <i class="fa fa-window-minimize" style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px" aria-hidden="true"></i>
+            <?= Html::input('text', 'codpost2', null, ['class' => 'form-control', 'required' => 'true', 'maxlength' => 3, 'pattern' => '[0-9]{3}', "style" => "width:50px", 'id' =>'codpost2']) ?>
+        </div>
+        <br>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -80,25 +96,26 @@ use common\models\Restaurante;
 
         <h3>Criar Funcionário</h3>
 
-        <?= $form->field($user, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'username')->textInput(['maxlength' => true, "style" => "width:305px"]) ?>
 
         <?= Html::label('Password', 'username', ['class' => 'label username']) ?>
-        <?= HTML::input('password', 'password', '', ['class' => 'form-control'])?>
+        <?= HTML::input('password', 'password', null, ['class' => 'form-control', 'maxlength' => 32, "style" => "width:305px"])?>
         <br>
 
-        <?= $form->field($user, 'telemovel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'telemovel')->textInput(['type' => 'tel', 'maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:130px"]) ?>
 
-        <?= $form->field($user, 'nif')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nif')->textInput(['maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:120px"]) ?>
 
         <?= $form->field($user, 'tipo')->hiddenInput(['value' => 'Funcionario'])->label(false) ?>
 
-        <?= $form->field($user, 'nome')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nome')->textInput(['type' => 'text', 'maxlength' => true, "style" => "width:450px"]) ?>
 
-        <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'email')->textInput(['type' => 'email', 'maxlength' => true, "style" => "width:450px"]) ?>
 
         <?= $form->field($user, 'status')->hiddenInput(['value' => 10])->label(false) ?>
 
-        <?= $form->field($user, 'idRestaurante')->dropDownList(ArrayHelper::map(Restaurante::find()->all(), 'id', 'nome'))->label('Restaurante'); ?>
+        <?= Html::label('Restaurante', 'restaurante')?><br>
+        <?= Html::dropDownList('restaurante', null, ArrayHelper::map(Restaurante::find()->all(), 'id', 'nome'), ['class' => 'form-control', 'required' => 'true', 'id' =>'pais', "style" => "width:350px"]) ?><br>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -110,25 +127,26 @@ use common\models\Restaurante;
 
         <h3>Criar Gestor</h3>
 
-        <?= $form->field($user, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'username')->textInput(['maxlength' => true, "style" => "width:305px"]) ?>
 
         <?= Html::label('Password', 'username', ['class' => 'label username']) ?>
-        <?= HTML::input('password', 'password', '', ['class' => 'form-control'])?>
+        <?= HTML::input('password', 'password', null, ['class' => 'form-control', 'maxlength' => 32, "style" => "width:305px"])?>
         <br>
 
-        <?= $form->field($user, 'telemovel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'telemovel')->textInput(['type' => 'tel', 'maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:130px"]) ?>
 
-        <?= $form->field($user, 'nif')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nif')->textInput(['maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:120px"]) ?>
 
         <?= $form->field($user, 'tipo')->hiddenInput(['value' => 'Gestor'])->label(false) ?>
 
-        <?= $form->field($user, 'nome')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nome')->textInput(['type' => 'text', 'maxlength' => true, "style" => "width:450px"]) ?>
 
-        <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'email')->textInput(['type' => 'email', 'maxlength' => true, "style" => "width:450px"]) ?>
 
         <?= $form->field($user, 'status')->hiddenInput(['value' => 10])->label(false) ?>
 
-        <?= $form->field($user, 'idRestaurante')->dropDownList(ArrayHelper::map(Restaurante::find()->all(), 'id', 'nome'))->label('Restaurante'); ?>
+        <?= Html::label('Restaurante', 'restaurante')?><br>
+        <?= Html::dropDownList('restaurante', null, ArrayHelper::map(Restaurante::find()->all(), 'id', 'nome'), ['class' => 'form-control', 'required' => 'true', 'id' =>'pais', "style" => "width:350px"]) ?><br>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
@@ -140,21 +158,21 @@ use common\models\Restaurante;
 
         <h3>Criar Admin</h3>
 
-        <?= $form->field($user, 'username')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'username')->textInput(['maxlength' => true, "style" => "width:305px"]) ?>
 
         <?= Html::label('Password', 'username', ['class' => 'label username']) ?>
-        <?= HTML::input('password', 'password', '', ['class' => 'form-control'])?>
+        <?= HTML::input('password', 'password', null, ['class' => 'form-control', 'maxlength' => 32, "style" => "width:305px"])?>
         <br>
 
-        <?= $form->field($user, 'telemovel')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'telemovel')->textInput(['type' => 'tel', 'maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:130px"]) ?>
 
-        <?= $form->field($user, 'nif')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nif')->textInput(['maxlength' => true, 'pattern' => '[0-9]{9}', "style" => "width:120px"]) ?>
 
         <?= $form->field($user, 'tipo')->hiddenInput(['value' => 'Admin'])->label(false) ?>
 
-        <?= $form->field($user, 'nome')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'nome')->textInput(['type' => 'text', 'maxlength' => true, "style" => "width:450px"]) ?>
 
-        <?= $form->field($user, 'email')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($user, 'email')->textInput(['type' => 'email', 'maxlength' => true, "style" => "width:450px"]) ?>
 
         <?= $form->field($user, 'status')->hiddenInput(['value' => 10])->label(false) ?>
 

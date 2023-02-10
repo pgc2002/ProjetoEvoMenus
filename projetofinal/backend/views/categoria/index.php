@@ -152,7 +152,7 @@ $this->title = 'Ementa de: '.\common\models\Restaurante::findOne($idRestaurante)
                                 ]);
                                 echo Html::a(
                                     'Adicionar item',
-                                    Url::to(['item/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
+                                    Url::to(['item/create', 'idCategoria' => $idCategoria]),
                                     [
                                         'id'=>'grid-custom-button',
                                         'data-pjax'=>true,
@@ -205,7 +205,7 @@ $this->title = 'Ementa de: '.\common\models\Restaurante::findOne($idRestaurante)
                                 
                                 echo Html::a(
                                     'Adicionar menu',
-                                    Url::to(['menu/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
+                                    Url::to(['menu/create', 'idCategoria' => $idCategoria]),
                                     [
                                         'id'=>'grid-custom-button',
                                         'data-pjax'=>true,

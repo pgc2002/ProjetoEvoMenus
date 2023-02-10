@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
         }
     ?>
 
-    <?= $form->field($model, 'capacidade')->textInput() ?>
+    <?= $form->field($model, 'capacidade')->textInput(["type" => "number", "style" => "width:70px"]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

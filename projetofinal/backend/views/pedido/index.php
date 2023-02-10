@@ -11,8 +11,8 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var backend\models\PedidoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
-$idRestaurante = Yii::$app->request->get('id');
-$this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante)->nome;
+define("idRestaurante", Yii::$app->request->get('id'));
+$this->title = 'Pedidos de: '.\common\models\Restaurante::findOne(idRestaurante)->nome;
 ?>
 <div class="pedidos-index">
     <style>
@@ -33,7 +33,7 @@ $this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante
 
     <?= Html::a(
         'Voltar para restaurante',
-        Url::to(['..\restaurante\view', 'id' => $idRestaurante]),
+        Url::to(['..\restaurante\view', 'id' => idRestaurante]),
         [
             'class'=>'btn btn-secondary',
         ]); ?>
@@ -64,7 +64,7 @@ $this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante
                     'template' => '{detalhes}{expedir}',
                     'buttons' => [
                         'detalhes' => function($url, $model, $key) {
-                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id, 'idRestaurante' => idRestaurante], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
                         },
                         'expedir' => function($url, $model, $key) {
                             return Html::a('Expedir', ['pedido/expedir', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
@@ -118,7 +118,7 @@ $this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante
                     'template' => '{detalhes}{concluir}',
                     'buttons' => [
                         'detalhes' => function($url, $model, $key) {
-                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id, 'idRestaurante' => idRestaurante], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
                         },
                         'concluir' => function($url, $model, $key) {
                             return Html::a('Concluir', ['pedido/concluir', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
@@ -168,7 +168,7 @@ $this->title = 'Pedidos de: '.\common\models\Restaurante::findOne($idRestaurante
                     'template' => '{detalhes}',
                     'buttons' => [
                         'detalhes' => function($url, $model, $key) {
-                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
+                            return Html::a('Ver detalhes', ['pedido/view', 'id' => $model->id, 'idRestaurante' => idRestaurante], ['class' => 'btn btn-success btn-xs', 'data-pjax' => 0]);
                         },
                     ]
                 ],

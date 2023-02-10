@@ -1,6 +1,8 @@
 <?php
 
+use common\models\Categoria;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
