@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 
+import amsi.dei.estg.ipleiria.evo_menu.Model.EvoMenuBd;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorCategorias;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorItems;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorMenus;
@@ -24,6 +25,7 @@ import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorPedidos;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorRestaurantes;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
+import amsi.dei.estg.ipleiria.evo_menu.Model.UserBdHelper;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class LoginActivity extends AppCompatActivity
@@ -48,6 +50,8 @@ public class LoginActivity extends AppCompatActivity
         btnLogin = findViewById(R.id.btLogin);
         btnRegistar = findViewById(R.id.btRegistar);
 
+
+        EvoMenuBd evoMenuBd = new EvoMenuBd(this);
         SingletonGestorUsers.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext());
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
 

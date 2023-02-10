@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class UserBdHelper extends SQLiteOpenHelper {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "user";
-    private final static int DB_VERSION = 3;
+    private final static int DB_VERSION = 6;
     private final static String ID = "id";
     private final static String USERNAME = "username";
     private final static String PASS = "pass";

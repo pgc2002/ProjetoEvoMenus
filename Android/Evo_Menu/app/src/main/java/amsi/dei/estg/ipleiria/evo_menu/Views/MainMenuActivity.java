@@ -93,7 +93,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         verificarUserLogadoNaBd();
 
-        //preencherRestaurantesNaBd();
+        preencherRestaurantesNaBd();
 
         carregarCabecalho();
 

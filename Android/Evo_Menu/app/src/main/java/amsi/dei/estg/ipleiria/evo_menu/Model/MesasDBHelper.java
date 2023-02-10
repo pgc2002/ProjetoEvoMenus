@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class MesasDBHelper extends SQLiteOpenHelper
 {
     private final static String DB_NAME = "evo_menus";
-    private final static String TABLE_NAME = "mesas";
-    private final static int DB_VERSION = 3;
+    private final static String TABLE_NAME = "mesa";
+    private final static int DB_VERSION = 6;
     private final static String ID = "id";
     private final static String numero = "numero";
     private final static String capacidade = "capacidade";
     private final static String estado = "estado";
-    private final static String id_restaurante = "id_restaurante";
+    private final static String id_restaurante = "idRestaurante";
 
     private SQLiteDatabase db;
 

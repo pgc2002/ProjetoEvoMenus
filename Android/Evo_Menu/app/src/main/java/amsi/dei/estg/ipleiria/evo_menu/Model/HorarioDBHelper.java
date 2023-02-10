@@ -12,7 +12,7 @@ public class HorarioDBHelper extends SQLiteOpenHelper
 {
     private final static String DB_NAME = "evo_menus";
     private final static String TABLE_NAME = "horarios";
-    private final static int DB_VERSION = 3;
+    private final static int DB_VERSION = 6;
     private final static String ID = "id";
     private final static String segunda_feira = "segunda_feira";
     private final static String terca_feira = "terca_feira";
