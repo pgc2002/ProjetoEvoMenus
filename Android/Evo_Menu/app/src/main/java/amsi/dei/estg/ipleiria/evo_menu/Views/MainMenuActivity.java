@@ -93,32 +93,9 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         verificarUserLogadoNaBd();
 
-        preencherRestaurantesNaBd();
-
         carregarCabecalho();
 
         carregarFragmentoInicial();
-    }
-
-    private void preencherRestaurantesNaBd() {
-        ArrayList<Restaurante> restaurantesApi = SingletonGestorRestaurantes.getInstance(getApplicationContext()).getRestaurantes();
-        ArrayList<Restaurante> restaurantesBd = SingletonGestorRestaurantes.getInstance(getApplicationContext()).getRestaurantesDB();
-
-        if (!restaurantesApi.isEmpty()){
-            for (int i = 0; i < restaurantesApi.size(); i++){
-                if (restaurantesBd.isEmpty())
-                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).adicionarRestauranteBD(restaurantesApi.get(i));
-                else
-                    for (int p = 0; p < restaurantesBd.size(); p++) {
-                        boolean naoEstaNaBd = true;
-                        if (restaurantesApi.get(i).getId() == restaurantesBd.get(p).getId())
-                            naoEstaNaBd = false;
-
-                        if (naoEstaNaBd)
-                            SingletonGestorRestaurantes.getInstance(getApplicationContext()).adicionarRestauranteBD(restaurantesApi.get(i));
-                    }
-            }
-        }
     }
 
     private void verificarUserLogadoNaBd() {
