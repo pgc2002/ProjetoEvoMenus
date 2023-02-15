@@ -54,7 +54,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
 
         lvRestaurantes = view.findViewById(R.id.lvListaRestaurantes);
 
-        //SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
+        SingletonGestorRestaurantes.getInstance(getContext()).getAllRestaurantesAPI(getContext());
         adaptador = new ListaRestaurantesAdaptador(getContext(), SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantesDB());
         /*ArrayList<Restaurante> restaurantes = SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes();
         adaptador = new ListaRestaurantesAdaptador(getContext(), restaurantes);*/
@@ -67,7 +67,7 @@ public class ListaRestaurantesFragment extends Fragment implements RestaurantesL
                 Intent intent = new Intent(getContext(), DetalhesRestauranteActivity.class);
                 //intent.putExtra(DetalhesRestauranteActivity.ID_RESTAURANTE, l);
                 intent.putExtra("idRestaurante", SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getId());
-
+                //SingletonGestorRestaurantes.getInstance(getContext()).getHorarioAPI(getContext(),SingletonGestorRestaurantes.getInstance(getContext()).getRestaurantes().get(position).getId());
                 startActivity(intent);
             }
         });

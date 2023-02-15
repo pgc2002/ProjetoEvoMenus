@@ -35,27 +35,6 @@ class UserController extends ActiveController
         return $dataProvider;
     }
 
-
-    public function actionValidar($username, $password){
-        $user = User::find()->where(['username' => $username])->one();
-
-        $connection = new Connection();
-        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
-        $mqtt->connect();
-        $mqtt->publish($connection->topic, "Desencriptar pass do user ".$username, 0);
-        $mqtt->disconnect();
-
-        if(!isset($user))
-            return "false";
-
-        if(Yii::$app->getSecurity()->validatePassword($password, $user->password_hash))
-            $string = "1----".$user->id;
-        else
-            $string = "0----".$user->id;
-
-        return $string;
-    }
-
     public function actionValidarlogin($username, $password){
         $user = User::find()->where(['username' => $username])->one();
 
@@ -187,7 +166,8 @@ class UserController extends ActiveController
         $user = User::find()->where(['id' => $idUser])->one();
         $user->username = $username;
         $user->nome = $nome;
-        $user->setPassword($password);
+        if(strlen($password) > 0)
+            $user->setPassword($password);
         $user->email = $email;
         $user->telemovel = $telemovel;
         $user->nif = $nif;

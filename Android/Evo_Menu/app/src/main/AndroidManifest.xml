@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Evo_Menu"
         tools:targetApi="31">
         <activity
+            android:name=".Views.EditarPerfilActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.RealizarPagamento"
             android:exported="false">
             <meta-data
@@ -55,12 +58,8 @@
             android:exported="true"
             android:parentActivityName=".Views.LoginActivity" />
         <activity
-            android:name=".Views.EditarPerfilFragment"
-            android:exported="true" />
-        <activity
             android:name=".Views.DetalhesRestauranteActivity"
             android:exported="true" />
-
         <activity
             android:name=".Views.DetalhesPedidoActivity"
             android:exported="true" />

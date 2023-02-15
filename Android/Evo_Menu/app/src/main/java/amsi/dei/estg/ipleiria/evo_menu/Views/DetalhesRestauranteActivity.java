@@ -56,7 +56,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         btFazerPedido = findViewById(R.id.btFazerPedido);
 
         tvNome = findViewById(R.id.tvNomeRestaurante);
-        tvLotacao = findViewById(R.id.tvLotacaoMax);
+        //tvLotacao = findViewById(R.id.tvLotacaoMax);
         tvEmail = findViewById(R.id.tvEmail);
         tvTelemovel = findViewById(R.id.tvTelemovel);
 
@@ -81,7 +81,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         //int id = (int)intent.getLongExtra(ID_RESTAURANTE, -1);
         int idRestaurante = (int)intent.getIntExtra("idRestaurante", 0);
 
-        SingletonGestorRestaurantes.getInstance(this).getHorarioAPI(this,idRestaurante);
+        //SingletonGestorRestaurantes.getInstance(this).getHorarioAPI(this,idRestaurante);
         Restaurante restaurante = SingletonGestorRestaurantes.getInstance(this).getRestaurante(idRestaurante);
 
         SingletonGestorRestaurantes.getInstance(this).getCategoriasAPI(this, idRestaurante);
@@ -106,7 +106,7 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
         setTitle("Detalhes: " + restaurante.getNome());
         tvNome.setText(restaurante.getNome());
         tvEmail.setText(restaurante.getEmail());
-        tvLotacao.setText(String.valueOf(restaurante.getLotacao_max()));
+        //tvLotacao.setText(String.valueOf(restaurante.getLotacao_max()));
         tvTelemovel.setText(restaurante.getTelemovel());
 
         HorarioFuncionamento horario = restaurante.getHorario();
@@ -155,7 +155,6 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
             else
                 tvDomingoAlmoco.setText("Folga");
 
-
             // Jantar
             if(segunda.length > 1)
                 tvSegundaJantar.setText(segunda[2]+"-"+segunda[3]);
@@ -197,9 +196,6 @@ public class DetalhesRestauranteActivity extends AppCompatActivity implements Re
     @Override
     public void onRefreshDetalhes(int op)
     {
-        Intent intent = new Intent();
-        intent.putExtra(OP_CODE, op);
-        setResult(RESULT_OK, intent);
-        finish();
+
     }
 }

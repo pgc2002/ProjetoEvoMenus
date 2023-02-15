@@ -82,7 +82,7 @@ public class SingletonGestorCategorias {
             @Override
             public void onResponse(JSONArray response) {
                 categorias = CategoriaJsonParser.parserJsonCategorias(response);
-                //adicionarCategoriasDB(categorias);
+                adicionarCategoriasDB(categorias);
                 //Ativar o listener
                 if(categoriaListener !=null)
                 {
@@ -92,7 +92,11 @@ public class SingletonGestorCategorias {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){
+                    //Toast.makeText(contexto, "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
         });

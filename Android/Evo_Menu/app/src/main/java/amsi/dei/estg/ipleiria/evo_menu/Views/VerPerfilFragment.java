@@ -1,15 +1,16 @@
 package amsi.dei.estg.ipleiria.evo_menu.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import amsi.dei.estg.ipleiria.evo_menu.Listeners.UserListener;
 import amsi.dei.estg.ipleiria.evo_menu.Model.Morada;
 import amsi.dei.estg.ipleiria.evo_menu.Model.SingletonGestorUsers;
 import amsi.dei.estg.ipleiria.evo_menu.Model.User;
 import amsi.dei.estg.ipleiria.evo_menu.R;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,29 +19,28 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-
-public class VerPerfilFragment extends Fragment {
+public class VerPerfilFragment extends Fragment{
 
     public VerPerfilFragment() {
     }
+
+    private TextView tvNome, tvEmail, tvTelemovel, tvNif, tvRua, tvCodPost, tvPais, tvCidade;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ver_perfil, container, false);
 
-        TextView tvNome = view.findViewById(R.id.tvNome);
-        TextView tvEmail = view.findViewById(R.id.tvEmail);
-        TextView tvTelemovel = view.findViewById(R.id.tvTelemovel);
-        TextView tvNif = view.findViewById(R.id.tvNif);
+        tvNome = view.findViewById(R.id.tvNome);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        tvTelemovel = view.findViewById(R.id.tvTelemovel);
+        tvNif = view.findViewById(R.id.tvNif);
 
-        TextView tvRua = view.findViewById(R.id.tvRua);
-        TextView tvCodPost = view.findViewById(R.id.tvCodPost);
-        TextView tvPais = view.findViewById(R.id.tvPais);
-        TextView tvCidade = view.findViewById(R.id.tvCidade);
+        tvRua = view.findViewById(R.id.tvRua);
+        tvCodPost = view.findViewById(R.id.tvCodPost);
+        tvPais = view.findViewById(R.id.tvPais);
+        tvCidade = view.findViewById(R.id.tvCidade);
 
-        SingletonGestorUsers.getInstance(getContext()).getMoradaAPI(getContext());
         User user = SingletonGestorUsers.getInstance(getContext()).getUserLogado();
 
         if(user != null) {
@@ -59,21 +59,22 @@ public class VerPerfilFragment extends Fragment {
             tvCodPost.setText(morada.getCodpost());
         }
 
-
         Button btn = view.findViewById(R.id.btEditarPerfil);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment editarPerfil = new EditarPerfilFragment();
+                /*Fragment editarPerfil = new EditarPerfilFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.contentFragment, editarPerfil);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
+
+
+                Intent intent = new Intent(getContext(), EditarPerfilActivity.class);
+                startActivity(intent);
             }
         });
 
         return view;
     }
-
-
 }

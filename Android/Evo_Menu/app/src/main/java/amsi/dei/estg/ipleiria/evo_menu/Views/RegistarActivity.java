@@ -60,8 +60,10 @@ public class RegistarActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Todos os campos devem estar preenchidos", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!existeUser())
+                if(!existeUser()){
                     registarUser();
+                    finish();
+                }
             }
         });
     }

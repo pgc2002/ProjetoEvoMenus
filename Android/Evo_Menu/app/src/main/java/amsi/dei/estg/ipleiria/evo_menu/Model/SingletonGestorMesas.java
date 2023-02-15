@@ -94,7 +94,7 @@ public class SingletonGestorMesas
             @Override
             public void onResponse(JSONArray response) {
                 mesas = MesasJsonParser.parserJsonMesa(response);
-                //adicionarMesasDB(mesas);
+                adicionarMesasDB(mesas);
                 //Ativar o listener
                 if(mesaListener!=null)
                 {
@@ -104,7 +104,11 @@ public class SingletonGestorMesas
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){
+                    //Toast.makeText(contexto, "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
         });
