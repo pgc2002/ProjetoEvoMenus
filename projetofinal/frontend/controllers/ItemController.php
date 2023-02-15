@@ -41,7 +41,7 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+        if(Yii::$app->user->can('crudMenus') || Yii::$app->user->can('visualizarMenus')) {
             $searchModel = new ItemSearch();
             $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -74,7 +74,7 @@ class ItemController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+        if(Yii::$app->user->can('crudMenus')) {
             $model = new Item();
 
             if ($this->request->isPost) {
@@ -84,7 +84,7 @@ class ItemController extends Controller
                     $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
                     $model->fotografia = $imgName;
                     $model->save();
-                    return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+                    //return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
                 }
             } else {
                 $model->loadDefaultValues();
@@ -105,7 +105,7 @@ class ItemController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+        if(Yii::$app->user->can('crudMenus')) {
             $model = $this->findModel($id);
 
             if ($this->request->isPost && $model->load($this->request->post())) {

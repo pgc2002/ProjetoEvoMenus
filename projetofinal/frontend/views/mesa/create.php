@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Criar Mesa';
 ?>
-<div class="mesa-create">
+<div class="mesa-create" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -13,7 +13,7 @@ use yii\grid\GridView;
 $this->title = 'Pedido Inscricaos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pedido-inscricao-index">
+<div class="pedido-inscricao-index" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

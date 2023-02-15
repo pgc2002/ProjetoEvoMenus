@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Alterar Mesa ' . $model->numero . ' de ' . \common\models\Restaurante::findOne($model->idRestaurante)->nome;
 ?>
-<div class="mesa-update">
+<div class="mesa-update" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

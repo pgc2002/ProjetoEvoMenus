@@ -56,6 +56,7 @@ class Menu extends \yii\db\ActiveRecord
             'desconto' => 'Desconto',
             'idCategoria' => 'Categoria',
             'imagemMenu' => 'Imagem',
+            'precoTotal' => 'Preço Total'
         ];
     }
 
@@ -103,5 +104,19 @@ class Menu extends \yii\db\ActiveRecord
     public function getImagemMenu()
     {
         return Yii::getAlias('@fotografiaUrl').'/'.$this->fotografia;
+    }
+
+    public function getPrecoTotal()
+    {
+        $items = $this->getItems()->all();
+        $preco = 0;
+        $valorTotal = 0;
+        
+        foreach ($items as $item)   
+            $preco += $item->preco;
+
+        $valorTotal = $preco-($preco*$this->desconto);
+
+        return $valorTotal . ' €';
     }
 }

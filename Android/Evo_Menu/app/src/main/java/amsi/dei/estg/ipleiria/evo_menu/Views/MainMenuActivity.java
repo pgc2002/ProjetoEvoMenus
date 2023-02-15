@@ -51,7 +51,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(saveInstanceState);
         //inicializarSingletons();
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             public void run() {
                 try {
                     inicializarSingletons();
@@ -74,7 +74,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                     }
                 }, delay);
             }
-        }).start();
+        }).start();*/
 
         setContentView(R.layout.activity_main_menu);
         navigationView = findViewById(R.id.navView);
@@ -93,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         verificarUserLogadoNaBd();
 
+        //preencherRestaurantesNaBd();
         carregarCabecalho();
 
         carregarFragmentoInicial();
@@ -125,6 +126,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     private void inicializarSingletons() throws InterruptedException {
         //Thread.sleep(3000);
+        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
         SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
         SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());

@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h5>Por favor preencha os seguintes campos do requerimento:</h5><p>
 
-    </p><div class="row">
+    </p><div class="row" id="siteBody">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 

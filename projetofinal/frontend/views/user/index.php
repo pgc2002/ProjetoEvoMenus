@@ -15,7 +15,7 @@ $this->title = 'Funcionários';
 
 ?>
 
-<div class="user-index">
+<div class="user-index" id="siteBody">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p><?php

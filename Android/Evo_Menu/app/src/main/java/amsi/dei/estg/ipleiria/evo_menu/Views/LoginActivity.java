@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -53,14 +54,16 @@ public class LoginActivity extends AppCompatActivity
 
         EvoMenuBd evoMenuBd = new EvoMenuBd(this);
         SingletonGestorUsers.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext());
-        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+        //SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                if(etUsername.getText().length() < 1 || etPass.getText().length() < 1)
+                if(etUsername.getText().length() < 1 || etPass.getText().length() < 1){
+                    Toast.makeText(getApplicationContext(), "Todos os campos devem estar preenchidos", Toast.LENGTH_SHORT).show();
                     return;
+                }
 
                 btnLogin.setClickable(false);
                 btnRegistar.setClickable(false);
@@ -84,18 +87,12 @@ public class LoginActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
 
                 if(validarLoginBD()){
-                    SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
                     startActivity(intent);
-                }else {
-                    if (validarLogin()) {
-                        SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                        startActivity(intent);
-                    }
+                }else if (validarLogin()) {
+                    //SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
+                    startActivity(intent);
+                }else{
+                        Toast.makeText(getApplicationContext(), "Username ou password errados", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -112,12 +109,12 @@ public class LoginActivity extends AppCompatActivity
 
     private boolean validarLogin() {
 
-        SingletonGestorUsers.getInstance(this).validarLogin(this, etUsername.getText().toString(), etPass.getText().toString());
+        SingletonGestorUsers.getInstance(this).validarLogin(this, etUsername.getText().toString().trim(), etPass.getText().toString().trim());
         String loginValido = SingletonGestorUsers.getInstance(this).getLoginValido();
 
         if(loginValido != null){
             if(loginValido.equals("true")){
-                SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogadoAPI(this, etUsername.getText().toString(), etPass.getText().toString());
+                SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogadoAPI(this, etUsername.getText().toString().trim(), etPass.getText().toString().trim());
                 return true;
             }else{
                 return false;
@@ -135,7 +132,7 @@ public class LoginActivity extends AppCompatActivity
 
         if (!users.isEmpty())
             for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).getUsername().equals(etUsername.getText().toString()) && users.get(i).getPass().equals(etPass.getText().toString())) {
+                if (users.get(i).getUsername().equals(etUsername.getText().toString().trim()) && users.get(i).getPass().equals(etPass.getText().toString().trim())) {
                     SingletonGestorUsers.getInstance(getApplicationContext()).setUserLogado(users.get(i));
                     validacao = true;
                 }
@@ -146,7 +143,7 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onDestroy() {
-        thread.interrupt();
+        //thread.interrupt();
         super.onDestroy();
     }
 }

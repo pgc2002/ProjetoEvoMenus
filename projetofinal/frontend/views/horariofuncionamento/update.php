@@ -9,7 +9,7 @@ $restaurante = \common\models\Restaurante::findOne($model->getRestauranteId());
 
 $this->title = 'Editar Horário Funcionamento: '. $restaurante->nome;
 ?>
-<div class="horario-funcionamento-update">
+<div class="horario-funcionamento-update" id="siteBody">
 
     <?= Html::a(
         'Voltar para restaurante',

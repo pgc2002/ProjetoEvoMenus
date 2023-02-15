@@ -13,7 +13,7 @@ use yii\grid\GridView;
 $this->title = 'Menus';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="menu-index">
+<div class="menu-index" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

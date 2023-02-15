@@ -40,9 +40,8 @@ public class SingletonGestorUsers {
 
     private static RequestQueue volleyQueue = null;
     private String validacao;
-    private UsersListener usersListener;
-    private UserListener userListener;
     private User userLogado;
+    private User user;
 
     //Verificar se ja existe ou nao
     public static synchronized SingletonGestorUsers getInstance(Context contexto) {
@@ -127,7 +126,7 @@ public class SingletonGestorUsers {
             @Override
             public void onResponse(String response) {
                 Log.d("respostaAPI", response);
-                //adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
+                adicionarUserBD(UserJsonParser.parserJsonUser(response, user.getPass()));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -174,6 +173,24 @@ public class SingletonGestorUsers {
             public void onResponse(JSONObject response) {
                 userLogado = UserJsonParser.parserJsonUserObjeto(response);
                 userLogado.setPass(password);
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("erro de user logado", error.getMessage());
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void getUserAPI(final Context contexto, final String username, final String password)
+    {
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIuser + "/getuser?username=" + username,null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                user = UserJsonParser.parserJsonUserObjeto(response);
+                user.setPass(password);
             }
         } , new Response.ErrorListener() {
             @Override
@@ -326,6 +343,10 @@ public class SingletonGestorUsers {
 
     public String getValidacao(){
         return validacao;
+    }
+
+    public User getUserP(){
+        return user;
     }
 
     public User getUserLogado(){

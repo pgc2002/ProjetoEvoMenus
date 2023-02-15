@@ -9,7 +9,7 @@ $this->title = 'Create Horario Funcionamento';
 $this->params['breadcrumbs'][] = ['label' => 'Horario Funcionamentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="horario-funcionamento-create">
+<div class="horario-funcionamento-create" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

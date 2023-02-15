@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Horario Funcionamentos', 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="horario-funcionamento-view">
+<div class="horario-funcionamento-view" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

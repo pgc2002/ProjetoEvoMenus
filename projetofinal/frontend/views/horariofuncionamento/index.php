@@ -12,7 +12,7 @@ use yii\grid\GridView;
 $this->title = 'Horario Funcionamentos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="horario-funcionamento-index">
+<div class="horario-funcionamento-index" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

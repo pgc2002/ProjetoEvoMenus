@@ -86,7 +86,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
         border-bottom: 3px solid #0080ff;
     }
 </style>
-<div class="categoria-index" style="height: 100%;">
+<div class="categoria-index" style="height: 100%;" id="siteBody">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="row" >
         <h1>Ementa</h1>
@@ -182,7 +182,7 @@ $user = User::findOne(Yii::$app->user->identity->id);
                                     'layout' => '{items}{pager}',
                                     'columns' => [
                                         'nome',
-                                        'desconto',
+                                        'precoTotal',
                                         [
                                             'attribute' => 'imagemMenu',
                                             'format'=>['image', ['width'=>'100', 'height'=>'100']]

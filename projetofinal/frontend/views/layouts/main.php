@@ -26,7 +26,9 @@ $cookies = Yii::$app->request->cookies;
     <?php $this->head() ?>
     <script src="https://kit.fontawesome.com/7809ee6006.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="..\..\web\css\site.css"></link>
 </head>
+
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
@@ -75,7 +77,6 @@ $cookies = Yii::$app->request->cookies;
     }else{
         $menuItems = [['label' => 'Home', 'url' => Yii::$app->homeUrl],
         ['label' => 'Restaurantes', 'url' => ['/restaurante/index']],
-        ['label' => 'Contactos', 'url' => ['/site/contact']],
         ['label' => 'Login', 'url' => ['/site/login']]];
     }
 
@@ -87,6 +88,15 @@ $cookies = Yii::$app->request->cookies;
     NavBar::end();
     ?>
 </header>
+
+<style type="text/css">
+    #siteBody{
+        padding-top: 10px;
+        padding-right: 80px;
+        padding-bottom: 50px;
+        padding-left: 80px;
+    }
+</style>
 
 <main role="main" class="flex-shrink-0">
     <div class="container-fluid">

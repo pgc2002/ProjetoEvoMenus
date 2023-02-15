@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->getNomeRestaurante().' - Mesa '.$model->numero;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="mesa-view">
+<div class="mesa-view" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

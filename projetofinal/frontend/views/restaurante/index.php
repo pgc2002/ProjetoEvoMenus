@@ -14,7 +14,7 @@ $this->title = 'Restaurantes';
 
 ?>
 
-<div class="restaurante-index">
+<div class="restaurante-index" id="siteBody">
 
     <?php /*echo $this->render('_search', ['model' => $searchModel]);*/ ?>
 

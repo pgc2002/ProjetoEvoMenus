@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
 $this->title = "Detalhes do pedido ".$model->id;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="pedidos-view">
+<div class="pedidos-view" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

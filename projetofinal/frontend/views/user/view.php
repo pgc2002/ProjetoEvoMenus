@@ -18,7 +18,7 @@ $morada = Morada::findOne([
 $this->title = 'Detalhes do Funcionário';
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="user-view">
+<div class="user-view" id="siteBody">
 
     <br>
 

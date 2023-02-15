@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 $this->title = 'Criar Funcionário';
 ?>
-<div class="user-create">
+<div class="user-create" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

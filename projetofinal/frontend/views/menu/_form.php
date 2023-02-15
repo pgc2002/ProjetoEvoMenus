@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Categoria;
 use common\models\Item;
+use common\models\Menu;
 use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
@@ -16,8 +17,6 @@ $idRestaurante = Yii::$app->request->get('idRestaurante');
 $idCategoria = Yii::$app->request->get('idCategoria');
 $categorias = Categoria::findAll(['idRestaurante' => $idRestaurante]);
 
-if(count($categorias) > 0)
-    $items = Item::findAll(['idCategoria' => $categorias[0]->id]);
 ?>
 
 <div class="menu-form">
@@ -31,7 +30,24 @@ if(count($categorias) > 0)
 
     <?= $form->field($model, 'desconto')->textInput() ?>
 
-    <input type="hidden" id="idItems" name="idItems" value=""></div>
+    <?php 
+        if(Yii::$app->request->get('id')){
+            $menu = Menu::find()
+            ->where(['id' => Yii::$app->request->get('id')])
+            ->one();
+            $items = $menu->getItems()->all();
+            echo '<input type="hidden" id="idItems" name="idItems" value="';
+            for($i = 0; $i<count($items); $i++)
+                if(($i+1)==count($items))
+                    echo $items[$i]->id;
+                else
+                    echo $items[$i]->id. ',';
+                    
+            echo '"></div>';
+        }else
+            echo '<input type="hidden" id="idItems" name="idItems" value=""></div>';
+    ?>
+    
     
     <?php 
     echo '<input type="hidden" id="idCategoriaHidden" name="idCategoriaHidden" value="'.$idCategoria.'">'; 
@@ -85,6 +101,29 @@ if(count($categorias) > 0)
             </tr>
         </thead>
         <tbody id="tabelaItens">
+            <?php
+            if(Yii::$app->request->get('id')){
+                $menu = Menu::find()
+                ->where(['id' => Yii::$app->request->get('id')])
+                ->one();
+                $items = $menu->getItems()->all();
+                for($i = 0; $i<count($items); $i++){
+                    $categoria = Categoria::find()
+                    ->where(['id' => $items[$i]->idCategoria])
+                    ->one();
+                    echo '
+                        <tr id="'.$i.'">
+                            <td>'.$items[$i]->nome.'</td>
+                            <td>'.$items[$i]->preco.' €</td>
+                            <td>'.$categoria->nome.'</td>
+                            <td>
+                            <a style="cursor: pointer;" id="retirarItem" name="retirarItem" onClick="retirar('.$items[$i]->id . ', ' . $i.')"><span><i class="fa fa-minus" style="color: red;" aria-hidden="true"></i></span></a>
+                        </td>
+                        ';
+                }
+                
+            }
+            ?>
         </tbody>
     </table>
     <div class="form-group">
@@ -101,30 +140,35 @@ if(count($categorias) > 0)
     document.getElementById("menu-items").disabled = true;
     $("select#menu-items").empty();
 
+    if($( "input#idItems" ).val() != ""){
+        array = $( "input#idItems" ).val().split(",");
+    }
+
     $('#botaoItem').on('click', function(e)
     {
         e.preventDefault();
         var id = $( "select#menu-items option:checked" ).val();
-        if(id != "" && !array.includes(id))
-        {
-            array.push(id);
-            const textoItem = $("select#menu-items option:checked").text().split(" | ");
-            var row = table.insertRow(0);
-            row.id = i;
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            cell1.innerHTML = textoItem[0];
-            cell2.innerHTML = textoItem[1];
-            cell3.innerHTML = $("select#menu-idcategoria option:checked").text();
-            cell4.innerHTML = '<a style="cursor: pointer;" id="retirarItem" name="retirarItem" onClick="retirar(' + id + ', ' + i +')"><span><i class="fa fa-minus" style="color: red;" aria-hidden="true"></i></span></a>';
-            i++;
-            if(array.length != 1)
-                $( "input#idItems" ).val($( "input#idItems" ).val() + "," + id);
-            else
-                $( "input#idItems" ).val($( "input#idItems" ).val() + id);
-        }
+        if ($( "select#menu-items" ).val() != null)
+            if(id != "" && !array.includes(id))
+            {
+                array.push(id);
+                const textoItem = $("select#menu-items option:checked").text().split(" | ");
+                var row = table.insertRow(0);
+                row.id = i;
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                cell1.innerHTML = textoItem[0];
+                cell2.innerHTML = textoItem[1];
+                cell3.innerHTML = $("select#menu-idcategoria option:checked").text();
+                cell4.innerHTML = '<a style="cursor: pointer;" id="retirarItem" name="retirarItem" onClick="retirar(' + id + ', ' + i +')"><span><i class="fa fa-minus" style="color: red;" aria-hidden="true"></i></span></a>';
+                i++;
+                if(array.length != 1)
+                    $( "input#idItems" ).val($( "input#idItems" ).val() + "," + id);
+                else
+                    $( "input#idItems" ).val($( "input#idItems" ).val() + id);
+            }
     });
 
     function retirar(id, idRow) {

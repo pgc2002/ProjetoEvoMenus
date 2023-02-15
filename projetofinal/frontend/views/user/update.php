@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Editar Funcionário';
 ?>
-<div class="user-update">
+<div class="user-update" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

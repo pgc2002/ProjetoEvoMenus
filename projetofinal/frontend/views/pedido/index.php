@@ -18,7 +18,7 @@ $idRestaurante = $cookies->getValue('idRestaurante');
 
 $this->title = 'Pedidos';
 ?>
-<div class="pedidos-index">
+<div class="pedidos-index" id="siteBody">
     <style>
         .navUsers a{
             text-decoration: none;

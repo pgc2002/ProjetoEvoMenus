@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Pedido Inscricaos', 'url' => ['ind
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="pedido-inscricao-view">
+<div class="pedido-inscricao-view" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

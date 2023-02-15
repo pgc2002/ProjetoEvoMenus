@@ -84,7 +84,7 @@ class ItemController extends Controller
                     $image->saveAs(Yii::getAlias('@fotografiaPath') . '/' . $imgName);
                     $model->fotografia = $imgName;
                     $model->save();
-                    return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->get('idRestaurante')]);
+                    return $this->redirect(['..\categoria\index', 'id' => Yii::$app->request->post('idRestaurante')]);
                 }
             } else {
                 $model->loadDefaultValues();

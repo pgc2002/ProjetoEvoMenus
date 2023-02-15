@@ -18,7 +18,7 @@ use common\models\User;
 $this->title = $model->nome;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="restaurante-view">
+<div class="restaurante-view" id="siteBody">
 
     <?php
 

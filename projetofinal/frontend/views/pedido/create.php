@@ -9,7 +9,7 @@ $this->title = 'Create Pedido';
 $this->params['breadcrumbs'][] = ['label' => 'Pedido', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pedidos-create">
+<div class="pedidos-create" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

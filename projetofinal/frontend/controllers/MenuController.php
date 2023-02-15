@@ -42,7 +42,7 @@ class MenuController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+        if(Yii::$app->user->can('crudMenus') || Yii::$app->user->can('visualizarMenus')) {
             $searchModel = new MenuSearch();
             $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -61,7 +61,7 @@ class MenuController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus')) || Yii::$app->user->can(Yii::$app->user->can('visualizarMenus'))) {
+        if(Yii::$app->user->can('crudMenus') || Yii::$app->user->can('visualizarMenus')) {
 
             return $this->render('view', [
                 'model' => $this->findModel($id),
@@ -76,7 +76,7 @@ class MenuController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+        if(Yii::$app->user->can('crudMenus')) {
         $model = new Menu();
 
         if ($this->request->isPost) {
@@ -115,7 +115,7 @@ class MenuController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {
+        if(Yii::$app->user->can('crudMenus')) {
             $model = $this->findModel($id);
 
             if ($this->request->isPost && $model->load($this->request->post())) {
@@ -141,13 +141,6 @@ class MenuController extends Controller
         }
     }
 
-    /**
-     * Deletes an existing Menu model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         if(Yii::$app->user->can(Yii::$app->user->can('crudMenus'))) {

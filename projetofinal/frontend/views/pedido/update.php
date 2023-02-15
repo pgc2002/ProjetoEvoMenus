@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Alterar Pedido: ' . $model->id;
 ?>
-<div class="pedidos-update">
+<div class="pedidos-update" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

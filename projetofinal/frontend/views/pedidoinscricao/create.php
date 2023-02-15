@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Criar Pedido de Inscricao';
 ?>
-<div class="pedido-inscricao-create">
+<div class="pedido-inscricao-create" id="siteBody">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

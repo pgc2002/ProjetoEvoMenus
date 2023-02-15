@@ -25,7 +25,7 @@ else
 
 $user = User::findOne(Yii::$app->user->identity->id);   
 ?>
-<div class="mesa-index">
+<div class="mesa-index" id="siteBody">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?php
