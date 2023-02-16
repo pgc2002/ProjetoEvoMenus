@@ -82,7 +82,7 @@ public class SingletonGestorItems {
             @Override
             public void onResponse(JSONArray response) {
                 items = ItemJsonParser.parserJsonItems(response);
-                //adicionarItemsDB(items);
+                adicionarItemsDB(items);
                 //Ativar o listener
                 if(itemListener !=null)
                 {
@@ -93,7 +93,11 @@ public class SingletonGestorItems {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){
+                    Toast.makeText(contexto, "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
         });

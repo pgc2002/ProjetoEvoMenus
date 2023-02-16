@@ -14,8 +14,8 @@ import amsi.dei.estg.ipleiria.evo_menu.R;
 
 public class ListaRestaurantesAdaptador extends BaseAdapter {
 
-    private ArrayList<Restaurante> listaRestaurantes;
-    private Context contexto;
+    private final ArrayList<Restaurante> listaRestaurantes;
+    private final Context contexto;
     private LayoutInflater inflater;
 
     public ListaRestaurantesAdaptador(Context context, ArrayList<Restaurante> lista)
@@ -60,8 +60,8 @@ public class ListaRestaurantesAdaptador extends BaseAdapter {
         return convertView;
     }
 
-    private class ViewHolderLista {
-        private TextView tvNomeRestaurante;
+    private static class ViewHolderLista {
+        private final TextView tvNomeRestaurante;
         //private ImageView ivRestauranteBackground;
 
         public ViewHolderLista(View view) {

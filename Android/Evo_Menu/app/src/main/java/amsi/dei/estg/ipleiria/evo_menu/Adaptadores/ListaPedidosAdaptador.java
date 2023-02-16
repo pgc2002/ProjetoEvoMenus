@@ -83,7 +83,7 @@ public class ListaPedidosAdaptador extends BaseAdapter {
         public void update(Pedido pedido) {
             Restaurante restaurante = SingletonGestorRestaurantes.getInstance(contexto).getRestaurante(pedido.getId_restaurante());
             tvNomeRestaurante.setText(restaurante.getNome());
-            tvValorTotal.setText(String.valueOf(pedido.getValor_total()));
+            tvValorTotal.setText(pedido.getValor_total()+" €");
             //tvData.setText();
 
             //Glide.with(contexto).load(restaurante.getCapa()).placeholder(R.drawable.logoipl).diskCacheStrategy(DiskCacheStrategy.ALL).into(ivCapa);

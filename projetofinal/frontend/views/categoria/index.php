@@ -124,98 +124,127 @@ $user = User::findOne(Yii::$app->user->identity->id);
                                     ],
                                 ]);
                                 echo ' <h4>'.$categoria->nome.'</h4>';
-                                echo GridView::widget([
-                                    'dataProvider' => $dataProvider,
-                                    'layout' => '{items}{pager}',
-                                    'columns' => [
-                                        'nome',
-                                        'precoFormatado',
-                                        [
-                                            'attribute' => 'imagemItem',
-                                            'format'=>['image', ['width'=>'100', 'height'=>'100']],
+
+                                if(Yii::$app->user->can('crudMenus')) {
+                                    echo GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'layout' => '{items}{pager}',
+                                        'columns' => [
+                                            'nome',
+                                            'precoFormatado',
+                                            [
+                                                'attribute' => 'imagemItem',
+                                                'format' => ['image', ['width' => '100', 'height' => '100']],
+                                            ],
+                                            [
+                                                'format' => 'raw',
+                                                'value' => function ($model, $key, $index, $column) {
+                                                    return Html::a(
+                                                        '<i class="fa fa-pencil"></i>',
+                                                        Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                        [
+                                                            'id' => 'grid-custom-button',
+                                                            'data-pjax' => true,
+                                                            'action' => Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                            'class' => 'button btn btn-default',
+                                                        ]
+                                                    );
+                                                }
+                                            ],
                                         ],
-                                        [
-                                            'format' => 'raw',
-                                            'value' => function($model, $key, $index, $column) {
-                                                return Html::a(
-                                                    '<i class="fa fa-pencil"></i>',
-                                                    Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]), 
-                                                    [
-                                                        'id'=>'grid-custom-button',
-                                                        'data-pjax'=>true,
-                                                        'action'=>Url::to(['item/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
-                                                        'class'=>'button btn btn-default',
-                                                    ]
-                                                );
-                                            }
-                                        ],
-                                    ],
-                                ]);
-                                if(Yii::$app->user->can('crudMenus'))
+                                    ]);
                                     echo Html::a(
                                         'Adicionar item',
                                         Url::to(['item/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
                                         [
-                                            'id'=>'grid-custom-button',
-                                            'data-pjax'=>true,
-                                            'class'=>'button btn btn-success',
+                                            'id' => 'grid-custom-button',
+                                            'data-pjax' => true,
+                                            'class' => 'button btn btn-success',
                                         ]
                                     );
+                                }else{
+                                    echo GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'layout' => '{items}{pager}',
+                                        'columns' => [
+                                            'nome',
+                                            'precoFormatado',
+                                            [
+                                                'attribute' => 'imagemItem',
+                                                'format' => ['image', ['width' => '100', 'height' => '100']],
+                                            ]
+                                        ],
+                                    ]);
+                                }
                             }
                         ?>
                     </div>
                     <div id="menus" style="display: none">
                         <?php
-                            if($idCategoria != null){
+                            if($idCategoria != null) {
                                 $categoria = Categoria::findOne(['id' => $idCategoria]);
-                                
+
                                 $dataProvider = new ActiveDataProvider([
                                     'query' => Menu::find()->where(['idCategoria' => $idCategoria]),
                                     'pagination' => [
                                         'pageSize' => 4,
                                     ],
                                 ]);
-                        
-                                echo ' <h4>'.$categoria->nome.'</h4>';
-                                echo GridView::widget([
-                                    'dataProvider' => $dataProvider,
-                                    'layout' => '{items}{pager}',
-                                    'columns' => [
-                                        'nome',
-                                        'precoTotal',
-                                        [
-                                            'attribute' => 'imagemMenu',
-                                            'format'=>['image', ['width'=>'100', 'height'=>'100']]
+                                echo ' <h4>' . $categoria->nome . '</h4>';
+
+                                if (Yii::$app->user->can('crudMenus')) {
+                                    echo GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'layout' => '{items}{pager}',
+                                        'columns' => [
+                                            'nome',
+                                            'desconto',
+                                            [
+                                                'attribute' => 'imagemMenu',
+                                                'format' => ['image', ['width' => '100', 'height' => '100']]
+                                            ],
+                                            [
+                                                'format' => 'raw',
+                                                'value' => function ($model, $key, $index, $column) {
+                                                    return Html::a(
+                                                        '<i class="fa fa-pencil"></i>',
+                                                        Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                        [
+                                                            'id' => 'grid-custom-button',
+                                                            'data-pjax' => true,
+                                                            'action' => Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
+                                                            'class' => 'button btn btn-default',
+                                                        ]
+                                                    );
+                                                }
+                                            ],
                                         ],
-                                        [
-                                            'format' => 'raw',
-                                            'value' => function($model, $key, $index, $column) {
-                                                return Html::a(
-                                                    '<i class="fa fa-pencil"></i>',
-                                                    Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]), 
-                                                    [
-                                                        'id'=>'grid-custom-button',
-                                                        'data-pjax'=>true,
-                                                        'action'=>Url::to(['menu/update', 'idCategoria' => $model->idCategoria, 'id' => $model->id]),
-                                                        'class'=>'button btn btn-default',
-                                                    ]
-                                                );
-                                            }
-                                        ],
-                                    ],
-                                ]);
-                                if(Yii::$app->user->can('crudMenus'))
+                                    ]);
+
                                     echo Html::a(
                                         'Adicionar menu',
                                         Url::to(['menu/create', 'idRestaurante' => $idRestaurante, 'idCategoria' => $idCategoria]),
                                         [
-                                            'id'=>'grid-custom-button',
-                                            'data-pjax'=>true,
-                                            'class'=>'button btn btn-success',
+                                            'id' => 'grid-custom-button',
+                                            'data-pjax' => true,
+                                            'class' => 'button btn btn-success',
                                         ]
                                     );
+                                }else{
+                                    echo GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'layout' => '{items}{pager}',
+                                        'columns' => [
+                                            'nome',
+                                            'desconto',
+                                            [
+                                                'attribute' => 'imagemMenu',
+                                                'format' => ['image', ['width' => '100', 'height' => '100']]
+                                            ]
+                                        ],
+                                    ]);
+                                }
                             }
-                            
                         ?>
                     </div>
                 </div>

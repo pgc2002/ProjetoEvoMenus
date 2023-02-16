@@ -359,7 +359,7 @@ public class SingletonGestorPedidos {
             public void onResponse(JSONArray response) {
                 pedidos = PedidoJsonParser.parserJsonPedidos(response);
 
-                //adicionarPedidosBD(pedidos);
+                adicionarPedidosBD(pedidos);
 
                 //Ativar o listener
                 if(pedidoListener!=null)
@@ -370,7 +370,9 @@ public class SingletonGestorPedidos {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){}
                 return;
             }
         });

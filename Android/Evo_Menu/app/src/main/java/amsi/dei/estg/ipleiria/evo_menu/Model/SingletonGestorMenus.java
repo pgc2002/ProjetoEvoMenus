@@ -80,7 +80,7 @@ public class SingletonGestorMenus {
             @Override
             public void onResponse(JSONArray response) {
                 menus = MenuJsonParser.parserJsonMenus(response);
-                //adicionarMenusDB(menus);
+                adicionarMenusDB(menus);
                 //Ativar o listener
                 if(menuListener !=null)
                 {
@@ -91,7 +91,11 @@ public class SingletonGestorMenus {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){
+                    //Toast.makeText(contexto, "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
         });

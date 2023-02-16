@@ -35,6 +35,8 @@ public class SingletonGestorRestaurantes
     private final static String mUrlAPIrestaurantes =  new UrlApi().getUrl() + "restaurante"; //link da api
     private static final long REQUEST_TIMEOUT = 15;
     private RestauranteDBHelper restaurantesDB = null;
+
+    private HorarioDBHelper horarioDB = null;
     private static SingletonGestorRestaurantes instancia = null;
     private ArrayList<Restaurante> restaurantes = null;
     private ArrayList<Categoria> categorias;
@@ -60,6 +62,7 @@ public class SingletonGestorRestaurantes
     private SingletonGestorRestaurantes(Context contexto) {
         restaurantes = new ArrayList<>();
         restaurantesDB = new RestauranteDBHelper(contexto);
+        horarioDB = new HorarioDBHelper(contexto);
     }
 
     public ArrayList<Restaurante> getRestaurantesDB() {
@@ -115,6 +118,10 @@ public class SingletonGestorRestaurantes
                 restaurantes = RestauranteJsonParser.parserJsonRestaurante(response);
                 adicionarRestaurantesBD(restaurantes);
 
+                for (Restaurante restaurante: restaurantes) {
+                    SingletonGestorRestaurantes.getInstance(contexto).getHorarioAPI(contexto, restaurante);
+                }
+
                 //Ativar o listener
                 if(restauranteListener!=null)
                 {
@@ -125,7 +132,11 @@ public class SingletonGestorRestaurantes
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){
+                    //Toast.makeText(contexto, "Ocorreu um erro", Toast.LENGTH_SHORT).show();
+                }
                 return;
             }
         });
@@ -219,6 +230,7 @@ public class SingletonGestorRestaurantes
         });
         volleyQueue.add(req);
     }
+
     public void getHorarioAPI(final Context contexto, final int id)
     {
         if(!UserJsonParser.isConnectionInternet(contexto)){
@@ -232,6 +244,29 @@ public class SingletonGestorRestaurantes
             public void onResponse(JSONObject response) {
                 restaurante.setHorario(RestauranteJsonParser.parserJsonHorario(response));
                 //adicionarUserBD(user);
+            }
+        } , new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    public void getHorarioAPI(final Context contexto, final Restaurante restaurante)
+    {
+        if(!UserJsonParser.isConnectionInternet(contexto)){
+            Toast.makeText(contexto, R.string.no_internet, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, mUrlAPIrestaurantes + "/" + restaurante.getId_horario() + "/horario",null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                HorarioFuncionamento horario = RestauranteJsonParser.parserJsonHorario(response);
+                restaurante.setHorario(horario);
+                //horarioDB.adicionarHorariosBD(horario);
             }
         } , new Response.ErrorListener() {
             @Override

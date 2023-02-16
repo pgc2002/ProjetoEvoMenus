@@ -148,7 +148,7 @@ public class SingletonGestorPagamentos {
             @Override
             public void onResponse(JSONArray response) {
                 pagamentos = PagamentoJsonParser.parserJsonPagamentos(response);
-                //adicionarPagamentosBD(pagamentos);
+                adicionarPagamentosBD(pagamentos);
                 //Ativar o listener
                 if(pagamentoListener!=null)
                 {
@@ -158,7 +158,9 @@ public class SingletonGestorPagamentos {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                try{
+                    Toast.makeText(contexto, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }catch (Exception ignored){}
                 return;
             }
         });

@@ -102,6 +102,8 @@ public class UserJsonParser {
     }
 
     public static String parserJsonValidacao (String resposta) throws JSONException {
+        if(resposta != null)
+            resposta = resposta.substring(1, resposta.length() - 1);
         return resposta;
     }
 

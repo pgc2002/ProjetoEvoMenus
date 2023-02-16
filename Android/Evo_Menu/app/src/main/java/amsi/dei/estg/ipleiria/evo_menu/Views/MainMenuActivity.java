@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -51,19 +52,9 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(saveInstanceState);
         //inicializarSingletons();
 
-        /*new Thread(new Runnable() {
-            public void run() {
-                try {
-                    inicializarSingletons();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-
-
-        final Handler handler = new Handler();
+        /*final Handler handler = new Handler();
         final int delay = 300000;
+        //final int delay = 10000;
 
         new Thread(new Runnable() {
             public void run() {
@@ -91,7 +82,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        verificarUserLogadoNaBd();
+        //verificarUserLogadoNaBd();
 
         //preencherRestaurantesNaBd();
         carregarCabecalho();
@@ -113,19 +104,19 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             SingletonGestorUsers.getInstance(getApplicationContext()).adicionarUserBD(SingletonGestorUsers.getInstance(getApplicationContext()).getUserLogado());
     }
 
-    // TESTAR DPS !!!!!!!
     private void atualizarSingletons() {
+        Toast.makeText(getApplicationContext(), "Dados atualizados", Toast.LENGTH_SHORT).show();
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
         SingletonGestorMenus.getInstance(getApplicationContext()).getAllMenusAPI(getApplicationContext());
         SingletonGestorItems.getInstance(getApplicationContext()).getAllItemsAPI(getApplicationContext());
-        SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
-        SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
+        //SingletonGestorPedidos.getInstance(getApplicationContext()).getAllPedidosAPI(getApplicationContext());
+        //SingletonGestorPagamentos.getInstance(getApplicationContext()).getAllPagamentosAPI(getApplicationContext());
         SingletonGestorMesas.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
     }
 
     private void inicializarSingletons() throws InterruptedException {
-        //Thread.sleep(3000);
+        Thread.sleep(1000);
         SingletonGestorRestaurantes.getInstance(getApplicationContext()).getAllRestaurantesAPI(getApplicationContext());
         SingletonGestorUsers.getInstance(getApplicationContext()).getMoradaAPI(getApplicationContext());
         SingletonGestorCategorias.getInstance(getApplicationContext()).getAllCategoriasAPI(getApplicationContext());
@@ -144,40 +135,38 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }*/
+        if(getIntent().getExtras() != null){
+            if (getIntent().getExtras().containsKey("refreshPerfil")) {
+                Fragment fragment = new VerPerfilFragment();
+                fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+                return;
+            }
+        }
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    inicializarSingletons();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
         Fragment fragment = new ListaRestaurantesFragment();
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
     }
 
-    private void carregarCabecalho()
-    {
+    private void carregarCabecalho() {
         SharedPreferences sharedPreferences = getSharedPreferences("DADOS_USER", Context.MODE_PRIVATE);
-        /*if(email != null)
-        {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(MAIL, email);
-            editor.apply();
-        }
-        else
-        {
-            //a ver mais tarde, defvalue em vez de s1
-            email = sharedPreferences.getString(MAIL, "Email não definido");
-        }*/
-
-        //Bundle extras = getIntent().getExtras();
-
-        //SingletonGestorUsers.getInstance(this).getUserAPI(this, extras.getInt("id"), extras.getString("pass"));
-
-        /*User user = SingletonGestorUsers.getInstance(this).getUserLogado();
-
-        Log.d("userLogado", user.getNome());*/
-
-        /*SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(MAIL, user.getNome());
-        editor.apply();*/
 
         View headerView = navigationView.getHeaderView(0);
         TextView tvUsername = headerView.findViewById(R.id.tvHeaderUsername);
-        tvUsername.setText(SingletonGestorUsers.getInstance(this).getUserLogado().getUsername());
+
+        if(SingletonGestorUsers.getInstance(this).getUserLogado() == null)
+            tvUsername.setText(getIntent().getExtras().getString("username"));
+        else
+            tvUsername.setText(SingletonGestorUsers.getInstance(this).getUserLogado().getUsername());
     }
 
     @Override
@@ -185,6 +174,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     {
         int opcao = item.getItemId();
         Fragment fragment = null;
+
         switch(opcao)
         {
             case R.id.navRestaurantes:
@@ -200,7 +190,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.navLogout:
-                LoginActivity.login.finish();
                 SingletonGestorUsers.getInstance(getApplicationContext()).logout();
                 finish();
                 Intent intent = new Intent(this, LoginActivity.class);

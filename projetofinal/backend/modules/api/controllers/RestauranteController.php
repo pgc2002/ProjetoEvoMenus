@@ -106,6 +106,30 @@ class RestauranteController extends ActiveController
         return $provider;
     }
 
+    public function actionHorarios()
+    {
+        $horarios = [];
+        $Restaurantes = Restaurante::find()->all();
+
+        foreach ($Restaurantes as $restaurante) {
+            $horario = Horariofuncionamento::findOne($restaurante->idHorario);
+            array_push($horarios, $horario);
+        }
+
+        $provider = new ArrayDataProvider([
+            'allModels' => $horarios,
+            'pagination' => false,
+        ]);
+
+        $connection = new Connection();
+        $mqtt = new MqttClient($connection->ip, $connection->port, $connection->clientId);
+        $mqtt->connect();
+        $mqtt->publish($connection->topic, "GET das horarios dos restaurantes", 0);
+        $mqtt->disconnect();
+
+        return $provider;
+    }
+
     public function actionMesas($id)
     {
         $query = Mesa::find()->where(['idRestaurante' => $id]);
